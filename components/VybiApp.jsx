@@ -16,6 +16,7 @@ import { SettingsScreen } from "./screens/SettingsScreen.jsx";
 import { OnboardingScreen } from "./screens/OnboardingScreen.jsx";
 import { PregnancyScreen } from "./screens/PregnancyScreen.jsx";
 import { BirthControlScreen } from "./screens/BirthControlScreen.jsx";
+import { WearableScreen } from "./screens/WearableScreen.jsx";
 import { AccountMenu } from "./AccountMenu.tsx";
 
 export default function VybiApp() {
@@ -52,6 +53,7 @@ export default function VybiApp() {
     {screen:"Chat",icon:"◇",desc:"Vybi AI · Explains algorithm layers · Biome + cycle aware · Personalised plans",color:C.saliva},
     {screen:"Pregnancy",icon:"🤰",desc:"Week-by-week tracking · Trimester · Baby size · Countdown to due date",color:C.fuchsia},
     {screen:"Birth Control",icon:"💊",desc:"Method tracking · Pill reminders · Weekly adherence",color:C.amethyst},
+    {screen:"Wearable",icon:"⌚",desc:"BBT · Resting HR · HRV → activates Layer 4 fusion",color:C.aqua},
     {screen:"Subscription",icon:"◌",desc:"Free / Core £9.99 / Premium £24.99 · Layer access per plan",color:C.coral},
     {screen:"Settings",icon:"⚙",desc:"Anonymous mode · Privacy · Data export",color:"rgba(245,230,255,0.5)"},
   ];
@@ -69,6 +71,7 @@ export default function VybiApp() {
       case "Chat": return <ChatScreen/>;
       case "Pregnancy": return <PregnancyScreen/>;
       case "Birth Control": return <BirthControlScreen/>;
+      case "Wearable": return <WearableScreen/>;
       case "Subscription": return <SubscriptionScreen/>;
       case "Settings": return <SettingsScreen setScreen={setScreen}/>;
       default: return <HomeScreen setScreen={setScreen}/>;

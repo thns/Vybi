@@ -72,6 +72,13 @@ export interface BirthControlLog {
   taken: boolean;
 }
 
+export interface WearableReading {
+  date: string;
+  bbt: number | null;
+  restingHr: number | null;
+  hrv: number | null;
+}
+
 export interface CycleRow {
   id: string;
   periodStartDate: string;
@@ -132,6 +139,9 @@ export const api = {
   logSymptom: (b: { cycle_day?: number; symptoms: string[]; severity?: Record<string, number> }) =>
     post<{ prediction: unknown }>("/api/symptoms/log", b),
   healthSummary: () => get<{ summary: unknown[] }>("/api/health/summary"),
+  wearable: () => get<{ readings: WearableReading[] }>("/api/wearable"),
+  logWearable: (b: { date?: string; bbt?: number; resting_hr?: number; hrv?: number }) =>
+    post<{ reading: WearableReading; prediction: unknown }>("/api/wearable/log", b),
   subscriptionStatus: () =>
     get<{ tier: string; status: string | null; cancel_at_period_end: boolean }>(
       "/api/stripe/subscription-status",

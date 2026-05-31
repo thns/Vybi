@@ -150,6 +150,19 @@ export const preventionScores = pgTable("prevention_scores", {
   calculatedAt: timestamp("calculated_at", { withTimezone: true }).notNull().defaultNow(),
 });
 
+// ─── Wearable readings (BBT / resting HR / HRV) — feeds Layer 4 ───────────────
+export const wearableReadings = pgTable("wearable_readings", {
+  id: uuid("id").primaryKey().defaultRandom(),
+  userId: text("user_id")
+    .notNull()
+    .references(() => users.id, { onDelete: "cascade" }),
+  date: date("date").notNull(),
+  bbt: doublePrecision("bbt"), // basal body temperature °C
+  restingHr: integer("resting_hr"), // bpm
+  hrv: doublePrecision("hrv"), // ms
+  loggedAt: timestamp("logged_at", { withTimezone: true }).notNull().defaultNow(),
+});
+
 // ─── Web push subscriptions ──────────────────────────────────────────────────
 export const pushSubscriptions = pgTable("push_subscriptions", {
   id: uuid("id").primaryKey().defaultRandom(),

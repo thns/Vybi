@@ -90,6 +90,7 @@ export function HomeScreen({ setScreen }) {
         {[
           {label:"Pregnancy",icon:"🤰",color:C.fuchsia,screen:"Pregnancy"},
           {label:"Birth Control",icon:"💊",color:C.purple,screen:"Birth Control"},
+          {label:"Wearable",icon:"⌚",color:C.mint,screen:"Wearable"},
           {label:"AI Engine",icon:"◉",color:C.purple,screen:"AI Engine"},
           {label:"Microbe Report",icon:"🧬",color:C.mint,screen:"Microbe Report"},
           {label:"Prevention",icon:"△",color:C.amber,screen:"Prevention"},
