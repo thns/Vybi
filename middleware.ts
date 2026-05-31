@@ -10,5 +10,5 @@ export const config = {
   // requireUser) — critically, /api/auth must be handled solely by Auth.js's
   // route handler, otherwise the middleware double-sets the CSRF cookie and
   // logins fail with MissingCSRF behind HTTPS.
-  matcher: ["/((?!api|_next/static|_next/image|favicon.ico|.*\\.(?:svg|png|jpg|jpeg|gif|webp|ico)$).*)"],
+  matcher: ["/((?!api|_next/static|_next/image|sw.js|manifest.json|favicon.ico|.*\\.(?:svg|png|jpg|jpeg|gif|webp|ico|js|json|txt|woff2?)$).*)"],
 };
