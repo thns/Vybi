@@ -3,7 +3,7 @@ import { useSession, signOut } from "next-auth/react";
 import { useRouter } from "next/navigation";
 import { C } from "../vybi-data.js";
 import { Card } from "../vybi-ui.jsx";
-import { enablePush, disablePush, isPushEnabled, sendTestPush, pushSupported } from "../../lib/push-client.ts";
+import { enablePush, disablePush, isPushEnabled, sendTestPush, pushSupported, isIOS, isStandalone } from "../../lib/push-client.ts";
 
 const cap = (s) => s.charAt(0).toUpperCase() + s.slice(1);
 
@@ -20,7 +20,11 @@ export function SettingsScreen({ setScreen }) {
   const [pushOn, setPushOn] = useState(false);
   const [pushMsg, setPushMsg] = useState(null);
   const [pushBusy, setPushBusy] = useState(false);
-  useEffect(() => { isPushEnabled().then(setPushOn); }, []);
+  const [iosTip, setIosTip] = useState(false);
+  useEffect(() => {
+    isPushEnabled().then(setPushOn);
+    setIosTip(isIOS() && !isStandalone());
+  }, []);
 
   const togglePush = async () => {
     setPushBusy(true);
@@ -85,6 +89,12 @@ export function SettingsScreen({ setScreen }) {
           </div>
         );})}
       </Card>
+      {iosTip&&!pushOn&&(
+        <Card style={{borderColor:`${C.gold}40`,background:`rgba(255,215,0,0.06)`}}>
+          <div style={{fontFamily:"DM Sans,sans-serif",fontSize:10,color:C.gold,textTransform:"uppercase",letterSpacing:"0.08em",marginBottom:6}}>📲 Enable on iPhone</div>
+          <div style={{fontFamily:"DM Sans,sans-serif",fontSize:12,color:"rgba(245,230,255,0.75)",lineHeight:1.6}}>To get notifications on iOS, add Vybi to your Home Screen: tap the <strong>Share</strong> button, then <strong>Add to Home Screen</strong>. Open it from there and turn on notifications.</div>
+        </Card>
+      )}
       {[
         {icon:"💳",label:"Billing & Subscription",sub:`${tier} · manage plan`,screen:"Subscription"},
         {icon:"💊",label:"Birth Control",sub:"Method & pill tracking",screen:"Birth Control"},
