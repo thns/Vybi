@@ -1,0 +1,26 @@
+# Netlify deployment config for the Vybi Next.js 14 app.
+# The official Next.js runtime handles App Router, API routes, and middleware
+# as serverless/edge functions automatically.
+
+[build]
+  command = "npm run build"
+  publish = ".next"
+
+[[plugins]]
+  package = "@netlify/plugin-nextjs"
+
+[build.environment]
+  NODE_VERSION = "20"
+
+# Required environment variables (set these in Netlify UI → Site settings → Env):
+#   DATABASE_URL                       Neon pooled connection string
+#   AUTH_SECRET                        openssl rand / node crypto base64
+#   NEXTAUTH_URL                       https://<your-site>.netlify.app
+#   AUTH_GOOGLE_ID / AUTH_GOOGLE_SECRET  (optional) Google OAuth
+#   AUTH_RESEND_KEY / EMAIL_FROM       (optional) magic-link + recovery email
+#   STRIPE_SECRET_KEY                  (optional) Stripe payments
+#   STRIPE_WEBHOOK_SECRET              (optional) endpoint: /api/stripe/webhook
+#   NEXT_PUBLIC_STRIPE_PUBLISHABLE_KEY (optional)
+#   STRIPE_PRICE_CORE / STRIPE_PRICE_PREMIUM  (optional) price IDs
+#   ANTHROPIC_API_KEY                  (optional) Vybi chat
+#   NEXT_PUBLIC_SITE_URL               https://<your-site>.netlify.app

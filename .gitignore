@@ -11,6 +11,15 @@ dist
 dist-ssr
 *.local
 
+# Next.js
+.next/
+out/
+next-env.d.ts
+.vercel
+
+# TypeScript build info
+*.tsbuildinfo
+
 .vscode/*
 !.vscode/extensions.json
 .idea
@@ -21,3 +30,4 @@ dist-ssr
 *.sln
 *.sw?
 .env
+.env*.local
