@@ -7,6 +7,9 @@ import type {
   predictions,
   preventionScores,
   healthMetrics,
+  pregnancies,
+  birthControl,
+  birthControlLogs,
 } from "@/lib/db/schema";
 
 export type User = InferSelectModel<typeof users>;
@@ -29,5 +32,14 @@ export type NewPreventionScore = InferInsertModel<typeof preventionScores>;
 
 export type HealthMetric = InferSelectModel<typeof healthMetrics>;
 export type NewHealthMetric = InferInsertModel<typeof healthMetrics>;
+
+export type Pregnancy = InferSelectModel<typeof pregnancies>;
+export type NewPregnancy = InferInsertModel<typeof pregnancies>;
+
+export type BirthControl = InferSelectModel<typeof birthControl>;
+export type NewBirthControl = InferInsertModel<typeof birthControl>;
+
+export type BirthControlLog = InferSelectModel<typeof birthControlLogs>;
+export type NewBirthControlLog = InferInsertModel<typeof birthControlLogs>;
 
 export type SubscriptionTier = "free" | "core" | "premium";

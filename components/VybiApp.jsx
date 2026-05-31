@@ -14,6 +14,8 @@ import { ChatScreen } from "./screens/ChatScreen.jsx";
 import { SubscriptionScreen } from "./screens/SubscriptionScreen.jsx";
 import { SettingsScreen } from "./screens/SettingsScreen.jsx";
 import { OnboardingScreen } from "./screens/OnboardingScreen.jsx";
+import { PregnancyScreen } from "./screens/PregnancyScreen.jsx";
+import { BirthControlScreen } from "./screens/BirthControlScreen.jsx";
 
 export default function VybiApp() {
   const [screen, setScreen] = useState("Onboarding");
@@ -47,6 +49,8 @@ export default function VybiApp() {
     {screen:"Prevention",icon:"△",desc:"5 risk conditions · AI drivers · Action plans · Doctor report",color:C.amber},
     {screen:"General Health",icon:"◈",desc:"Sleep, stress, hydration, exercise · Biome impact · Wearable sync → Layer 4",color:C.gold},
     {screen:"Chat",icon:"◇",desc:"Vybi AI · Explains algorithm layers · Biome + cycle aware · Personalised plans",color:C.saliva},
+    {screen:"Pregnancy",icon:"🤰",desc:"Week-by-week tracking · Trimester · Baby size · Countdown to due date",color:C.fuchsia},
+    {screen:"Birth Control",icon:"💊",desc:"Method tracking · Pill reminders · Weekly adherence",color:C.amethyst},
     {screen:"Subscription",icon:"◌",desc:"Free / Core £9.99 / Premium £24.99 · Layer access per plan",color:C.coral},
     {screen:"Settings",icon:"⚙",desc:"Anonymous mode · Privacy · Data export",color:"rgba(245,230,255,0.5)"},
   ];
@@ -62,6 +66,8 @@ export default function VybiApp() {
       case "Prevention": return <PreventionScreen/>;
       case "General Health": return <GeneralHealthScreen/>;
       case "Chat": return <ChatScreen/>;
+      case "Pregnancy": return <PregnancyScreen/>;
+      case "Birth Control": return <BirthControlScreen/>;
       case "Subscription": return <SubscriptionScreen/>;
       case "Settings": return <SettingsScreen/>;
       default: return <HomeScreen setScreen={setScreen}/>;

@@ -88,6 +88,8 @@ export function HomeScreen({ setScreen }) {
 
       <div style={{display:"grid",gridTemplateColumns:"1fr 1fr",gap:10}}>
         {[
+          {label:"Pregnancy",icon:"🤰",color:C.fuchsia,screen:"Pregnancy"},
+          {label:"Birth Control",icon:"💊",color:C.purple,screen:"Birth Control"},
           {label:"AI Engine",icon:"◉",color:C.purple,screen:"AI Engine"},
           {label:"Microbe Report",icon:"🧬",color:C.mint,screen:"Microbe Report"},
           {label:"Prevention",icon:"△",color:C.amber,screen:"Prevention"},

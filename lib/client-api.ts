@@ -37,6 +37,41 @@ export interface PredictionRow {
   createdAt: string;
 }
 
+async function del<T>(url: string): Promise<T | null> {
+  try {
+    const res = await fetch(url, { method: "DELETE" });
+    if (!res.ok) return null;
+    return (await res.json()) as T;
+  } catch {
+    return null;
+  }
+}
+
+export interface PregnancyStatus {
+  week: number;
+  dayOfWeek: number;
+  trimester: 1 | 2 | 3;
+  daysRemaining: number;
+  dueDate: string;
+  progressPct: number;
+  babySize: string;
+  babyLengthCm: number | null;
+  weeklyNote: string;
+  overdue: boolean;
+}
+
+export interface BirthControlConfig {
+  method: string;
+  startDate: string | null;
+  pillTime: string | null;
+  notes: string | null;
+}
+
+export interface BirthControlLog {
+  date: string;
+  taken: boolean;
+}
+
 export interface CycleRow {
   id: string;
   periodStartDate: string;
@@ -79,6 +114,17 @@ export const api = {
     post<{ log: CycleRow; prediction: unknown }>("/api/cycles/log", b),
   onboard: (b: { last_period_date?: string; cycle_length?: number }) =>
     post<{ ok: boolean }>("/api/onboarding", b),
+  pregnancy: () =>
+    get<{ pregnancy: unknown; status: PregnancyStatus | null }>("/api/pregnancy"),
+  startPregnancy: (b: { due_date?: string; last_period_date?: string }) =>
+    post<{ status: PregnancyStatus }>("/api/pregnancy", b),
+  endPregnancy: () => del<{ ok: boolean }>("/api/pregnancy"),
+  birthControl: () =>
+    get<{ config: BirthControlConfig | null; logs: BirthControlLog[] }>("/api/birth-control"),
+  setBirthControl: (b: { method: string; start_date?: string; pill_time?: string; notes?: string }) =>
+    post<{ config: BirthControlConfig }>("/api/birth-control", b),
+  logPill: (b: { date?: string; taken?: boolean }) =>
+    post<{ log: BirthControlLog }>("/api/birth-control/log", b),
   logSymptom: (b: { cycle_day?: number; symptoms: string[]; severity?: Record<string, number> }) =>
     post<{ prediction: unknown }>("/api/symptoms/log", b),
   healthSummary: () => get<{ summary: unknown[] }>("/api/health/summary"),

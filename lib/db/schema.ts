@@ -148,6 +148,44 @@ export const preventionScores = pgTable("prevention_scores", {
   calculatedAt: timestamp("calculated_at", { withTimezone: true }).notNull().defaultNow(),
 });
 
+// ─── Pregnancy mode ──────────────────────────────────────────────────────────
+export const pregnancies = pgTable("pregnancies", {
+  id: uuid("id").primaryKey().defaultRandom(),
+  userId: text("user_id")
+    .notNull()
+    .references(() => users.id, { onDelete: "cascade" }),
+  dueDate: date("due_date").notNull(),
+  lastPeriodDate: date("last_period_date"),
+  active: boolean("active").notNull().default(true),
+  createdAt: timestamp("created_at", { withTimezone: true }).notNull().defaultNow(),
+  endedAt: timestamp("ended_at", { withTimezone: true }),
+});
+
+// ─── Birth control ───────────────────────────────────────────────────────────
+export const birthControl = pgTable("birth_control", {
+  id: uuid("id").primaryKey().defaultRandom(),
+  userId: text("user_id")
+    .notNull()
+    .references(() => users.id, { onDelete: "cascade" }),
+  // pill | patch | ring | iud_hormonal | iud_copper | implant | injection | condom | none
+  method: text("method").notNull(),
+  startDate: date("start_date"),
+  pillTime: text("pill_time"), // "HH:MM" local reminder time
+  active: boolean("active").notNull().default(true),
+  notes: text("notes"),
+  updatedAt: timestamp("updated_at", { withTimezone: true }).notNull().defaultNow(),
+});
+
+export const birthControlLogs = pgTable("birth_control_logs", {
+  id: uuid("id").primaryKey().defaultRandom(),
+  userId: text("user_id")
+    .notNull()
+    .references(() => users.id, { onDelete: "cascade" }),
+  date: date("date").notNull(),
+  taken: boolean("taken").notNull().default(true),
+  loggedAt: timestamp("logged_at", { withTimezone: true }).notNull().defaultNow(),
+});
+
 export const healthMetrics = pgTable("health_metrics", {
   id: uuid("id").primaryKey().defaultRandom(),
   userId: text("user_id")
