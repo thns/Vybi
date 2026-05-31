@@ -39,9 +39,11 @@ These render in **Settings** but don't persist or do anything real yet:
 4. ~~Richer symptom/mood taxonomy (40, grouped) + onboarding goals (track/conceive/avoid)~~ ✅
 5. ~~Wearable BBT/HRV manual entry → activates Layer 4~~ ✅ (true Apple Health/Oura/Garmin auto-sync still needs a native app — manual entry works today)
 6. ~~Content library (articles, daily insights)~~ ✅
-7. Partner sharing.
+7. ~~Partner sharing~~ ✅
 8. ~~Data export / doctor report~~ ✅
-9. Community / secret chats (large — real-time + moderation).
+9. ~~Community / secret chats~~ ✅ (anonymous rooms, posts/replies, report→auto-hide; full real-time + human moderation is a follow-up)
+
+— All 10 Flo-parity list items complete. —
 
 Goal-based tailoring (use users.goal to emphasize fertile window for "conceive",
 contraception for "avoid") is still TODO — currently goal is captured + shown only.

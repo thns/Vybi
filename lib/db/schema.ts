@@ -151,6 +151,35 @@ export const preventionScores = pgTable("prevention_scores", {
   calculatedAt: timestamp("calculated_at", { withTimezone: true }).notNull().defaultNow(),
 });
 
+// ─── Community (anonymous posts + replies) ───────────────────────────────────
+export const communityPosts = pgTable("community_posts", {
+  id: uuid("id").primaryKey().defaultRandom(),
+  userId: text("user_id")
+    .notNull()
+    .references(() => users.id, { onDelete: "cascade" }),
+  room: text("room").notNull(),
+  body: text("body").notNull(),
+  anonName: text("anon_name").notNull(),
+  reportCount: integer("report_count").notNull().default(0),
+  hidden: boolean("hidden").notNull().default(false),
+  createdAt: timestamp("created_at", { withTimezone: true }).notNull().defaultNow(),
+});
+
+export const communityReplies = pgTable("community_replies", {
+  id: uuid("id").primaryKey().defaultRandom(),
+  postId: uuid("post_id")
+    .notNull()
+    .references(() => communityPosts.id, { onDelete: "cascade" }),
+  userId: text("user_id")
+    .notNull()
+    .references(() => users.id, { onDelete: "cascade" }),
+  body: text("body").notNull(),
+  anonName: text("anon_name").notNull(),
+  reportCount: integer("report_count").notNull().default(0),
+  hidden: boolean("hidden").notNull().default(false),
+  createdAt: timestamp("created_at", { withTimezone: true }).notNull().defaultNow(),
+});
+
 // ─── Wearable readings (BBT / resting HR / HRV) — feeds Layer 4 ───────────────
 export const wearableReadings = pgTable("wearable_readings", {
   id: uuid("id").primaryKey().defaultRandom(),

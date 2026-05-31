@@ -72,6 +72,24 @@ export interface BirthControlLog {
   taken: boolean;
 }
 
+export interface CommunityPost {
+  id: string;
+  room: string;
+  body: string;
+  anonName: string;
+  createdAt: string;
+  replyCount?: number;
+  mine?: boolean;
+}
+
+export interface CommunityReply {
+  id: string;
+  body: string;
+  anonName: string;
+  createdAt: string;
+  mine?: boolean;
+}
+
 export interface WearableReading {
   date: string;
   bbt: number | null;
@@ -121,6 +139,14 @@ export const api = {
     post<{ log: CycleRow; prediction: unknown }>("/api/cycles/log", b),
   onboard: (b: { last_period_date?: string; cycle_length?: number; goal?: string; birth_year?: number }) =>
     post<{ ok: boolean }>("/api/onboarding", b),
+  community: (room: string) => get<{ posts: CommunityPost[] }>(`/api/community?room=${room}`),
+  createPost: (room: string, body: string) => post<{ post: unknown }>("/api/community", { room, body }),
+  communityPost: (postId: string) =>
+    get<{ post: CommunityPost; replies: CommunityReply[] }>(`/api/community/${postId}`),
+  communityReply: (postId: string, body: string) =>
+    post<{ reply: unknown }>(`/api/community/${postId}/reply`, { body }),
+  communityReport: (b: { postId?: string; replyId?: string }) =>
+    post<{ ok: boolean }>("/api/community/report", b),
   partnerShare: () => get<{ token: string | null }>("/api/partner"),
   createPartnerShare: () => post<{ token: string }>("/api/partner", {}),
   revokePartnerShare: () => del<{ ok: boolean }>("/api/partner"),

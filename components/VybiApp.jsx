@@ -19,6 +19,7 @@ import { BirthControlScreen } from "./screens/BirthControlScreen.jsx";
 import { WearableScreen } from "./screens/WearableScreen.jsx";
 import { ContentScreen } from "./screens/ContentScreen.jsx";
 import { PartnerScreen } from "./screens/PartnerScreen.jsx";
+import { CommunityScreen } from "./screens/CommunityScreen.jsx";
 import { AccountMenu } from "./AccountMenu.tsx";
 
 export default function VybiApp() {
@@ -58,6 +59,7 @@ export default function VybiApp() {
     {screen:"Wearable",icon:"⌚",desc:"BBT · Resting HR · HRV → activates Layer 4 fusion",color:C.aqua},
     {screen:"Learn",icon:"📖",desc:"Content library · Articles on cycle, biome, fertility · Daily insight",color:C.gold},
     {screen:"Partner",icon:"💞",desc:"Share a read-only cycle view with a partner · Revoke anytime",color:C.blush},
+    {screen:"Community",icon:"💬",desc:"Anonymous rooms · Cycle, TTC, biome, PCOS, mood · Be kind",color:C.bubblegum},
     {screen:"Subscription",icon:"◌",desc:"Free / Core £9.99 / Premium £24.99 · Layer access per plan",color:C.coral},
     {screen:"Settings",icon:"⚙",desc:"Anonymous mode · Privacy · Data export",color:"rgba(245,230,255,0.5)"},
   ];
@@ -78,6 +80,7 @@ export default function VybiApp() {
       case "Wearable": return <WearableScreen/>;
       case "Learn": return <ContentScreen/>;
       case "Partner": return <PartnerScreen/>;
+      case "Community": return <CommunityScreen/>;
       case "Subscription": return <SubscriptionScreen/>;
       case "Settings": return <SettingsScreen setScreen={setScreen}/>;
       default: return <HomeScreen setScreen={setScreen}/>;

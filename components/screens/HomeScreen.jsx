@@ -94,6 +94,7 @@ export function HomeScreen({ setScreen }) {
           {label:"Wearable",icon:"⌚",color:C.mint,screen:"Wearable"},
           {label:"Learn",icon:"📖",color:C.gold,screen:"Learn"},
           {label:"Partner",icon:"💞",color:C.blush,screen:"Partner"},
+          {label:"Community",icon:"💬",color:C.bubblegum,screen:"Community"},
           {label:"AI Engine",icon:"◉",color:C.purple,screen:"AI Engine"},
           {label:"Microbe Report",icon:"🧬",color:C.mint,screen:"Microbe Report"},
           {label:"Prevention",icon:"△",color:C.amber,screen:"Prevention"},
