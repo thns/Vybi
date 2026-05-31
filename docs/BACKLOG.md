@@ -10,7 +10,7 @@ These render in **Settings** but don't persist or do anything real yet:
 - [ ] **Push Notifications toggle** — ✅ now wired to real web-push subscribe/unsubscribe (see Notifications below). Per-type preferences (period / fertile / pill) still TODO.
 - [ ] **Biometric Lock toggle** — local-only; needs WebAuthn / device biometric integration.
 - [ ] **Research Opt-in toggle** — local-only; needs a consent record + data pipeline.
-- [ ] **Export Health Data** — stub ("coming soon"); build a real PDF/JSON export of cycles, biome, predictions, prevention.
+- [x] **Export Health Data** — ✅ JSON download (`/api/export`) + printable doctor report (`/report`).
 - [ ] **My Test Kits** — removed from Settings list; needs the biome test-kit upload UI (below).
 
 ## Missing data-entry UIs (APIs exist, screens don't)
@@ -40,7 +40,7 @@ These render in **Settings** but don't persist or do anything real yet:
 5. ~~Wearable BBT/HRV manual entry → activates Layer 4~~ ✅ (true Apple Health/Oura/Garmin auto-sync still needs a native app — manual entry works today)
 6. Content library (articles, daily insights).
 7. Partner sharing.
-8. Data export / doctor report.
+8. ~~Data export / doctor report~~ ✅
 9. Community / secret chats (large — real-time + moderation).
 
 Goal-based tailoring (use users.goal to emphasize fertile window for "conceive",

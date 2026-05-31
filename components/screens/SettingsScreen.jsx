@@ -104,10 +104,10 @@ export function SettingsScreen({ setScreen }) {
         {icon:"💳",label:"Billing & Subscription",sub:`${tier} · manage plan`,screen:"Subscription"},
         {icon:"💊",label:"Birth Control",sub:"Method & pill tracking",screen:"Birth Control"},
         {icon:"🤰",label:"Pregnancy",sub:"Week-by-week tracking",screen:"Pregnancy"},
-        {icon:"📋",label:"Export Health Data",sub:"Full report download (coming soon)"},
+        {icon:"📋",label:"Export Health Data",sub:"Doctor report · JSON download",href:"/report"},
         {icon:"⚖️",label:"Privacy Policy",sub:"ISO 27001 · ISO 27701 · vybi.health"},
       ].map((item,i)=>(
-        <Card key={i} style={{padding:"12px 16px",cursor:item.screen?"pointer":"default"}} onClick={item.screen?()=>setScreen?.(item.screen):undefined}>
+        <Card key={i} style={{padding:"12px 16px",cursor:item.screen||item.href?"pointer":"default"}} onClick={item.screen?()=>setScreen?.(item.screen):item.href?()=>{window.location.href=item.href;}:undefined}>
           <div style={{display:"flex",justifyContent:"space-between",alignItems:"center"}}>
             <div style={{display:"flex",gap:12,alignItems:"center"}}>
               <span style={{fontSize:20}}>{item.icon}</span>
