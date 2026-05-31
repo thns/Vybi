@@ -1,8 +1,9 @@
-import { useState } from "react";
+import { useState, useEffect } from "react";
 import { useSession, signOut } from "next-auth/react";
 import { useRouter } from "next/navigation";
 import { C } from "../vybi-data.js";
 import { Card } from "../vybi-ui.jsx";
+import { enablePush, disablePush, isPushEnabled, sendTestPush, pushSupported } from "../../lib/push-client.ts";
 
 const cap = (s) => s.charAt(0).toUpperCase() + s.slice(1);
 
@@ -16,6 +17,29 @@ const TOGGLES = [
 
 export function SettingsScreen({ setScreen }) {
   const [states, setStates] = useState(TOGGLES.map(t=>t.on));
+  const [pushOn, setPushOn] = useState(false);
+  const [pushMsg, setPushMsg] = useState(null);
+  const [pushBusy, setPushBusy] = useState(false);
+  useEffect(() => { isPushEnabled().then(setPushOn); }, []);
+
+  const togglePush = async () => {
+    setPushBusy(true);
+    setPushMsg(null);
+    if (pushOn) {
+      await disablePush();
+      setPushOn(false);
+      setPushMsg("Notifications turned off");
+    } else {
+      if (!pushSupported()) { setPushMsg("This browser doesn't support notifications"); setPushBusy(false); return; }
+      const res = await enablePush();
+      if (res.ok) { setPushOn(true); setPushMsg("Notifications enabled 🌸"); }
+      else setPushMsg(res.reason === "denied" ? "Permission blocked — enable it in browser settings" : res.reason === "unsupported" ? "Not supported on this browser (iOS needs the app installed to Home Screen)" : "Couldn't enable notifications");
+    }
+    setPushBusy(false);
+  };
+
+  const test = async () => { setPushMsg(await sendTestPush() ? "Test sent — check your notifications" : "Couldn't send test"); };
+
   const { data: session } = useSession();
   const router = useRouter();
   const user = session?.user;
@@ -45,17 +69,21 @@ export function SettingsScreen({ setScreen }) {
       </Card>
       <Card>
         <div style={{fontFamily:"DM Sans,sans-serif",fontSize:10,color:C.mint,textTransform:"uppercase",letterSpacing:"0.08em",marginBottom:12}}>Privacy & Preferences</div>
-        {TOGGLES.map((t,i)=>(
+        {TOGGLES.map((t,i)=>{
+          const isPush = t.label==="Push Notifications";
+          const on = isPush ? pushOn : states[i];
+          const toggle = isPush ? togglePush : ()=>setStates(s=>s.map((v,j)=>j===i?!v:v));
+          return (
           <div key={i} style={{display:"flex",justifyContent:"space-between",alignItems:"center",marginBottom:i<TOGGLES.length-1?14:0,paddingBottom:i<TOGGLES.length-1?14:0,borderBottom:i<TOGGLES.length-1?"1px solid rgba(255,255,255,0.05)":"none"}}>
-            <div>
-              <div style={{fontFamily:"DM Sans,sans-serif",fontSize:13,color:C.pearl}}>{t.label}</div>
-              <div style={{fontFamily:"DM Sans,sans-serif",fontSize:11,color:"rgba(245,230,255,0.4)"}}>{t.desc}</div>
+            <div style={{flex:1}}>
+              <div style={{fontFamily:"DM Sans,sans-serif",fontSize:13,color:C.pearl}}>{t.label}{isPush&&pushOn&&<span onClick={test} style={{marginLeft:8,fontSize:10,color:C.mint,cursor:"pointer",textDecoration:"underline"}}>Send test</span>}</div>
+              <div style={{fontFamily:"DM Sans,sans-serif",fontSize:11,color:"rgba(245,230,255,0.4)"}}>{isPush&&pushMsg?pushMsg:t.desc}</div>
             </div>
-            <div onClick={()=>setStates(s=>s.map((v,j)=>j===i?!v:v))} style={{width:44,height:24,borderRadius:12,background:states[i]?t.color:"rgba(255,255,255,0.1)",position:"relative",cursor:"pointer",transition:"background 0.2s",flexShrink:0}}>
-              <div style={{width:18,height:18,borderRadius:"50%",background:"white",position:"absolute",top:3,left:states[i]?23:3,transition:"left 0.2s",boxShadow:"0 1px 4px rgba(0,0,0,0.3)"}}/>
+            <div onClick={pushBusy&&isPush?undefined:toggle} style={{width:44,height:24,borderRadius:12,background:on?t.color:"rgba(255,255,255,0.1)",position:"relative",cursor:"pointer",transition:"background 0.2s",flexShrink:0,opacity:pushBusy&&isPush?0.6:1}}>
+              <div style={{width:18,height:18,borderRadius:"50%",background:"white",position:"absolute",top:3,left:on?23:3,transition:"left 0.2s",boxShadow:"0 1px 4px rgba(0,0,0,0.3)"}}/>
             </div>
           </div>
-        ))}
+        );})}
       </Card>
       {[
         {icon:"💳",label:"Billing & Subscription",sub:`${tier} · manage plan`,screen:"Subscription"},

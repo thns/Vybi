@@ -148,6 +148,18 @@ export const preventionScores = pgTable("prevention_scores", {
   calculatedAt: timestamp("calculated_at", { withTimezone: true }).notNull().defaultNow(),
 });
 
+// ─── Web push subscriptions ──────────────────────────────────────────────────
+export const pushSubscriptions = pgTable("push_subscriptions", {
+  id: uuid("id").primaryKey().defaultRandom(),
+  userId: text("user_id")
+    .notNull()
+    .references(() => users.id, { onDelete: "cascade" }),
+  endpoint: text("endpoint").notNull().unique(),
+  p256dh: text("p256dh").notNull(),
+  auth: text("auth").notNull(),
+  createdAt: timestamp("created_at", { withTimezone: true }).notNull().defaultNow(),
+});
+
 // ─── Pregnancy mode ──────────────────────────────────────────────────────────
 export const pregnancies = pgTable("pregnancies", {
   id: uuid("id").primaryKey().defaultRandom(),
