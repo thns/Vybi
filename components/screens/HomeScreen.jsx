@@ -2,6 +2,7 @@ import { C, BIOMES, calcAccuracy, phaseColor, phaseLabel } from "../vybi-data.js
 import { Card, GlowOrb, BiomeRing } from "../vybi-ui.jsx";
 import { useDashboard } from "../useVybiData.ts";
 import { daysUntil } from "../../lib/client-api.ts";
+import { getDailyTip } from "../content-data.js";
 
 export function HomeScreen({ setScreen }) {
   const { prediction, biome, prevention } = useDashboard();
@@ -91,6 +92,7 @@ export function HomeScreen({ setScreen }) {
           {label:"Pregnancy",icon:"🤰",color:C.fuchsia,screen:"Pregnancy"},
           {label:"Birth Control",icon:"💊",color:C.purple,screen:"Birth Control"},
           {label:"Wearable",icon:"⌚",color:C.mint,screen:"Wearable"},
+          {label:"Learn",icon:"📖",color:C.gold,screen:"Learn"},
           {label:"AI Engine",icon:"◉",color:C.purple,screen:"AI Engine"},
           {label:"Microbe Report",icon:"🧬",color:C.mint,screen:"Microbe Report"},
           {label:"Prevention",icon:"△",color:C.amber,screen:"Prevention"},
@@ -104,6 +106,12 @@ export function HomeScreen({ setScreen }) {
           </Card>
         ))}
       </div>
+
+      <Card style={{borderColor:`${C.gold}30`,background:`rgba(255,215,0,0.05)`,cursor:"pointer"}} onClick={()=>setScreen("Learn")}>
+        <div style={{fontFamily:"DM Sans,sans-serif",fontSize:10,color:C.gold,textTransform:"uppercase",letterSpacing:"0.08em",marginBottom:6}}>✦ Insight of the day</div>
+        <div style={{fontFamily:"DM Sans,sans-serif",fontSize:12,color:"rgba(245,230,255,0.75)",lineHeight:1.7}}>{getDailyTip()}</div>
+        <div style={{fontFamily:"DM Sans,sans-serif",fontSize:10,color:C.gold,marginTop:6}}>Open the library →</div>
+      </Card>
 
       <Card>
         <div style={{fontFamily:"DM Sans,sans-serif",fontSize:10,color:C.gold,textTransform:"uppercase",letterSpacing:"0.08em",marginBottom:8}}>✦ Biome-Cycle Insight</div>
