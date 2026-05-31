@@ -37,6 +37,14 @@ export interface PredictionRow {
   createdAt: string;
 }
 
+export interface CycleRow {
+  id: string;
+  periodStartDate: string;
+  periodEndDate: string | null;
+  cycleLength: number | null;
+  loggedAt: string;
+}
+
 export interface BiomeRow {
   vaginalScore: number | null;
   gutScore: number | null;
@@ -66,9 +74,11 @@ export const api = {
   calculatePrediction: () => post<unknown>("/api/predictions/calculate", {}),
   latestBiome: () => get<{ biome: BiomeRow | null }>("/api/biome/latest"),
   preventionScores: () => get<PreventionScores>("/api/prevention/scores"),
-  cycles: () => get<{ cycles: unknown[] }>("/api/cycles/log"),
+  cycles: () => get<{ cycles: CycleRow[] }>("/api/cycles/log"),
   logCycle: (b: { period_start_date: string; period_end_date?: string; cycle_length?: number }) =>
-    post<unknown>("/api/cycles/log", b),
+    post<{ log: CycleRow; prediction: unknown }>("/api/cycles/log", b),
+  onboard: (b: { last_period_date?: string; cycle_length?: number }) =>
+    post<{ ok: boolean }>("/api/onboarding", b),
   logSymptom: (b: { cycle_day?: number; symptoms: string[]; severity?: Record<string, number> }) =>
     post<{ prediction: unknown }>("/api/symptoms/log", b),
   healthSummary: () => get<{ summary: unknown[] }>("/api/health/summary"),
@@ -106,6 +116,24 @@ export function daysUntil(iso: string | null): number | null {
   const today = new Date();
   const todayUtc = Date.UTC(today.getUTCFullYear(), today.getUTCMonth(), today.getUTCDate());
   return Math.round((target - todayUtc) / 86_400_000);
+}
+
+// Current cycle day from the most recent period start (day 1 = start day).
+export function cycleDayFrom(startISO: string | null): number | null {
+  if (!startISO) return null;
+  const d = daysUntil(startISO);
+  if (d == null) return null;
+  return 1 - d; // start in the past → positive day number
+}
+
+// Map a cycle day to a phase key (matches the screens' phase palette).
+export function phaseForDay(day: number | null, cycleLength = 28): string {
+  if (day == null || day < 1) return "follicular";
+  const ovulation = cycleLength - 14;
+  if (day <= 5) return "menstrual";
+  if (day < ovulation) return "follicular";
+  if (day <= ovulation + 2) return "ovulation";
+  return "luteal";
 }
 
 export function formatShort(iso: string | null): string | null {

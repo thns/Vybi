@@ -1,20 +1,36 @@
-import { useState } from "react";
+import { useState, useEffect } from "react";
 import { C, CYCLE_DAYS, SYMPTOMS_LIST, calcAccuracy, phaseColor, phaseLabel } from "../vybi-data.js";
 import { Card, GlowOrb, Badge } from "../vybi-ui.jsx";
-import { useDashboard } from "../useVybiData.ts";
-import { api, formatShort, daysUntil } from "../../lib/client-api.ts";
+import { useDashboard, useCycles } from "../useVybiData.ts";
+import { api, formatShort, daysUntil, cycleDayFrom } from "../../lib/client-api.ts";
 
 const dText = (d, fallback) =>
   d == null ? fallback : d === 0 ? "Today" : d > 0 ? `In ${d} days` : `${-d} days ago`;
 
 export function CycleScreen() {
+  const [reload, setReload] = useState(0);
+  const { prediction } = useDashboard(reload);
+  const { cycles } = useCycles(reload);
+  const latestCycle = cycles[0] ?? null;
+  const cycleLen = latestCycle?.cycleLength ?? 28;
+  const realDay = cycleDayFrom(latestCycle?.periodStartDate ?? null);
+  const hasCycleData = realDay != null && realDay >= 1;
+
   const [currentDay, setCurrentDay] = useState(22);
-  const [loggedSymptoms, setLoggedSymptoms] = useState(["cramps","bloating","acne"]);
+  // Default the day view to the user's real current cycle day once it loads.
+  useEffect(() => {
+    if (hasCycleData) setCurrentDay(Math.min(realDay, 35));
+  }, [realDay, hasCycleData]);
+
+  const [loggedSymptoms, setLoggedSymptoms] = useState([]);
   const [activeTab, setActiveTab] = useState("tracker");
   const [saving, setSaving] = useState(false);
   const [savedMsg, setSavedMsg] = useState(null);
-  const today = CYCLE_DAYS[currentDay-1];
-  const { prediction } = useDashboard();
+  const [periodDate, setPeriodDate] = useState("");
+  const [logging, setLogging] = useState(false);
+  const [logMsg, setLogMsg] = useState(null);
+
+  const today = CYCLE_DAYS[Math.min(Math.max(currentDay,1),35)-1];
   const accuracy = prediction?.accuracyPct ?? calcAccuracy(3, true, false, 47);
   const toggleSymptom = (id) => setLoggedSymptoms(s=>s.includes(id)?s.filter(x=>x!==id):[...s,id]);
 
@@ -26,12 +42,56 @@ export function CycleScreen() {
     setSavedMsg(res ? "Logged · Layer 2 recalculated" : "Sign in to sync your symptom logs");
   };
 
+  const logPeriod = async () => {
+    if (!periodDate) return;
+    setLogging(true);
+    setLogMsg(null);
+    const res = await api.logCycle({ period_start_date: periodDate });
+    setLogging(false);
+    if (res) {
+      setLogMsg("Period logged · predictions updated");
+      setPeriodDate("");
+      setReload((r) => r + 1); // refetch cycles + prediction
+    } else {
+      setLogMsg("Sign in to save your cycle");
+    }
+  };
+
   // Live prediction rows (fall back to the demo values when none on file yet).
   const predRows = [
     {label:"Next Period",   value: formatShort(prediction?.predictedPeriodStart) ?? "Jun 2",   days: dText(daysUntil(prediction?.predictedPeriodStart), "7 days"),      color:C.rose,   icon:"◎", conf: prediction?.confidencePct ?? 82},
     {label:"Ovulation",     value: formatShort(prediction?.predictedOvulation) ?? "Jun 9",      days: dText(daysUntil(prediction?.predictedOvulation), "14 days"),       color:C.gold,   icon:"○", conf: prediction?.confidencePct ?? 74},
     {label:"Fertile Window",value: (formatShort(prediction?.fertileWindowStart) && formatShort(prediction?.fertileWindowEnd)) ? `${formatShort(prediction.fertileWindowStart)}–${formatShort(prediction.fertileWindowEnd)}` : "Jun 7–12", days: dText(daysUntil(prediction?.fertileWindowStart), "Opens in 12d"), color:C.mint, icon:"◈", conf: prediction?.confidencePct ?? 70},
   ];
+
+  // Build the current month grid, marking real period / fertile / ovulation days.
+  const cal = (() => {
+    const now = new Date();
+    const y = now.getFullYear(), m = now.getMonth();
+    const dim = new Date(y, m + 1, 0).getDate();
+    const lead = (new Date(y, m, 1).getDay() + 6) % 7; // Mon = 0
+    const monthName = now.toLocaleDateString("en-GB", { month: "long", year: "numeric" });
+    const parse = (s) => (s ? new Date(`${s}T00:00:00`) : null);
+    const pp = parse(prediction?.predictedPeriodStart);
+    const lp = parse(latestCycle?.periodStartDate);
+    const ov = parse(prediction?.predictedOvulation);
+    const fs = parse(prediction?.fertileWindowStart);
+    const fe = parse(prediction?.fertileWindowEnd);
+    const within = (d, start, len) => start && d >= start && (d - start) / 86400000 < len;
+    const days = [];
+    for (let i = 0; i < lead; i++) days.push(null);
+    for (let day = 1; day <= dim; day++) {
+      const d = new Date(y, m, day);
+      days.push({
+        day,
+        isToday: day === now.getDate(),
+        isPeriod: within(d, pp, 5) || within(d, lp, 5),
+        isOv: ov && d.toDateString() === ov.toDateString(),
+        isFertile: fs && fe && d >= fs && d <= fe,
+      });
+    }
+    return { monthName, days };
+  })();
 
   return (
     <div style={{height:"100%",display:"flex",flexDirection:"column",overflow:"hidden"}}>
@@ -51,7 +111,7 @@ export function CycleScreen() {
 
         {activeTab==="tracker"&&<>
           <Card>
-            <div style={{fontFamily:"DM Sans,sans-serif",fontSize:10,color:C.mint,textTransform:"uppercase",letterSpacing:"0.08em",marginBottom:10}}>Cycle Day</div>
+            <div style={{fontFamily:"DM Sans,sans-serif",fontSize:10,color:hasCycleData?C.mint:"rgba(245,230,255,0.4)",textTransform:"uppercase",letterSpacing:"0.08em",marginBottom:10}}>{hasCycleData?"Cycle Day":"Cycle Day · sample data"}</div>
             <div style={{display:"flex",alignItems:"center",gap:12,marginBottom:12}}>
               <button onClick={()=>setCurrentDay(Math.max(1,currentDay-1))} style={{width:32,height:32,borderRadius:"50%",background:"rgba(255,255,255,0.08)",border:"none",color:C.pearl,fontSize:16,cursor:"pointer"}}>‹</button>
               <div style={{flex:1,textAlign:"center"}}>
@@ -67,6 +127,17 @@ export function CycleScreen() {
               <span style={{fontFamily:"DM Sans,sans-serif",fontSize:10,color:"rgba(245,230,255,0.5)"}}>AI prediction confidence</span>
               <span style={{fontFamily:"DM Sans,sans-serif",fontSize:12,fontWeight:700,color:C.mint}}>{accuracy}% · L1+L2+L3</span>
             </div>
+          </Card>
+
+          <Card style={{borderColor:`${C.rose}30`}}>
+            <div style={{fontFamily:"DM Sans,sans-serif",fontSize:10,color:C.rose,textTransform:"uppercase",letterSpacing:"0.08em",marginBottom:8}}>{hasCycleData?"Log a new period":"Log your period · activates Layer 1"}</div>
+            <div style={{display:"flex",gap:8}}>
+              <input type="date" value={periodDate} max={new Date().toISOString().slice(0,10)} onChange={(e)=>setPeriodDate(e.target.value)}
+                style={{flex:1,background:"rgba(26,10,46,0.6)",border:"1px solid rgba(195,155,211,0.3)",borderRadius:10,padding:"9px 12px",color:C.pearl,fontFamily:"DM Sans,sans-serif",fontSize:13,outline:"none",colorScheme:"dark"}}/>
+              <button onClick={logPeriod} disabled={logging||!periodDate} style={{padding:"9px 16px",borderRadius:10,border:"none",background:`linear-gradient(135deg,${C.fuchsia},${C.coral})`,color:"#fff",fontFamily:"DM Sans,sans-serif",fontSize:13,fontWeight:600,cursor:logging||!periodDate?"default":"pointer",opacity:logging||!periodDate?0.6:1}}>{logging?"…":"Log"}</button>
+            </div>
+            {logMsg&&<div style={{marginTop:8,fontFamily:"DM Sans,sans-serif",fontSize:10,color:C.mint}}>{logMsg}</div>}
+            {hasCycleData&&<div style={{marginTop:8,fontFamily:"DM Sans,sans-serif",fontSize:10,color:"rgba(245,230,255,0.45)"}}>Last logged: {formatShort(latestCycle.periodStartDate)} · {cycles.length} cycle{cycles.length===1?"":"s"} on file</div>}
           </Card>
 
           <Card>
@@ -141,23 +212,27 @@ export function CycleScreen() {
 
         {activeTab==="calendar"&&<>
           <Card>
-            <div style={{fontFamily:"DM Sans,sans-serif",fontSize:10,color:C.mint,textTransform:"uppercase",letterSpacing:"0.08em",marginBottom:12}}>June 2026</div>
+            <div style={{fontFamily:"DM Sans,sans-serif",fontSize:10,color:C.mint,textTransform:"uppercase",letterSpacing:"0.08em",marginBottom:12}}>{cal.monthName}</div>
             <div style={{display:"grid",gridTemplateColumns:"repeat(7,1fr)",gap:4,marginBottom:8}}>
               {["M","T","W","T","F","S","S"].map((d,i)=><div key={i} style={{fontFamily:"DM Sans,sans-serif",fontSize:9,color:"rgba(245,230,255,0.3)",textAlign:"center"}}>{d}</div>)}
             </div>
             <div style={{display:"grid",gridTemplateColumns:"repeat(7,1fr)",gap:4}}>
-              {Array.from({length:30},(_,i)=>{
-                const day=i+1, cycleDay=((day+21)%35)+1;
-                const isToday=day===26, isPeriod=cycleDay<=5;
-                const isOvulation=cycleDay>=14&&cycleDay<=16;
-                const isFertile=cycleDay>=12&&cycleDay<=18;
+              {cal.days.map((c,i)=>{
+                if(!c) return <div key={`b${i}`}/>;
+                const {day,isToday,isPeriod,isOv,isFertile}=c;
                 return (
-                  <div key={day} style={{aspectRatio:"1",borderRadius:8,background:isToday?C.coral:isPeriod?`${C.rose}40`:isOvulation?`${C.gold}40`:isFertile?`${C.mint}25`:"rgba(255,255,255,0.04)",display:"flex",alignItems:"center",justifyContent:"center",border:isToday?`2px solid ${C.coral}`:isPeriod?`1px solid ${C.rose}50`:"none",cursor:"pointer"}}>
-                    <span style={{fontFamily:"DM Sans,sans-serif",fontSize:10,fontWeight:isToday?700:400,color:isToday?"white":isPeriod?C.rose:isOvulation?C.gold:"rgba(245,230,255,0.7)"}}>{day}</span>
+                  <div key={day} style={{aspectRatio:"1",borderRadius:8,background:isToday?C.coral:isPeriod?`${C.rose}40`:isOv?`${C.gold}40`:isFertile?`${C.mint}25`:"rgba(255,255,255,0.04)",display:"flex",alignItems:"center",justifyContent:"center",border:isToday?`2px solid ${C.coral}`:isPeriod?`1px solid ${C.rose}50`:"none"}}>
+                    <span style={{fontFamily:"DM Sans,sans-serif",fontSize:10,fontWeight:isToday?700:400,color:isToday?"white":isPeriod?C.rose:isOv?C.gold:"rgba(245,230,255,0.7)"}}>{day}</span>
                   </div>
                 );
               })}
             </div>
+            <div style={{display:"flex",gap:12,marginTop:12,flexWrap:"wrap"}}>
+              {[{c:C.rose,l:"Period"},{c:C.gold,l:"Ovulation"},{c:C.mint,l:"Fertile"},{c:C.coral,l:"Today"}].map(x=>(
+                <div key={x.l} style={{display:"flex",alignItems:"center",gap:5}}><div style={{width:8,height:8,borderRadius:2,background:x.c}}/><span style={{fontFamily:"DM Sans,sans-serif",fontSize:9,color:"rgba(245,230,255,0.5)"}}>{x.l}</span></div>
+              ))}
+            </div>
+            {!hasCycleData&&<div style={{marginTop:10,fontFamily:"DM Sans,sans-serif",fontSize:10,color:"rgba(245,230,255,0.45)"}}>Log a period in the Tracker tab to see your predicted period, ovulation and fertile window here.</div>}
           </Card>
         </>}
 

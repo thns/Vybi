@@ -1,7 +1,7 @@
 "use client";
 
 import { useEffect, useState } from "react";
-import { api, type PredictionRow, type BiomeRow, type PreventionScores } from "@/lib/client-api";
+import { api, type PredictionRow, type BiomeRow, type PreventionScores, type CycleRow } from "@/lib/client-api";
 
 export interface DashboardData {
   loading: boolean;
@@ -13,7 +13,7 @@ export interface DashboardData {
 // Loads the core signals for the authenticated user. For guests/anonymous
 // users every call returns null, so screens transparently fall back to their
 // default presentation.
-export function useDashboard(): DashboardData {
+export function useDashboard(reloadKey = 0): DashboardData {
   const [data, setData] = useState<DashboardData>({
     loading: true,
     prediction: null,
@@ -40,9 +40,30 @@ export function useDashboard(): DashboardData {
     return () => {
       alive = false;
     };
-  }, []);
+  }, [reloadKey]);
 
   return data;
+}
+
+// Loads the user's cycle logs (newest first). `reloadKey` lets callers refetch
+// after logging a new period.
+export function useCycles(reloadKey = 0): { loading: boolean; cycles: CycleRow[] } {
+  const [state, setState] = useState<{ loading: boolean; cycles: CycleRow[] }>({
+    loading: true,
+    cycles: [],
+  });
+  useEffect(() => {
+    let alive = true;
+    (async () => {
+      const res = await api.cycles();
+      if (!alive) return;
+      setState({ loading: false, cycles: res?.cycles ?? [] });
+    })();
+    return () => {
+      alive = false;
+    };
+  }, [reloadKey]);
+  return state;
 }
 
 export interface HealthMonth {

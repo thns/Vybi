@@ -1,6 +1,7 @@
 "use client";
 
 import { useState, useEffect } from "react";
+import { useSession } from "next-auth/react";
 import { C, NAV } from "./vybi-data.js";
 import { AIEngineScreen } from "./screens/AIEngineScreen.jsx";
 import { HomeScreen } from "./screens/HomeScreen.jsx";
@@ -18,6 +19,15 @@ export default function VybiApp() {
   const [screen, setScreen] = useState("Onboarding");
   const [onboarded, setOnboarded] = useState(false);
   const handleComplete = () => { setOnboarded(true); setScreen("Home"); };
+
+  // Returning users who already onboarded skip straight to the app.
+  const { data: session } = useSession();
+  useEffect(() => {
+    if (session?.user?.onboarded) {
+      setOnboarded(true);
+      setScreen((s) => (s === "Onboarding" ? "Home" : s));
+    }
+  }, [session]);
 
   // On phone-width viewports, render the app full-screen (no desktop mockup).
   const [isMobile, setIsMobile] = useState(false);
