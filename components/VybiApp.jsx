@@ -16,6 +16,7 @@ import { SettingsScreen } from "./screens/SettingsScreen.jsx";
 import { OnboardingScreen } from "./screens/OnboardingScreen.jsx";
 import { PregnancyScreen } from "./screens/PregnancyScreen.jsx";
 import { BirthControlScreen } from "./screens/BirthControlScreen.jsx";
+import { AccountMenu } from "./AccountMenu.tsx";
 
 export default function VybiApp() {
   const [screen, setScreen] = useState("Onboarding");
@@ -69,7 +70,7 @@ export default function VybiApp() {
       case "Pregnancy": return <PregnancyScreen/>;
       case "Birth Control": return <BirthControlScreen/>;
       case "Subscription": return <SubscriptionScreen/>;
-      case "Settings": return <SettingsScreen/>;
+      case "Settings": return <SettingsScreen setScreen={setScreen}/>;
       default: return <HomeScreen setScreen={setScreen}/>;
     }
   };
@@ -90,6 +91,7 @@ export default function VybiApp() {
       <div style={{height:"100dvh",display:"flex",flexDirection:"column",background:"linear-gradient(180deg,#1a0a2e 0%,#2d1155 100%)",fontFamily:"DM Sans,sans-serif",overflow:"hidden"}}>
         {GLOBAL_STYLE}
         <div style={{flex:1,overflow:"hidden",position:"relative"}}>
+          {onboarded&&<AccountMenu setScreen={setScreen}/>}
           {renderScreen()}
         </div>
         {onboarded&&(
@@ -127,6 +129,7 @@ export default function VybiApp() {
             <span style={{fontFamily:"DM Sans,sans-serif",fontSize:11,color:"rgba(245,230,255,0.5)"}}>●●●</span>
           </div>
           <div style={{flex:1,overflow:"hidden",position:"relative",background:`linear-gradient(180deg,#1a0a2e 0%,#2d1155 100%)`}}>
+            {onboarded&&<AccountMenu setScreen={setScreen}/>}
             {renderScreen()}
           </div>
           {onboarded&&(
