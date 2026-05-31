@@ -134,6 +134,64 @@ export const SYMPTOMS_LIST = [
   {id:"sleep",label:"Poor Sleep",icon:"◌"},{id:"backpain",label:"Back Pain",icon:"⚡"},
 ];
 
+// Expanded, categorised symptom & mood taxonomy. Original ids (cramps, bloating,
+// acne, discharge…) are preserved so the Layer-2 pattern engine still matches.
+export const SYMPTOM_GROUPS = [
+  { category:"Physical", color:"#e91e8c", items:[
+    {id:"cramps",label:"Cramps",icon:"⚡"},
+    {id:"headache",label:"Headache",icon:"🤕"},
+    {id:"backpain",label:"Back Pain",icon:"🔙"},
+    {id:"breast_tenderness",label:"Breast Tenderness",icon:"💗"},
+    {id:"nausea",label:"Nausea",icon:"🤢"},
+    {id:"dizziness",label:"Dizziness",icon:"💫"},
+    {id:"joint_pain",label:"Joint Pain",icon:"🦴"},
+    {id:"hot_flashes",label:"Hot Flashes",icon:"🔥"},
+  ]},
+  { category:"Mood", color:"#9b59b6", items:[
+    {id:"happy",label:"Happy",icon:"😊"},
+    {id:"calm",label:"Calm",icon:"😌"},
+    {id:"mood",label:"Mood Swings",icon:"🎭"},
+    {id:"anxiety",label:"Anxious",icon:"😰"},
+    {id:"irritable",label:"Irritable",icon:"😤"},
+    {id:"sad",label:"Sad / Low",icon:"😢"},
+    {id:"sensitive",label:"Sensitive",icon:"🥺"},
+    {id:"unmotivated",label:"Unmotivated",icon:"😶"},
+  ]},
+  { category:"Energy & Sleep", color:"#ffd700", items:[
+    {id:"fatigue",label:"Fatigue",icon:"🪫"},
+    {id:"energetic",label:"Energetic",icon:"⚡️"},
+    {id:"sleep",label:"Poor Sleep",icon:"🌙"},
+    {id:"insomnia",label:"Insomnia",icon:"👁"},
+    {id:"restless",label:"Restless",icon:"😣"},
+  ]},
+  { category:"Flow & Discharge", color:"#ff6eb4", items:[
+    {id:"spotting",label:"Spotting",icon:"🩸"},
+    {id:"heavy_flow",label:"Heavy Flow",icon:"🌊"},
+    {id:"light_flow",label:"Light Flow",icon:"💧"},
+    {id:"discharge",label:"Egg-white Discharge",icon:"🥚"},
+    {id:"sticky_discharge",label:"Sticky Discharge",icon:"◉"},
+    {id:"dryness",label:"Dryness",icon:"🏜"},
+  ]},
+  { category:"Digestion", color:"#b8f0e6", items:[
+    {id:"bloating",label:"Bloating",icon:"🎈"},
+    {id:"constipation",label:"Constipation",icon:"🚧"},
+    {id:"diarrhea",label:"Diarrhea",icon:"💦"},
+    {id:"cravings",label:"Cravings",icon:"🍫"},
+    {id:"appetite",label:"Increased Appetite",icon:"🍽"},
+  ]},
+  { category:"Skin & Hair", color:"#c39bd3", items:[
+    {id:"acne",label:"Acne",icon:"🔴"},
+    {id:"oily_skin",label:"Oily Skin",icon:"✨"},
+    {id:"dry_skin",label:"Dry Skin",icon:"🍂"},
+    {id:"breakouts",label:"Breakouts",icon:"😬"},
+  ]},
+  { category:"Sexual", color:"#ff8c42", items:[
+    {id:"high_libido",label:"High Libido",icon:"💞"},
+    {id:"libido",label:"Low Libido",icon:"💤"},
+    {id:"pain_sex",label:"Pain During Sex",icon:"⚠️"},
+  ]},
+];
+
 export const PREVENTION_RISKS = [
   {condition:"Bacterial Vaginosis",risk:"Moderate",score:42,color:C.amber,icon:"◈",
    drivers:["Vaginal biome diversity elevated","pH trending up (4.2)","Post-menstrual window"],

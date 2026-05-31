@@ -1,5 +1,5 @@
 import { useState, useEffect } from "react";
-import { C, CYCLE_DAYS, SYMPTOMS_LIST, calcAccuracy, phaseColor, phaseLabel } from "../vybi-data.js";
+import { C, CYCLE_DAYS, SYMPTOM_GROUPS, calcAccuracy, phaseColor, phaseLabel } from "../vybi-data.js";
 import { Card, GlowOrb, Badge } from "../vybi-ui.jsx";
 import { useDashboard, useCycles } from "../useVybiData.ts";
 import { api, formatShort, daysUntil, cycleDayFrom } from "../../lib/client-api.ts";
@@ -172,14 +172,22 @@ export function CycleScreen() {
           </Card>
 
           <Card>
-            <div style={{fontFamily:"DM Sans,sans-serif",fontSize:10,color:C.mint,textTransform:"uppercase",letterSpacing:"0.08em",marginBottom:10}}>Log Symptoms · Feeds Layer 2</div>
-            <div style={{display:"flex",flexWrap:"wrap",gap:7}}>
-              {SYMPTOMS_LIST.map(s=>(
-                <button key={s.id} onClick={()=>toggleSymptom(s.id)} style={{padding:"6px 11px",borderRadius:16,border:`1px solid ${loggedSymptoms.includes(s.id)?C.coral:"rgba(255,255,255,0.12)"}`,background:loggedSymptoms.includes(s.id)?`${C.coral}20`:"transparent",color:loggedSymptoms.includes(s.id)?C.coral:"rgba(245,230,255,0.5)",fontFamily:"DM Sans,sans-serif",fontSize:10,cursor:"pointer",display:"flex",gap:4,alignItems:"center"}}>
-                  <span>{s.icon}</span>{s.label}
-                </button>
-              ))}
-            </div>
+            <div style={{fontFamily:"DM Sans,sans-serif",fontSize:10,color:C.mint,textTransform:"uppercase",letterSpacing:"0.08em",marginBottom:10}}>Log Symptoms & Mood · Feeds Layer 2</div>
+            {SYMPTOM_GROUPS.map(g=>(
+              <div key={g.category} style={{marginBottom:12}}>
+                <div style={{fontFamily:"DM Sans,sans-serif",fontSize:9,color:g.color,textTransform:"uppercase",letterSpacing:"0.06em",marginBottom:6}}>{g.category}</div>
+                <div style={{display:"flex",flexWrap:"wrap",gap:6}}>
+                  {g.items.map(s=>{
+                    const on=loggedSymptoms.includes(s.id);
+                    return (
+                      <button key={s.id} onClick={()=>toggleSymptom(s.id)} style={{padding:"5px 10px",borderRadius:16,border:`1px solid ${on?g.color:"rgba(255,255,255,0.12)"}`,background:on?`${g.color}22`:"transparent",color:on?g.color:"rgba(245,230,255,0.55)",fontFamily:"DM Sans,sans-serif",fontSize:10,cursor:"pointer",display:"flex",gap:4,alignItems:"center"}}>
+                        <span>{s.icon}</span>{s.label}
+                      </button>
+                    );
+                  })}
+                </div>
+              </div>
+            ))}
             {loggedSymptoms.length>0&&<div style={{marginTop:10,padding:"8px 10px",borderRadius:8,background:"rgba(233,30,140,0.1)",border:`1px solid ${C.coral}30`}}>
               <div style={{fontFamily:"DM Sans,sans-serif",fontSize:11,color:C.coral}}>{loggedSymptoms.length} symptoms selected → improving Layer 2 pattern recognition</div>
             </div>}

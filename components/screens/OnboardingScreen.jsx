@@ -15,14 +15,15 @@ export function OnboardingScreen({ onComplete }) {
   const [capturing, setCapturing] = useState(false);
   const [periodDate, setPeriodDate] = useState("");
   const [cycleLength, setCycleLength] = useState(28);
+  const [goal, setGoal] = useState("track");
   const [busy, setBusy] = useState(false);
 
   const finish = async (withData) => {
     setBusy(true);
     await api.onboard(
       withData && periodDate
-        ? { last_period_date: periodDate, cycle_length: Number(cycleLength) || 28 }
-        : {},
+        ? { last_period_date: periodDate, cycle_length: Number(cycleLength) || 28, goal }
+        : { goal },
     );
     setBusy(false);
     onComplete();
@@ -38,6 +39,18 @@ export function OnboardingScreen({ onComplete }) {
             <div style={{fontSize:52,color:C.fuchsia,filter:`drop-shadow(0 0 20px ${C.fuchsia})`}}>◎</div>
             <div style={{fontFamily:"Cormorant Garamond,Georgia,serif",fontSize:28,color:C.pearl,marginTop:8}}>Let's start your cycle</div>
             <div style={{fontFamily:"DM Sans,sans-serif",fontSize:12,color:"rgba(245,230,255,0.6)",marginTop:4,lineHeight:1.6}}>This activates Layer 1 of the AI engine right away.</div>
+          </div>
+
+          <div>
+            <label style={{display:"block",fontFamily:"DM Sans,sans-serif",fontSize:12,color:"rgba(245,230,255,0.7)",marginBottom:8}}>What's your goal?</label>
+            <div style={{display:"flex",flexDirection:"column",gap:7}}>
+              {[{k:"track",l:"Track my cycle",icon:"🌙"},{k:"conceive",l:"Trying to conceive",icon:"🤍"},{k:"avoid",l:"Avoiding pregnancy",icon:"🛡"}].map(g=>(
+                <button key={g.k} onClick={()=>setGoal(g.k)} style={{display:"flex",alignItems:"center",gap:10,padding:"10px 12px",borderRadius:12,border:`1px solid ${goal===g.k?C.fuchsia:"rgba(255,255,255,0.12)"}`,background:goal===g.k?`${C.fuchsia}18`:"rgba(255,255,255,0.03)",color:goal===g.k?C.pearl:"rgba(245,230,255,0.6)",fontFamily:"DM Sans,sans-serif",fontSize:13,fontWeight:goal===g.k?600:400,cursor:"pointer",textAlign:"left"}}>
+                  <span style={{fontSize:18}}>{g.icon}</span>{g.l}
+                  {goal===g.k&&<span style={{marginLeft:"auto",color:C.fuchsia}}>✓</span>}
+                </button>
+              ))}
+            </div>
           </div>
 
           <div>

@@ -112,8 +112,12 @@ export const api = {
   cycles: () => get<{ cycles: CycleRow[] }>("/api/cycles/log"),
   logCycle: (b: { period_start_date: string; period_end_date?: string; cycle_length?: number }) =>
     post<{ log: CycleRow; prediction: unknown }>("/api/cycles/log", b),
-  onboard: (b: { last_period_date?: string; cycle_length?: number }) =>
+  onboard: (b: { last_period_date?: string; cycle_length?: number; goal?: string; birth_year?: number }) =>
     post<{ ok: boolean }>("/api/onboarding", b),
+  me: () =>
+    get<{ user: { email: string | null; name: string | null; subscriptionTier: string; goal: string | null; birthYear: number | null } | null }>(
+      "/api/me",
+    ),
   pregnancy: () =>
     get<{ pregnancy: unknown; status: PregnancyStatus | null }>("/api/pregnancy"),
   startPregnancy: (b: { due_date?: string; last_period_date?: string }) =>

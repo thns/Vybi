@@ -4,8 +4,10 @@ import { useRouter } from "next/navigation";
 import { C } from "../vybi-data.js";
 import { Card } from "../vybi-ui.jsx";
 import { enablePush, disablePush, isPushEnabled, sendTestPush, pushSupported, isIOS, isStandalone } from "../../lib/push-client.ts";
+import { api } from "../../lib/client-api.ts";
 
 const cap = (s) => s.charAt(0).toUpperCase() + s.slice(1);
+const GOAL_LABEL = { track: "🌙 Tracking my cycle", conceive: "🤍 Trying to conceive", avoid: "🛡 Avoiding pregnancy" };
 
 const TOGGLES = [
   {label:"Anonymous Mode",desc:"No identity linked to health data",on:false,color:C.coral},
@@ -21,9 +23,11 @@ export function SettingsScreen({ setScreen }) {
   const [pushMsg, setPushMsg] = useState(null);
   const [pushBusy, setPushBusy] = useState(false);
   const [iosTip, setIosTip] = useState(false);
+  const [goal, setGoal] = useState(null);
   useEffect(() => {
     isPushEnabled().then(setPushOn);
     setIosTip(isIOS() && !isStandalone());
+    api.me().then((r) => setGoal(r?.user?.goal ?? null));
   }, []);
 
   const togglePush = async () => {
@@ -68,6 +72,7 @@ export function SettingsScreen({ setScreen }) {
             <div style={{fontFamily:"Cormorant Garamond,Georgia,serif",fontSize:18,color:C.pearl,whiteSpace:"nowrap",overflow:"hidden",textOverflow:"ellipsis"}}>{display}</div>
             <div style={{fontFamily:"DM Sans,sans-serif",fontSize:11,color:C.mint}}>{tier}</div>
             {user?.email&&user?.name&&<div style={{fontFamily:"DM Sans,sans-serif",fontSize:10,color:"rgba(245,230,255,0.4)",whiteSpace:"nowrap",overflow:"hidden",textOverflow:"ellipsis"}}>{user.email}</div>}
+            {goal&&GOAL_LABEL[goal]&&<div style={{fontFamily:"DM Sans,sans-serif",fontSize:10,color:C.lavender,marginTop:3}}>{GOAL_LABEL[goal]}</div>}
           </div>
         </div>
       </Card>

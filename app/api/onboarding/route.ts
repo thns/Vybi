@@ -15,14 +15,22 @@ export async function POST(req: Request) {
   const guard = await requireUser();
   if (guard instanceof NextResponse) return guard;
 
-  let b: { last_period_date?: string; cycle_length?: number } = {};
+  let b: { last_period_date?: string; cycle_length?: number; goal?: string; birth_year?: number } = {};
   try {
     b = await req.json();
   } catch {
     // empty body is fine (skip flow)
   }
 
-  await db.update(users).set({ onboarded: true }).where(eq(users.id, guard.userId));
+  const VALID_GOALS = ["track", "conceive", "avoid"];
+  await db
+    .update(users)
+    .set({
+      onboarded: true,
+      ...(b.goal && VALID_GOALS.includes(b.goal) ? { goal: b.goal } : {}),
+      ...(b.birth_year ? { birthYear: b.birth_year } : {}),
+    })
+    .where(eq(users.id, guard.userId));
 
   if (b.last_period_date) {
     await db.insert(cycleLogs).values({

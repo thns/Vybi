@@ -36,12 +36,15 @@ These render in **Settings** but don't persist or do anything real yet:
 1. ~~Pregnancy mode~~ ✅
 2. ~~Birth control tracking~~ ✅
 3. ~~Notifications/reminders~~ ✅ (core)
-4. Richer symptom/mood taxonomy + onboarding goals (TTC / avoid / track).
-5. Wearable / Apple Health sync → activates Layer 4 (BBT/HRV).
+4. ~~Richer symptom/mood taxonomy (40, grouped) + onboarding goals (track/conceive/avoid)~~ ✅
+5. Wearable / Apple Health sync → activates Layer 4 (BBT/HRV). Web-feasible version = manual BBT/HRV entry (true HealthKit needs a native app).
 6. Content library (articles, daily insights).
-7. Community / secret chats.
-8. Partner sharing.
-9. Data export / doctor report.
+7. Partner sharing.
+8. Data export / doctor report.
+9. Community / secret chats (large — real-time + moderation).
+
+Goal-based tailoring (use users.goal to emphasize fertile window for "conceive",
+contraception for "avoid") is still TODO — currently goal is captured + shown only.
 
 ## Infra / hardening
 - [ ] Stripe live keys + webhook endpoint registration.

@@ -28,6 +28,8 @@ export const users = pgTable("users", {
   stripeSubscriptionId: text("stripe_subscription_id"),
   anonymousMode: boolean("anonymous_mode").notNull().default(false),
   onboarded: boolean("onboarded").notNull().default(false),
+  goal: text("goal"), // track | conceive | avoid
+  birthYear: integer("birth_year"),
   createdAt: timestamp("created_at", { withTimezone: true }).notNull().defaultNow(),
 });
 
