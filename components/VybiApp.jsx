@@ -130,7 +130,7 @@ export default function VybiApp() {
           <div style={{fontFamily:"Cormorant Garamond,Georgia,serif",fontSize:48,lineHeight:1,marginBottom:4}}>
             <span style={{background:"linear-gradient(135deg, #e91e8c, #9b59b6, #c39bd3)",WebkitBackgroundClip:"text",WebkitTextFillColor:"transparent"}}>VYBI</span>
           </div>
-          <div style={{fontFamily:"DM Sans,sans-serif",fontSize:10,color:C.lavender,letterSpacing:"0.15em",textTransform:"uppercase",marginBottom:4}}>Vaginal · And · Body Intelligence</div>
+          <div style={{fontFamily:"DM Sans,sans-serif",fontSize:10,color:C.lavender,letterSpacing:"0.15em",textTransform:"uppercase",marginBottom:4}}>View Your Biome Intelligence</div>
           <div style={{fontFamily:"Cormorant Garamond,Georgia,serif",fontSize:13,fontStyle:"italic",color:"rgba(245,230,255,0.5)",marginBottom:20}}>Know your body. Before it speaks.</div>
           <div style={{display:"flex",flexDirection:"column",gap:7}}>
             {SIDE.map(item=>(

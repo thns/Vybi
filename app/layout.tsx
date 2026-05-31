@@ -5,7 +5,7 @@ import { Providers } from '@/components/Providers';
 import type { Viewport } from 'next';
 
 export const metadata: Metadata = {
-  title: 'VYBI — Vaginal · And · Body Intelligence',
+  title: 'VYBI — View Your Biome Intelligence',
   description: 'Know your body. Before it speaks.',
 };
 
