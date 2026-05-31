@@ -31,3 +31,6 @@ next-env.d.ts
 *.sw?
 .env
 .env*.local
+
+# Local Netlify folder
+.netlify

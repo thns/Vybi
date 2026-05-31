@@ -6,6 +6,9 @@ import { authConfig } from "@/auth.config";
 export const { auth: middleware } = NextAuth(authConfig);
 
 export const config = {
-  // Run on everything except Next internals and static asset files.
-  matcher: ["/((?!_next/static|_next/image|favicon.ico|.*\\.(?:svg|png|jpg|jpeg|gif|webp|ico)$).*)"],
+  // Run on page routes only. Exclude /api (routes self-enforce auth via
+  // requireUser) — critically, /api/auth must be handled solely by Auth.js's
+  // route handler, otherwise the middleware double-sets the CSRF cookie and
+  // logins fail with MissingCSRF behind HTTPS.
+  matcher: ["/((?!api|_next/static|_next/image|favicon.ico|.*\\.(?:svg|png|jpg|jpeg|gif|webp|ico)$).*)"],
 };
