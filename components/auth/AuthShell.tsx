@@ -46,7 +46,7 @@ export function AuthShell({
               marginTop: 6,
             }}
           >
-            Vaginal · And · Body Intelligence
+            View Your Biome Intelligence
           </div>
         </div>
 
