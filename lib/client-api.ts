@@ -121,6 +121,9 @@ export const api = {
     post<{ log: CycleRow; prediction: unknown }>("/api/cycles/log", b),
   onboard: (b: { last_period_date?: string; cycle_length?: number; goal?: string; birth_year?: number }) =>
     post<{ ok: boolean }>("/api/onboarding", b),
+  partnerShare: () => get<{ token: string | null }>("/api/partner"),
+  createPartnerShare: () => post<{ token: string }>("/api/partner", {}),
+  revokePartnerShare: () => del<{ ok: boolean }>("/api/partner"),
   me: () =>
     get<{ user: { email: string | null; name: string | null; subscriptionTier: string; goal: string | null; birthYear: number | null } | null }>(
       "/api/me",

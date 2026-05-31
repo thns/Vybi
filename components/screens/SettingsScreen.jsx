@@ -104,6 +104,7 @@ export function SettingsScreen({ setScreen }) {
         {icon:"💳",label:"Billing & Subscription",sub:`${tier} · manage plan`,screen:"Subscription"},
         {icon:"💊",label:"Birth Control",sub:"Method & pill tracking",screen:"Birth Control"},
         {icon:"🤰",label:"Pregnancy",sub:"Week-by-week tracking",screen:"Pregnancy"},
+        {icon:"💞",label:"Partner Sharing",sub:"Share a read-only cycle view",screen:"Partner"},
         {icon:"📋",label:"Export Health Data",sub:"Doctor report · JSON download",href:"/report"},
         {icon:"⚖️",label:"Privacy Policy",sub:"ISO 27001 · ISO 27701 · vybi.health"},
       ].map((item,i)=>(

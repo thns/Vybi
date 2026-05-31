@@ -38,7 +38,7 @@ These render in **Settings** but don't persist or do anything real yet:
 3. ~~Notifications/reminders~~ ✅ (core)
 4. ~~Richer symptom/mood taxonomy (40, grouped) + onboarding goals (track/conceive/avoid)~~ ✅
 5. ~~Wearable BBT/HRV manual entry → activates Layer 4~~ ✅ (true Apple Health/Oura/Garmin auto-sync still needs a native app — manual entry works today)
-6. Content library (articles, daily insights).
+6. ~~Content library (articles, daily insights)~~ ✅
 7. Partner sharing.
 8. ~~Data export / doctor report~~ ✅
 9. Community / secret chats (large — real-time + moderation).

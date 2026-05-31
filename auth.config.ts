@@ -1,7 +1,7 @@
 import type { NextAuthConfig } from "next-auth";
 import Google from "next-auth/providers/google";
 
-const PUBLIC_PREFIXES = ["/login", "/signup", "/forgot-password"];
+const PUBLIC_PREFIXES = ["/login", "/signup", "/forgot-password", "/shared"];
 
 // Edge-safe config (no DB adapter, no bcrypt). Used by middleware AND spread
 // into the full node-runtime config in auth.ts.

@@ -30,6 +30,7 @@ export const users = pgTable("users", {
   onboarded: boolean("onboarded").notNull().default(false),
   goal: text("goal"), // track | conceive | avoid
   birthYear: integer("birth_year"),
+  partnerShareToken: text("partner_share_token").unique(),
   createdAt: timestamp("created_at", { withTimezone: true }).notNull().defaultNow(),
 });
 
