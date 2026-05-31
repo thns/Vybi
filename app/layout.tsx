@@ -2,10 +2,19 @@ import './globals.css';
 import type { Metadata } from 'next';
 import type { ReactNode } from 'react';
 import { Providers } from '@/components/Providers';
+import type { Viewport } from 'next';
 
 export const metadata: Metadata = {
   title: 'VYBI — Vaginal · And · Body Intelligence',
   description: 'Know your body. Before it speaks.',
+};
+
+export const viewport: Viewport = {
+  width: 'device-width',
+  initialScale: 1,
+  maximumScale: 1,
+  viewportFit: 'cover',
+  themeColor: '#1a0a2e',
 };
 
 export default function RootLayout({ children }: { children: ReactNode }) {

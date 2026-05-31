@@ -1,6 +1,6 @@
 "use client";
 
-import { useState } from "react";
+import { useState, useEffect } from "react";
 import { C, NAV } from "./vybi-data.js";
 import { AIEngineScreen } from "./screens/AIEngineScreen.jsx";
 import { HomeScreen } from "./screens/HomeScreen.jsx";
@@ -18,6 +18,15 @@ export default function VybiApp() {
   const [screen, setScreen] = useState("Onboarding");
   const [onboarded, setOnboarded] = useState(false);
   const handleComplete = () => { setOnboarded(true); setScreen("Home"); };
+
+  // On phone-width viewports, render the app full-screen (no desktop mockup).
+  const [isMobile, setIsMobile] = useState(false);
+  useEffect(() => {
+    const check = () => setIsMobile(window.innerWidth < 560);
+    check();
+    window.addEventListener("resize", check);
+    return () => window.removeEventListener("resize", check);
+  }, []);
 
   const SIDE = [
     {screen:"Home",icon:"⌂",desc:"Vybi Score · Cycle phase · AI accuracy badge · Prevention alert",color:C.mint},
@@ -48,6 +57,38 @@ export default function VybiApp() {
       default: return <HomeScreen setScreen={setScreen}/>;
     }
   };
+
+  const GLOBAL_STYLE = (
+    <style>{`
+      @import url('https://fonts.googleapis.com/css2?family=Cormorant+Garamond:ital,wght@0,400;0,500;0,600;1,400&family=DM+Sans:wght@300;400;500;600;700&display=swap');
+      *{box-sizing:border-box;margin:0;padding:0;}
+      ::-webkit-scrollbar{width:3px;} ::-webkit-scrollbar-track{background:transparent;} ::-webkit-scrollbar-thumb{background:rgba(195,155,211,0.3);border-radius:2px;}
+      @keyframes pulse{0%,100%{opacity:0.3;transform:scale(0.8);}50%{opacity:1;transform:scale(1.1);}}
+      input::placeholder{color:rgba(245,230,255,0.3);}
+    `}</style>
+  );
+
+  // ─── Mobile: full-screen app (no desktop mockup frame / side panel) ─────────
+  if (isMobile) {
+    return (
+      <div style={{height:"100dvh",display:"flex",flexDirection:"column",background:"linear-gradient(180deg,#1a0a2e 0%,#2d1155 100%)",fontFamily:"DM Sans,sans-serif",overflow:"hidden"}}>
+        {GLOBAL_STYLE}
+        <div style={{flex:1,overflow:"hidden",position:"relative"}}>
+          {renderScreen()}
+        </div>
+        {onboarded&&(
+          <div style={{background:"rgba(26,10,46,0.95)",backdropFilter:"blur(20px)",borderTop:"1px solid rgba(195,155,211,0.15)",display:"flex",alignItems:"center",justifyContent:"space-around",padding:"8px 8px calc(8px + env(safe-area-inset-bottom))",flexShrink:0,zIndex:10}}>
+            {NAV.map(item=>(
+              <button key={item.id} onClick={()=>setScreen(item.id)} style={{display:"flex",flexDirection:"column",alignItems:"center",gap:3,background:"none",border:"none",cursor:"pointer",padding:"4px 8px",borderRadius:10,flex:1}}>
+                <span style={{fontSize:20,color:screen===item.id?C.fuchsia:"rgba(245,230,255,0.3)",filter:screen===item.id?`drop-shadow(0 0 6px ${C.fuchsia})`:"none"}}>{item.icon}</span>
+                <span style={{fontFamily:"DM Sans,sans-serif",fontSize:9,color:screen===item.id?C.fuchsia:"rgba(245,230,255,0.3)",fontWeight:screen===item.id?600:400}}>{item.label}</span>
+              </button>
+            ))}
+          </div>
+        )}
+      </div>
+    );
+  }
 
   return (
     <div style={{display:"flex",justifyContent:"center",alignItems:"center",minHeight:"100vh",background:"#100520",fontFamily:"DM Sans,sans-serif",padding:"20px 10px"}}>
