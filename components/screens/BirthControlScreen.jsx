@@ -69,7 +69,7 @@ export function BirthControlScreen() {
         <div style={{fontFamily:"DM Sans,sans-serif",fontSize:11,color:C.mint,marginBottom:8}}>Method · Pill tracking · Adherence</div>
       </div>
 
-      <div style={{flex:1,overflowY:"auto",padding:"8px 16px 16px",display:"flex",flexDirection:"column",gap:12}}>
+      <div style={{flex:1,overflowY:"auto",padding:"8px 16px 28px",display:"flex",flexDirection:"column",gap:12}}>
         <GlowOrb color={C.amethyst} size={220} opacity={0.12} x={70} y={-20}/>
 
         {loading ? (

@@ -32,7 +32,7 @@ export function PreventionScreen() {
         <div style={{fontFamily:"Cormorant Garamond,Georgia,serif",fontSize:26,color:C.pearl,marginBottom:4}}>Prevention</div>
         <div style={{fontFamily:"DM Sans,sans-serif",fontSize:11,color:C.mint,marginBottom:14}}>AI risk scores · Biome + cycle + lifestyle data</div>
       </div>
-      <div style={{flex:1,overflowY:"auto",padding:"0 16px 16px",display:"flex",flexDirection:"column",gap:10}}>
+      <div style={{flex:1,overflowY:"auto",padding:"0 16px 28px",display:"flex",flexDirection:"column",gap:10}}>
         <Card style={{background:`linear-gradient(135deg,rgba(45,17,85,0.9),rgba(74,32,128,0.7))`}}>
           <div style={{display:"flex",alignItems:"center",gap:16}}>
             <div style={{position:"relative",width:80,height:80,flexShrink:0}}>

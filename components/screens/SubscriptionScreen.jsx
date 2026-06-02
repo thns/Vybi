@@ -31,7 +31,7 @@ export function SubscriptionScreen() {
     {id:"premium",name:"Vybi Premium",price:"£24.99",period:"/mo",color:C.gold,features:["Everything in Core","Unlimited Vybi AI","2 test kits/year included","Wearable sync (Layer 4)","Monthly expert Q&A","Supplement plan","Anonymous mode","Partner sharing","Doctor report export"]},
   ];
   return (
-    <div style={{padding:"16px",overflowY:"auto",height:"100%",display:"flex",flexDirection:"column",gap:12}}>
+    <div style={{padding:"16px 16px 28px",overflowY:"auto",height:"100%",display:"flex",flexDirection:"column",gap:12}}>
       <div>
         <div style={{fontFamily:"Cormorant Garamond,Georgia,serif",fontSize:26,color:C.pearl}}>Vybi Plans</div>
         <div style={{fontFamily:"DM Sans,sans-serif",fontSize:12,color:C.mint}}>More layers = more accuracy</div>

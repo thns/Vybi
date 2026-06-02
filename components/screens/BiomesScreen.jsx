@@ -23,7 +23,7 @@ export function BiomesScreen() {
           ))}
         </div>
       </div>
-      <div style={{flex:1,overflowY:"auto",padding:"0 16px 16px",display:"flex",flexDirection:"column",gap:12}}>
+      <div style={{flex:1,overflowY:"auto",padding:"0 16px 28px",display:"flex",flexDirection:"column",gap:12}}>
         <GlowOrb color={b.color} size={220} opacity={0.15} x={80} y={-20}/>
         <Card style={{borderColor:`${b.color}40`}}>
           <div style={{display:"flex",alignItems:"center",gap:16}}>

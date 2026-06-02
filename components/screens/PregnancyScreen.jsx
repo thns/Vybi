@@ -51,7 +51,7 @@ export function PregnancyScreen() {
     return (
       <div style={{height:"100%",display:"flex",flexDirection:"column",overflow:"hidden"}}>
         {Header}
-        <div style={{flex:1,overflowY:"auto",padding:"8px 16px 16px",display:"flex",flexDirection:"column",gap:12}}>
+        <div style={{flex:1,overflowY:"auto",padding:"8px 16px 28px",display:"flex",flexDirection:"column",gap:12}}>
           <GlowOrb color={C.fuchsia} size={220} opacity={0.13} x={70} y={-20}/>
           <Card style={{textAlign:"center"}}>
             <div style={{fontSize:46,filter:`drop-shadow(0 0 18px ${C.fuchsia})`}}>🤰</div>
@@ -88,7 +88,7 @@ export function PregnancyScreen() {
   return (
     <div style={{height:"100%",display:"flex",flexDirection:"column",overflow:"hidden"}}>
       {Header}
-      <div style={{flex:1,overflowY:"auto",padding:"8px 16px 16px",display:"flex",flexDirection:"column",gap:12}}>
+      <div style={{flex:1,overflowY:"auto",padding:"8px 16px 28px",display:"flex",flexDirection:"column",gap:12}}>
         <GlowOrb color={C.fuchsia} size={240} opacity={0.14} x={60} y={-30}/>
 
         <Card style={{background:`linear-gradient(135deg,rgba(74,32,128,0.7),rgba(45,17,85,0.9))`,textAlign:"center"}}>

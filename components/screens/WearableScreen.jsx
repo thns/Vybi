@@ -48,7 +48,7 @@ export function WearableScreen() {
         <div style={{ fontFamily: "DM Sans,sans-serif", fontSize: 11, color: C.aqua, marginBottom: 8 }}>BBT · Resting HR · HRV → Layer 4</div>
       </div>
 
-      <div style={{ flex: 1, overflowY: "auto", padding: "8px 16px 16px", display: "flex", flexDirection: "column", gap: 12 }}>
+      <div style={{ flex: 1, overflowY: "auto", padding: "8px 16px 28px", display: "flex", flexDirection: "column", gap: 12 }}>
         <GlowOrb color={C.aqua} size={220} opacity={0.12} x={70} y={-20} />
 
         <Card style={{ borderColor: layer4 ? `${C.mint}40` : `${C.aqua}30`, background: layer4 ? `rgba(184,240,230,0.06)` : "rgba(45,17,85,0.55)" }}>

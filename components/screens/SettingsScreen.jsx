@@ -63,7 +63,7 @@ export function SettingsScreen({ setScreen }) {
   };
 
   return (
-    <div style={{padding:"16px",overflowY:"auto",height:"100%",display:"flex",flexDirection:"column",gap:12}}>
+    <div style={{padding:"16px 16px 28px",overflowY:"auto",height:"100%",display:"flex",flexDirection:"column",gap:12}}>
       <div style={{fontFamily:"Cormorant Garamond,Georgia,serif",fontSize:26,color:C.pearl}}>Settings</div>
       <Card>
         <div style={{display:"flex",gap:12,alignItems:"center"}}>

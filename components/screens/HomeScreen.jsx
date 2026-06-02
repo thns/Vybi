@@ -23,7 +23,7 @@ export function HomeScreen({ setScreen }) {
 
   const periodText = periodDays != null && periodDays >= 0 ? `Period in ${periodDays} days` : "Log a period to predict";
   return (
-    <div style={{padding:"0 16px 16px",display:"flex",flexDirection:"column",gap:12,overflowY:"auto",height:"100%"}}>
+    <div style={{padding:"0 16px 28px",display:"flex",flexDirection:"column",gap:12,overflowY:"auto",height:"100%"}}>
       <GlowOrb color={C.fuchsia} size={200} opacity={0.15} x={100} y={-30}/>
       <div style={{paddingTop:16}}>
         <div style={{fontFamily:"DM Sans,sans-serif",fontSize:11,color:C.mint,letterSpacing:"0.1em",textTransform:"uppercase"}}>Day 22 · Luteal Phase</div>

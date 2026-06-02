@@ -29,7 +29,7 @@ export function PartnerScreen() {
         <div style={{ fontFamily: "DM Sans,sans-serif", fontSize: 11, color: C.mint, marginBottom: 8 }}>Read-only cycle view · No health details</div>
       </div>
 
-      <div style={{ flex: 1, overflowY: "auto", padding: "8px 16px 16px", display: "flex", flexDirection: "column", gap: 12 }}>
+      <div style={{ flex: 1, overflowY: "auto", padding: "8px 16px 28px", display: "flex", flexDirection: "column", gap: 12 }}>
         <GlowOrb color={C.fuchsia} size={220} opacity={0.12} x={70} y={-20} />
 
         <Card style={{ textAlign: "center" }}>

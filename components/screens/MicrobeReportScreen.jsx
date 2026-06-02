@@ -35,7 +35,7 @@ export function MicrobeReportScreen() {
           ))}
         </div>
       </div>
-      <div style={{flex:1,overflowY:"auto",padding:"0 16px 16px",display:"flex",flexDirection:"column",gap:12}}>
+      <div style={{flex:1,overflowY:"auto",padding:"0 16px 28px",display:"flex",flexDirection:"column",gap:12}}>
         <GlowOrb color={biome?.color||C.mint} size={180} opacity={0.1} x={100} y={0}/>
 
         {r.alert&&<Card style={{borderColor:`${C.amber}50`,background:`rgba(255,140,66,0.08)`}}>

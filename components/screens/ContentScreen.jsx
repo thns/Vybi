@@ -37,7 +37,7 @@ export function ContentScreen() {
         <div style={{ fontFamily: "DM Sans,sans-serif", fontSize: 11, color: C.mint, marginBottom: 8 }}>Cycle · Biome · Fertility · Prevention</div>
       </div>
 
-      <div style={{ flex: 1, overflowY: "auto", padding: "8px 16px 16px", display: "flex", flexDirection: "column", gap: 12 }}>
+      <div style={{ flex: 1, overflowY: "auto", padding: "8px 16px 28px", display: "flex", flexDirection: "column", gap: 12 }}>
         <GlowOrb color={C.fuchsia} size={200} opacity={0.1} x={80} y={-20} />
 
         <Card style={{ borderColor: `${C.gold}40`, background: `rgba(255,215,0,0.06)` }}>

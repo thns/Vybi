@@ -21,7 +21,7 @@ export function AIEngineScreen() {
         <div style={{fontFamily:"DM Sans,sans-serif",fontSize:11,color:C.mint,marginBottom:14}}>5-layer algorithm · Accuracy grows with your data</div>
       </div>
 
-      <div style={{flex:1,overflowY:"auto",padding:"0 16px 16px",display:"flex",flexDirection:"column",gap:12}}>
+      <div style={{flex:1,overflowY:"auto",padding:"0 16px 28px",display:"flex",flexDirection:"column",gap:12}}>
         <GlowOrb color={C.fuchsia} size={220} opacity={0.12} x={60} y={-30}/>
 
         <Card style={{background:`linear-gradient(135deg,rgba(45,17,85,0.9),rgba(74,32,128,0.7))`}}>

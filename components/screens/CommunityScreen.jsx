@@ -59,7 +59,7 @@ export function CommunityScreen() {
         </div>
       </div>
 
-      <div style={{ flex: 1, overflowY: "auto", padding: "0 16px 16px", display: "flex", flexDirection: "column", gap: 10 }}>
+      <div style={{ flex: 1, overflowY: "auto", padding: "0 16px 28px", display: "flex", flexDirection: "column", gap: 10 }}>
         <GlowOrb color={C.fuchsia} size={200} opacity={0.1} x={80} y={-10} />
 
         <Card>
@@ -112,7 +112,7 @@ function PostDetail({ postId, onBack }) {
       <div style={{ padding: "16px 16px 8px" }}>
         <button onClick={onBack} style={{ background: "none", border: "none", color: C.lavender, fontFamily: "DM Sans,sans-serif", fontSize: 13, cursor: "pointer", padding: 0 }}>‹ Community</button>
       </div>
-      <div style={{ flex: 1, overflowY: "auto", padding: "4px 16px 16px", display: "flex", flexDirection: "column", gap: 10 }}>
+      <div style={{ flex: 1, overflowY: "auto", padding: "4px 16px 28px", display: "flex", flexDirection: "column", gap: 10 }}>
         {!data ? <div style={{ color: "rgba(245,230,255,0.4)", fontFamily: "DM Sans,sans-serif", fontSize: 12 }}>Loading…</div> : (
           <>
             <Card>
