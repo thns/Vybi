@@ -112,7 +112,7 @@ export default function VybiApp() {
       <button onClick={()=>{ if(onboarded) setScreen("Home"); }} aria-label="Vybi — home"
         style={{display:"flex",alignItems:"center",gap:7,background:"none",border:"none",padding:0,cursor:onboarded?"pointer":"default"}}>
         <img src="/logo-mark.png" alt="Vybi" width={30} height={30} style={{display:"block",filter:"drop-shadow(0 2px 8px rgba(233,30,140,0.35))"}}/>
-        <span style={{fontFamily:"Cormorant Garamond,Georgia,serif",fontSize:22,lineHeight:1,background:"linear-gradient(135deg,#e91e8c,#9b59b6,#c39bd3)",WebkitBackgroundClip:"text",WebkitTextFillColor:"transparent"}}>VYBI</span>
+        <span style={{fontFamily:"Cormorant Garamond,Georgia,serif",fontSize:22,lineHeight:1,color:"#ffffff",letterSpacing:"0.02em"}}>VYBI</span>
       </button>
     </div>
   );
