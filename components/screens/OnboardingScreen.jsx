@@ -32,9 +32,9 @@ export function OnboardingScreen({ onComplete }) {
   // ─── Final step: capture the user's last period so predictions can start ───
   if (capturing) {
     return (
-      <div style={{height:"100%",display:"flex",flexDirection:"column",padding:24,position:"relative",overflow:"hidden"}}>
+      <div style={{height:"100%",display:"flex",flexDirection:"column",padding:"16px 24px",position:"relative",overflowY:"auto"}}>
         <GlowOrb color={C.fuchsia} size={300} opacity={0.15} x={-50} y={-40}/>
-        <div style={{zIndex:1,flex:1,display:"flex",flexDirection:"column",justifyContent:"center",gap:18}}>
+        <div style={{zIndex:1,flex:"1 0 auto",display:"flex",flexDirection:"column",justifyContent:"center",gap:16}}>
           <div style={{textAlign:"center"}}>
             <div style={{fontSize:52,color:C.fuchsia,filter:`drop-shadow(0 0 20px ${C.fuchsia})`}}>◎</div>
             <div style={{fontFamily:"Cormorant Garamond,Georgia,serif",fontSize:28,color:C.pearl,marginTop:8}}>Let's start your cycle</div>
@@ -67,7 +67,7 @@ export function OnboardingScreen({ onComplete }) {
           </div>
         </div>
 
-        <div style={{width:"100%",zIndex:1,display:"flex",flexDirection:"column",gap:10}}>
+        <div style={{width:"100%",zIndex:1,flexShrink:0,display:"flex",flexDirection:"column",gap:10,paddingTop:16,paddingBottom:"max(8px,env(safe-area-inset-bottom))"}}>
           <button onClick={()=>finish(true)} disabled={busy||!periodDate}
             style={{width:"100%",padding:14,borderRadius:12,background:`linear-gradient(135deg,${C.fuchsia},${C.amethyst})`,boxShadow:`0 8px 24px rgba(233,30,140,0.4)`,border:"none",color:"white",fontFamily:"DM Sans,sans-serif",fontSize:15,fontWeight:600,cursor:busy||!periodDate?"default":"pointer",opacity:busy||!periodDate?0.6:1}}>
             {busy?"Setting up…":"Start tracking"}
@@ -95,7 +95,7 @@ export function OnboardingScreen({ onComplete }) {
           {STEPS.map((_,i)=><div key={i} style={{width:i===step?20:6,height:6,borderRadius:3,background:i===step?s.color:"rgba(255,255,255,0.2)",transition:"all 0.3s"}}/>)}
         </div>
       </div>
-      <div style={{width:"100%",zIndex:1,display:"flex",flexDirection:"column",gap:10}}>
+      <div style={{width:"100%",zIndex:1,flexShrink:0,display:"flex",flexDirection:"column",gap:10,paddingBottom:"max(8px,env(safe-area-inset-bottom))"}}>
         {step<STEPS.length-1
           ?<button onClick={()=>setStep(step+1)} style={{width:"100%",padding:14,borderRadius:12,background:s.color,border:"none",color:"white",fontFamily:"DM Sans,sans-serif",fontSize:15,fontWeight:600,cursor:"pointer"}}>Continue</button>
           :<button onClick={()=>setCapturing(true)} style={{width:"100%",padding:14,borderRadius:12,background:`linear-gradient(135deg,${C.fuchsia},${C.amethyst})`,boxShadow:`0 8px 24px rgba(233,30,140,0.4)`,border:"none",color:"white",fontFamily:"DM Sans,sans-serif",fontSize:15,fontWeight:600,cursor:"pointer"}}>Begin My Biome Journey</button>}
