@@ -1,4 +1,5 @@
 import { useState, useEffect } from "react";
+import { useSession } from "next-auth/react";
 import { C } from "../vybi-data.js";
 import { Card, GlowOrb } from "../vybi-ui.jsx";
 import { api, formatShort } from "../../lib/client-api.ts";
@@ -12,6 +13,8 @@ export function PregnancyScreen() {
   const [dueDate, setDueDate] = useState("");
   const [lmp, setLmp] = useState("");
   const [busy, setBusy] = useState(false);
+  const [msg, setMsg] = useState(null);
+  const { data: session } = useSession();
 
   const load = async () => {
     const res = await api.pregnancy();
@@ -22,10 +25,12 @@ export function PregnancyScreen() {
 
   const start = async () => {
     setBusy(true);
+    setMsg(null);
     const body = mode === "due" ? { due_date: dueDate } : { last_period_date: lmp };
     const res = await api.startPregnancy(body);
     setBusy(false);
     if (res?.status) setStatus(res.status);
+    else setMsg(session?.user ? "Couldn't start tracking — please try again." : "Sign in to track your pregnancy and save it to your account.");
   };
 
   const end = async () => {
@@ -77,6 +82,7 @@ export function PregnancyScreen() {
               </>
             )}
             <button onClick={start} disabled={busy||(mode==="due"?!dueDate:!lmp)} style={{width:"100%",marginTop:6,padding:13,borderRadius:12,border:"none",background:`linear-gradient(135deg,${C.fuchsia},${C.amethyst})`,color:"#fff",fontFamily:"DM Sans,sans-serif",fontSize:15,fontWeight:600,cursor:"pointer",opacity:busy||(mode==="due"?!dueDate:!lmp)?0.6:1}}>{busy?"Starting…":"Start pregnancy tracking"}</button>
+            {msg&&<div style={{marginTop:10,fontFamily:"DM Sans,sans-serif",fontSize:12,color:C.gold,textAlign:"center",lineHeight:1.5}}>{msg}</div>}
           </Card>
         </div>
       </div>

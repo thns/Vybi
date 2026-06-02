@@ -1,4 +1,5 @@
 import { useState, useEffect } from "react";
+import { useSession } from "next-auth/react";
 import { C } from "../vybi-data.js";
 import { Card, GlowOrb } from "../vybi-ui.jsx";
 import { api } from "../../lib/client-api.ts";
@@ -24,6 +25,8 @@ export function BirthControlScreen() {
   const [selected, setSelected] = useState(null);
   const [pillTime, setPillTime] = useState("21:00");
   const [busy, setBusy] = useState(false);
+  const [msg, setMsg] = useState(null);
+  const { data: session } = useSession();
 
   const load = async () => {
     const res = await api.birthControl();
@@ -40,15 +43,19 @@ export function BirthControlScreen() {
   const save = async () => {
     if (!selected) return;
     setBusy(true);
+    setMsg(null);
     const res = await api.setBirthControl({ method: selected, pill_time: selected === "pill" ? pillTime : undefined });
     setBusy(false);
-    if (res?.config) setConfig(res.config);
+    if (res?.config) { setConfig(res.config); setMsg("Saved · reminders updated"); }
+    else setMsg(session?.user ? "Couldn't save — please try again." : "Sign in to save your birth control method.");
   };
 
   const takeToday = async () => {
     setBusy(true);
-    await api.logPill({ taken: true });
-    await load();
+    setMsg(null);
+    const res = await api.logPill({ taken: true });
+    if (res) await load();
+    else setMsg(session?.user ? "Couldn't log — please try again." : "Sign in to track your pill.");
     setBusy(false);
   };
 
@@ -93,6 +100,7 @@ export function BirthControlScreen() {
                 </div>
               )}
               <button onClick={save} disabled={busy||!selected||selected===config?.method&&selected!=="pill"} style={{width:"100%",marginTop:12,padding:12,borderRadius:12,border:"none",background:`linear-gradient(135deg,${C.fuchsia},${C.amethyst})`,color:"#fff",fontFamily:"DM Sans,sans-serif",fontSize:14,fontWeight:600,cursor:"pointer",opacity:busy||!selected?0.6:1}}>{busy?"Saving…":config?"Update method":"Save method"}</button>
+              {msg&&<div style={{marginTop:10,fontFamily:"DM Sans,sans-serif",fontSize:12,color:C.gold,textAlign:"center",lineHeight:1.5}}>{msg}</div>}
             </Card>
 
             {config?.method==="pill"&&(
