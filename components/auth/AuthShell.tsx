@@ -23,7 +23,7 @@ export function AuthShell({
     >
       <style>{`@import url('https://fonts.googleapis.com/css2?family=Cormorant+Garamond:ital,wght@0,400;0,600&family=DM+Sans:wght@300;400;500;600;700&display=swap');
         input::placeholder{color:rgba(245,230,255,0.3);}`}</style>
-      <div style={{ width: 360, maxWidth: "100%" }}>
+      <div style={{ width: 360, maxWidth: "100%", marginBottom: 64 }}>
         <div style={{ textAlign: "center", marginBottom: 16 }}>
           { /* eslint-disable-next-line @next/next/no-img-element */ }
           <img
