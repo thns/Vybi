@@ -106,7 +106,7 @@ export function CycleScreen() {
         </div>
       </div>
 
-      <div style={{flex:1,overflowY:"auto",padding:"0 16px 16px",display:"flex",flexDirection:"column",gap:12}}>
+      <div style={{flex:1,overflowY:"auto",padding:"0 16px 28px",display:"flex",flexDirection:"column",gap:12}}>
         <GlowOrb color={phaseColor(today.phase)} size={200} opacity={0.1} x={80} y={-20}/>
 
         {activeTab==="tracker"&&<>
