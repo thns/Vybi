@@ -34,10 +34,10 @@ export function OnboardingScreen({ onComplete }) {
     return (
       <div style={{height:"100%",display:"flex",flexDirection:"column",padding:"16px 24px",position:"relative",overflowY:"auto"}}>
         <GlowOrb color={C.fuchsia} size={300} opacity={0.15} x={-50} y={-40}/>
-        <div style={{zIndex:1,flex:"1 0 auto",display:"flex",flexDirection:"column",justifyContent:"center",gap:16}}>
+        <div style={{zIndex:1,flex:"1 0 auto",display:"flex",flexDirection:"column",justifyContent:"flex-start",gap:14}}>
           <div style={{textAlign:"center"}}>
-            <div style={{fontSize:52,color:C.fuchsia,filter:`drop-shadow(0 0 20px ${C.fuchsia})`}}>◎</div>
-            <div style={{fontFamily:"Cormorant Garamond,Georgia,serif",fontSize:28,color:C.pearl,marginTop:8}}>Let's start your cycle</div>
+            <div style={{fontSize:40,color:C.fuchsia,filter:`drop-shadow(0 0 20px ${C.fuchsia})`}}>◎</div>
+            <div style={{fontFamily:"Cormorant Garamond,Georgia,serif",fontSize:26,color:C.pearl,marginTop:6}}>Let's start your cycle</div>
             <div style={{fontFamily:"DM Sans,sans-serif",fontSize:12,color:"rgba(245,230,255,0.6)",marginTop:4,lineHeight:1.6}}>This activates Layer 1 of the AI engine right away.</div>
           </div>
 
