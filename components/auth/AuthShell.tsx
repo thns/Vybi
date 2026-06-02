@@ -38,9 +38,8 @@ export function AuthShell({
               fontFamily: "Cormorant Garamond,Georgia,serif",
               fontSize: 52,
               lineHeight: 1,
-              background: "linear-gradient(135deg,#e91e8c,#9b59b6,#c39bd3)",
-              WebkitBackgroundClip: "text",
-              WebkitTextFillColor: "transparent",
+              color: "#ffffff",
+              letterSpacing: "0.02em",
             }}
           >
             VYBI
