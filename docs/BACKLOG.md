@@ -17,13 +17,36 @@ These render in **Settings** but don't persist or do anything real yet:
 - [ ] **Biome test-kit upload form** → `POST /api/biome/upload` (unlocks Layer 3 + full Microbe Report).
 - [ ] **Health-metrics logger** (sleep/stress/hydration/exercise) → `POST /api/health/log` (feeds General Health + prevention).
 
-## Screens still showing demo/static content
-- [ ] **Cycle → Insights tab** — hardcoded stats (regularity, avg length, error). Wire to real cycle history.
-- [ ] **Cycle → Estimated Hormones bars** — demo curve from the mock 35-day array; replace with model-based estimates.
-- [ ] **Biomes → Score History bars** — hardcoded; wire to biome_scores history.
-- [ ] **AI Engine → layer accuracy numbers are hardcoded** — L1–L3 show fixed 72/79/88% even with zero user data (credibility risk). Fix: relabel L1–L3 as "up to X%" (ceilings, like L4 already does), and drive the *active* layer's number from the real computed `prediction.accuracyPct`. Keep the lock states ("Activates after Cycle 2 / first test kit / connect wearable") — they're accurate and drive upsell.
-- [ ] **AI Engine → Confidence Signals / roadmap / Flo comparison** — partly static copy.
-- [ ] **Microbe Report** — only the vaginal biome uses live data; gut/skin/oral are demo.
+## Demo-data gating — signed-in vs preview  ✅ (shipped)
+Rule now enforced everywhere: **signed-in users (`session.user`) see only their
+real data or honest empty states; demo numbers appear in guest/preview mode only.**
+Gated via `isLive = !!session?.user` across Home, Cycle, Biomes, AI Engine,
+Microbe Report, Chat (+ `BiomeRing` renders `—` for null score).
+- [x] **Home** — real cycle day/phase; rings `—` with no kit; AI confidence/accuracy/score null-safe; demo "biome predicted this dip" card hidden when no biome.
+- [x] **Cycle → Insights tab** — now computed from the user's real cycles (regularity SD, avg length, count) for signed-in users; demo numbers only in preview.
+- [x] **Cycle → predictions** — "Log a period" / `—` instead of demo "Jun 2 · 82%"; PMS window computed from the real predicted period.
+- [x] **Cycle → Estimated Hormones / Layer-3 biome card** — hidden for signed-in users until there's cycle/biome data (still a day-based estimate when shown; true model curve is future work).
+- [x] **Biomes** — empty rings + "No data yet" badge, upload prompt; demo Score-History bars hidden for signed-in users.
+- [x] **AI Engine** — real accuracy + active-layer count (`—` when none); confidence signals shown un-met; fabricated "Your Detected Symptom Patterns" hidden when signed in.
+- [x] **Microbe Report** — per-biome "no test yet" empty state for signed-in users instead of demo sequencing.
+- [x] **Chat** — clean greeting for signed-in users (no scripted fake conversation).
+
+### Still needs real data sources (kept honest with empty states for now)
+- [ ] **Biome Score-History over time** — `biome_scores` history series not stored/surfaced yet; bars hidden for signed-in users until it is.
+- [ ] **AI Engine → L1–L3 ceiling labels** — the locked layers still show fixed 72/79/88%. Active layer is now real; relabel locked ones as "up to X%". Confidence Signals/roadmap/Flo comparison remain product/marketing copy (intentional).
+- [ ] **Gut / skin / oral biomes** — no sequencing source exists; signed-in users see "not available". Vaginal biome is fully live.
+- [ ] **Estimated Hormones** — replace the mock 35-day curve with a real model-based estimate.
+
+## Recently shipped — UX / branding / navigation
+- [x] **New Vybi logo + icons** — three-petal mark on brand dark `#1a0a2e`; regenerated PWA icons (192/512), apple-touch, favicon-32, transparent `logo-mark`; master source at `brand/vybi-logo-source.png`.
+- [x] **Persistent top bar** — clickable logo + white "VYBI" wordmark on every screen (→ Home), above the scroll area so it never overlaps screen titles.
+- [x] **History-aware Back** — back chevron in the top bar walks the navigation stack; logo still jumps Home.
+- [x] **Write-screen feedback** — Pregnancy / Birth Control / Partner / Community now show "Sign in to…" (guests) or "please try again" instead of silently failing. Data stays strictly account-only (no guest writes).
+- [x] **Bottom-nav clearance** — every screen's scroll padding bumped so cards clear the phone nav bar.
+- [x] **Login page** — tightened spacing (no scroll), content nudged up, white wordmark.
+- [x] **Onboarding** — "Let's start your cycle" top-aligned + scrollable + safe-area padding so "I'll add this later" is reachable on tall Android screens.
+- [ ] **Hardware/gesture Back** — map the Android back gesture to the in-app history stack (currently top-bar Back only).
+- [ ] **Bottom-nav active state** on non-nav screens (Prevention, Pregnancy, etc.).
 
 ## Notifications (in progress / shipped)
 - [x] Web push infrastructure (service worker, VAPID, subscribe/unsubscribe/test).
