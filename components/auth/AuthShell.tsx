@@ -24,19 +24,19 @@ export function AuthShell({
       <style>{`@import url('https://fonts.googleapis.com/css2?family=Cormorant+Garamond:ital,wght@0,400;0,600&family=DM+Sans:wght@300;400;500;600;700&display=swap');
         input::placeholder{color:rgba(245,230,255,0.3);}`}</style>
       <div style={{ width: 360, maxWidth: "100%" }}>
-        <div style={{ textAlign: "center", marginBottom: 28 }}>
+        <div style={{ textAlign: "center", marginBottom: 16 }}>
           { /* eslint-disable-next-line @next/next/no-img-element */ }
           <img
             src="/logo-mark.png"
             alt="Vybi"
-            width={84}
-            height={84}
-            style={{ display: "block", margin: "0 auto 10px", filter: "drop-shadow(0 6px 20px rgba(233,30,140,0.35))" }}
+            width={60}
+            height={60}
+            style={{ display: "block", margin: "0 auto 6px", filter: "drop-shadow(0 6px 20px rgba(233,30,140,0.35))" }}
           />
           <div
             style={{
               fontFamily: "Cormorant Garamond,Georgia,serif",
-              fontSize: 52,
+              fontSize: 40,
               lineHeight: 1,
               color: "#ffffff",
               letterSpacing: "0.02em",
@@ -50,7 +50,7 @@ export function AuthShell({
               color: "#c39bd3",
               letterSpacing: "0.15em",
               textTransform: "uppercase",
-              marginTop: 6,
+              marginTop: 4,
             }}
           >
             View Your Biome Intelligence
@@ -62,14 +62,14 @@ export function AuthShell({
             background: "rgba(45,17,85,0.55)",
             borderRadius: 22,
             border: "1px solid rgba(195,155,211,0.2)",
-            padding: 28,
+            padding: 22,
             backdropFilter: "blur(12px)",
           }}
         >
-          <h1 style={{ color: "#f5e6ff", fontSize: 22, fontWeight: 600, marginBottom: 4 }}>
+          <h1 style={{ color: "#f5e6ff", fontSize: 21, fontWeight: 600, marginBottom: 2 }}>
             {title}
           </h1>
-          <p style={{ color: "rgba(245,230,255,0.5)", fontSize: 13, marginBottom: 22 }}>
+          <p style={{ color: "rgba(245,230,255,0.5)", fontSize: 13, marginBottom: 16 }}>
             {subtitle}
           </p>
           {children}
@@ -93,10 +93,10 @@ export const authStyles = {
     background: "rgba(26,10,46,0.6)",
     border: "1px solid rgba(195,155,211,0.25)",
     borderRadius: 12,
-    padding: "11px 14px",
+    padding: "10px 14px",
     color: "#f5e6ff",
     fontSize: 14,
-    marginBottom: 16,
+    marginBottom: 12,
     fontFamily: "DM Sans,sans-serif",
     outline: "none",
   } as const,
@@ -134,5 +134,5 @@ export const authStyles = {
     padding: "9px 12px",
     marginBottom: 16,
   } as const,
-  note: { color: "rgba(245,230,255,0.45)", fontSize: 12, textAlign: "center" as const, marginTop: 18 },
+  note: { color: "rgba(245,230,255,0.45)", fontSize: 12, textAlign: "center" as const, marginTop: 12 },
 };
