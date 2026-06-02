@@ -87,6 +87,17 @@ export default function VybiApp() {
     }
   };
 
+  // Persistent brand bar — top-left logo on every screen; click returns Home.
+  const TopBar = ({ inset = false }) => (
+    <div style={{display:"flex",alignItems:"center",height:46,padding:"0 12px",paddingTop:inset?"env(safe-area-inset-top)":undefined,flexShrink:0,zIndex:40}}>
+      <button onClick={()=>{ if(onboarded) setScreen("Home"); }} aria-label="Vybi — home"
+        style={{display:"flex",alignItems:"center",gap:7,background:"none",border:"none",padding:0,cursor:onboarded?"pointer":"default"}}>
+        <img src="/logo-mark.png" alt="Vybi" width={30} height={30} style={{display:"block",filter:"drop-shadow(0 2px 8px rgba(233,30,140,0.35))"}}/>
+        <span style={{fontFamily:"Cormorant Garamond,Georgia,serif",fontSize:22,lineHeight:1,background:"linear-gradient(135deg,#e91e8c,#9b59b6,#c39bd3)",WebkitBackgroundClip:"text",WebkitTextFillColor:"transparent"}}>VYBI</span>
+      </button>
+    </div>
+  );
+
   const GLOBAL_STYLE = (
     <style>{`
       @import url('https://fonts.googleapis.com/css2?family=Cormorant+Garamond:ital,wght@0,400;0,500;0,600;1,400&family=DM+Sans:wght@300;400;500;600;700&display=swap');
@@ -102,9 +113,10 @@ export default function VybiApp() {
     return (
       <div style={{height:"100dvh",display:"flex",flexDirection:"column",background:"linear-gradient(180deg,#1a0a2e 0%,#2d1155 100%)",fontFamily:"DM Sans,sans-serif",overflow:"hidden"}}>
         {GLOBAL_STYLE}
-        <div style={{flex:1,overflow:"hidden",position:"relative"}}>
+        <div style={{flex:1,overflow:"hidden",position:"relative",display:"flex",flexDirection:"column"}}>
           {onboarded&&<AccountMenu setScreen={setScreen}/>}
-          {renderScreen()}
+          <TopBar inset />
+          <div style={{flex:1,overflow:"hidden",position:"relative"}}>{renderScreen()}</div>
         </div>
         {onboarded&&(
           <div style={{background:"rgba(26,10,46,0.95)",backdropFilter:"blur(20px)",borderTop:"1px solid rgba(195,155,211,0.15)",display:"flex",alignItems:"center",justifyContent:"space-around",padding:"8px 8px calc(8px + env(safe-area-inset-bottom))",flexShrink:0,zIndex:10}}>
@@ -140,9 +152,10 @@ export default function VybiApp() {
             </div>
             <span style={{fontFamily:"DM Sans,sans-serif",fontSize:11,color:"rgba(245,230,255,0.5)"}}>●●●</span>
           </div>
-          <div style={{flex:1,overflow:"hidden",position:"relative",background:`linear-gradient(180deg,#1a0a2e 0%,#2d1155 100%)`}}>
+          <div style={{flex:1,overflow:"hidden",position:"relative",background:`linear-gradient(180deg,#1a0a2e 0%,#2d1155 100%)`,display:"flex",flexDirection:"column"}}>
             {onboarded&&<AccountMenu setScreen={setScreen}/>}
-            {renderScreen()}
+            <TopBar />
+            <div style={{flex:1,overflow:"hidden",position:"relative"}}>{renderScreen()}</div>
           </div>
           {onboarded&&(
             <div style={{height:64,background:"rgba(26,10,46,0.95)",backdropFilter:"blur(20px)",borderTop:"1px solid rgba(195,155,211,0.15)",display:"flex",alignItems:"center",justifyContent:"space-around",padding:"0 8px",flexShrink:0,zIndex:10}}>

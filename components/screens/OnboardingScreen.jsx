@@ -83,7 +83,9 @@ export function OnboardingScreen({ onComplete }) {
     <div style={{height:"100%",display:"flex",flexDirection:"column",alignItems:"center",justifyContent:"center",padding:24,position:"relative",overflow:"hidden"}}>
       <GlowOrb color={s.color} size={300} opacity={0.15} x={-50} y={-50}/>
       <div style={{textAlign:"center",zIndex:1,flex:1,display:"flex",flexDirection:"column",justifyContent:"center",gap:16}}>
-        <div style={{fontSize:60,color:s.color,filter:`drop-shadow(0 0 20px ${s.color})`}}>{s.icon}</div>
+        {step===0
+          ? <img src="/logo-mark.png" alt="Vybi" width={96} height={96} style={{margin:"0 auto",filter:`drop-shadow(0 0 24px ${s.color})`}}/>
+          : <div style={{fontSize:60,color:s.color,filter:`drop-shadow(0 0 20px ${s.color})`}}>{s.icon}</div>}
         <div>
           <div style={{fontFamily:"Cormorant Garamond,Georgia,serif",fontSize:32,color:C.pearl,lineHeight:1.1,marginBottom:6}}>{s.title}</div>
           <div style={{fontFamily:"DM Sans,sans-serif",fontSize:12,color:C.mint,letterSpacing:"0.08em",textTransform:"uppercase"}}>{s.sub}</div>
