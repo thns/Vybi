@@ -9,7 +9,8 @@ self.addEventListener("push", (event) => {
   const title = data.title || "Vybi";
   const options = {
     body: data.body || "",
-    badge: "/favicon.ico",
+    icon: "/icon-192.png",
+    badge: "/icon-192.png",
     data: { url: data.url || "/" },
     tag: data.tag,
     renotify: !!data.tag,

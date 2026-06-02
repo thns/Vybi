@@ -21,6 +21,7 @@ These render in **Settings** but don't persist or do anything real yet:
 - [ ] **Cycle → Insights tab** — hardcoded stats (regularity, avg length, error). Wire to real cycle history.
 - [ ] **Cycle → Estimated Hormones bars** — demo curve from the mock 35-day array; replace with model-based estimates.
 - [ ] **Biomes → Score History bars** — hardcoded; wire to biome_scores history.
+- [ ] **AI Engine → layer accuracy numbers are hardcoded** — L1–L3 show fixed 72/79/88% even with zero user data (credibility risk). Fix: relabel L1–L3 as "up to X%" (ceilings, like L4 already does), and drive the *active* layer's number from the real computed `prediction.accuracyPct`. Keep the lock states ("Activates after Cycle 2 / first test kit / connect wearable") — they're accurate and drive upsell.
 - [ ] **AI Engine → Confidence Signals / roadmap / Flo comparison** — partly static copy.
 - [ ] **Microbe Report** — only the vaginal biome uses live data; gut/skin/oral are demo.
 

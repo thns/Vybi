@@ -158,6 +158,7 @@ export default function VybiApp() {
 
         {/* Side panel */}
         <div style={{width:300,color:C.pearl}}>
+          <img src="/logo-mark.png" alt="Vybi" width={72} height={72} style={{display:"block",marginBottom:6,filter:"drop-shadow(0 6px 18px rgba(233,30,140,0.3))"}}/>
           <div style={{fontFamily:"Cormorant Garamond,Georgia,serif",fontSize:48,lineHeight:1,marginBottom:4}}>
             <span style={{background:"linear-gradient(135deg, #e91e8c, #9b59b6, #c39bd3)",WebkitBackgroundClip:"text",WebkitTextFillColor:"transparent"}}>VYBI</span>
           </div>

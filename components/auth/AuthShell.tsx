@@ -25,6 +25,14 @@ export function AuthShell({
         input::placeholder{color:rgba(245,230,255,0.3);}`}</style>
       <div style={{ width: 360, maxWidth: "100%" }}>
         <div style={{ textAlign: "center", marginBottom: 28 }}>
+          { /* eslint-disable-next-line @next/next/no-img-element */ }
+          <img
+            src="/logo-mark.png"
+            alt="Vybi"
+            width={84}
+            height={84}
+            style={{ display: "block", margin: "0 auto 10px", filter: "drop-shadow(0 6px 20px rgba(233,30,140,0.35))" }}
+          />
           <div
             style={{
               fontFamily: "Cormorant Garamond,Georgia,serif",
