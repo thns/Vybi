@@ -1,4 +1,5 @@
 import { useState, useEffect } from "react";
+import { useSession } from "next-auth/react";
 import { C } from "../vybi-data.js";
 import { Card, GlowOrb } from "../vybi-ui.jsx";
 import { api } from "../../lib/client-api.ts";
@@ -27,6 +28,8 @@ export function CommunityScreen() {
   const [draft, setDraft] = useState("");
   const [busy, setBusy] = useState(false);
   const [open, setOpen] = useState(null); // post detail
+  const [msg, setMsg] = useState(null);
+  const { data: session } = useSession();
 
   const loadRoom = async (r) => {
     setLoading(true);
@@ -39,10 +42,11 @@ export function CommunityScreen() {
   const submit = async () => {
     if (draft.trim().length < 2) return;
     setBusy(true);
-    await api.createPost(room, draft.trim());
-    setDraft("");
+    setMsg(null);
+    const res = await api.createPost(room, draft.trim());
     setBusy(false);
-    loadRoom(room);
+    if (res) { setDraft(""); loadRoom(room); }
+    else setMsg(session?.user ? "Couldn't post — please try again." : "Sign in to post to the community.");
   };
 
   if (open) return <PostDetail postId={open} onBack={() => { setOpen(null); loadRoom(room); }} />;
@@ -66,6 +70,7 @@ export function CommunityScreen() {
           <textarea value={draft} onChange={(e) => setDraft(e.target.value)} placeholder={`Share with the ${ROOMS.find((r) => r.id === room)?.label} room…`} rows={2}
             style={{ width: "100%", background: "rgba(26,10,46,0.6)", border: "1px solid rgba(195,155,211,0.25)", borderRadius: 10, padding: "10px 12px", color: C.pearl, fontFamily: "DM Sans,sans-serif", fontSize: 13, outline: "none", resize: "none" }} />
           <button onClick={submit} disabled={busy || draft.trim().length < 2} style={{ width: "100%", marginTop: 8, padding: 10, borderRadius: 10, border: "none", background: `linear-gradient(135deg,${C.fuchsia},${C.amethyst})`, color: "#fff", fontFamily: "DM Sans,sans-serif", fontSize: 13, fontWeight: 600, cursor: "pointer", opacity: busy || draft.trim().length < 2 ? 0.6 : 1 }}>{busy ? "Posting…" : "Post anonymously"}</button>
+          {msg && <div style={{ marginTop: 8, fontFamily: "DM Sans,sans-serif", fontSize: 12, color: C.gold, textAlign: "center", lineHeight: 1.5 }}>{msg}</div>}
         </Card>
 
         {loading ? (
@@ -93,6 +98,8 @@ function PostDetail({ postId, onBack }) {
   const [data, setData] = useState(null);
   const [draft, setDraft] = useState("");
   const [busy, setBusy] = useState(false);
+  const [msg, setMsg] = useState(null);
+  const { data: session } = useSession();
 
   const load = async () => { const res = await api.communityPost(postId); setData(res); };
   useEffect(() => { load(); }, [postId]);
@@ -100,12 +107,16 @@ function PostDetail({ postId, onBack }) {
   const reply = async () => {
     if (draft.trim().length < 2) return;
     setBusy(true);
-    await api.communityReply(postId, draft.trim());
-    setDraft("");
+    setMsg(null);
+    const res = await api.communityReply(postId, draft.trim());
     setBusy(false);
-    load();
+    if (res) { setDraft(""); load(); }
+    else setMsg(session?.user ? "Couldn't reply — please try again." : "Sign in to reply.");
   };
-  const report = async (b) => { await api.communityReport(b); alert("Reported. Thank you — our team will review."); };
+  const report = async (b) => {
+    const res = await api.communityReport(b);
+    alert(res ? "Reported. Thank you — our team will review." : (session?.user ? "Couldn't report — please try again." : "Sign in to report."));
+  };
 
   return (
     <div style={{ height: "100%", display: "flex", flexDirection: "column", overflow: "hidden" }}>
@@ -138,6 +149,7 @@ function PostDetail({ postId, onBack }) {
               <textarea value={draft} onChange={(e) => setDraft(e.target.value)} placeholder="Add a kind reply…" rows={2}
                 style={{ width: "100%", background: "rgba(26,10,46,0.6)", border: "1px solid rgba(195,155,211,0.25)", borderRadius: 10, padding: "10px 12px", color: C.pearl, fontFamily: "DM Sans,sans-serif", fontSize: 13, outline: "none", resize: "none" }} />
               <button onClick={reply} disabled={busy || draft.trim().length < 2} style={{ width: "100%", marginTop: 8, padding: 10, borderRadius: 10, border: "none", background: `linear-gradient(135deg,${C.fuchsia},${C.amethyst})`, color: "#fff", fontFamily: "DM Sans,sans-serif", fontSize: 13, fontWeight: 600, cursor: "pointer", opacity: busy || draft.trim().length < 2 ? 0.6 : 1 }}>{busy ? "Sending…" : "Reply"}</button>
+              {msg && <div style={{ marginTop: 8, fontFamily: "DM Sans,sans-serif", fontSize: 12, color: C.gold, textAlign: "center", lineHeight: 1.5 }}>{msg}</div>}
             </Card>
           </>
         )}
