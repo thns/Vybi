@@ -1,12 +1,16 @@
 import { useState } from "react";
+import { useSession } from "next-auth/react";
 import { C, BIOMES, MICROBE_REPORT } from "../vybi-data.js";
 import { Card, GlowOrb } from "../vybi-ui.jsx";
 import { useDashboard } from "../useVybiData.ts";
 import { formatShort } from "../../lib/client-api.ts";
 
 export function MicrobeReportScreen() {
+  const { data: session } = useSession();
+  const isLive = !!session?.user; // signed-in: real data only, no demo fallbacks
   const [selected, setSelected] = useState("vaginal");
   const { biome: liveBiome } = useDashboard();
+  const hasReport = selected === "vaginal" && liveBiome?.lCrispatusPct != null;
   const baseReport = MICROBE_REPORT[selected];
   // For the vaginal biome, overlay live sequencing percentages when available.
   const r = selected === "vaginal" && liveBiome?.lCrispatusPct != null
@@ -25,18 +29,26 @@ export function MicrobeReportScreen() {
     <div style={{height:"100%",display:"flex",flexDirection:"column",overflow:"hidden"}}>
       <div style={{padding:"16px 16px 0"}}>
         <div style={{fontFamily:"Cormorant Garamond,Georgia,serif",fontSize:26,color:C.pearl,marginBottom:4}}>Microbe Report</div>
-        <div style={{fontFamily:"DM Sans,sans-serif",fontSize:11,color:C.mint,marginBottom:12}}>{reportDate?`${reportDate} · ${liveBiome?.testKitId??"Test Kit"} · Powers Layer 3`:"May 2026 · Test Kit #3 · Powers Layer 3"}</div>
+        <div style={{fontFamily:"DM Sans,sans-serif",fontSize:11,color:C.mint,marginBottom:12}}>{reportDate?`${reportDate} · ${liveBiome?.testKitId??"Test Kit"} · Powers Layer 3`:(isLive?"No biome test on file yet":"May 2026 · Test Kit #3 · Powers Layer 3")}</div>
         <div style={{display:"flex",gap:8,marginBottom:14,overflowX:"auto",paddingBottom:4}}>
           {BIOMES.map(b=>(
             <button key={b.id} onClick={()=>setSelected(b.id)} style={{padding:"7px 14px",borderRadius:20,border:`1px solid ${selected===b.id?b.color:"rgba(255,255,255,0.1)"}`,background:selected===b.id?`${b.color}20`:"transparent",color:selected===b.id?b.color:"rgba(245,230,255,0.5)",fontFamily:"DM Sans,sans-serif",fontSize:11,fontWeight:600,cursor:"pointer",whiteSpace:"nowrap",display:"flex",alignItems:"center",gap:5}}>
               {b.icon} {b.name.split(" ")[0]}
-              {MICROBE_REPORT[b.id].alert&&<span style={{width:6,height:6,borderRadius:"50%",background:C.amber}}/>}
+              {!isLive&&MICROBE_REPORT[b.id].alert&&<span style={{width:6,height:6,borderRadius:"50%",background:C.amber}}/>}
             </button>
           ))}
         </div>
       </div>
       <div style={{flex:1,overflowY:"auto",padding:"0 16px 28px",display:"flex",flexDirection:"column",gap:12}}>
         <GlowOrb color={biome?.color||C.mint} size={180} opacity={0.1} x={100} y={0}/>
+
+        {isLive && !hasReport ? (
+          <Card style={{textAlign:"center"}}>
+            <div style={{fontSize:38}}>🧬</div>
+            <div style={{fontFamily:"Cormorant Garamond,Georgia,serif",fontSize:20,color:C.pearl,marginTop:6}}>No {biome?.name.split(" ")[0].toLowerCase()} test yet</div>
+            <div style={{fontFamily:"DM Sans,sans-serif",fontSize:12,color:"rgba(245,230,255,0.6)",lineHeight:1.6,marginTop:4}}>{selected==="vaginal"?"Upload a vaginal biome test kit to see your full sequencing results — and activate Layer 3 of the AI engine.":"Sequencing for this biome isn't available yet. Vaginal biome test kits are supported today."}</div>
+          </Card>
+        ) : (<>
 
         {r.alert&&<Card style={{borderColor:`${C.amber}50`,background:`rgba(255,140,66,0.08)`}}>
           <div style={{display:"flex",gap:8,alignItems:"center"}}>
@@ -74,6 +86,7 @@ export function MicrobeReportScreen() {
           <div style={{fontFamily:"DM Sans,sans-serif",fontSize:10,color:C.gold,textTransform:"uppercase",letterSpacing:"0.08em",marginBottom:8}}>✦ Vybi Interpretation</div>
           <div style={{fontFamily:"DM Sans,sans-serif",fontSize:13,color:"rgba(245,230,255,0.8)",lineHeight:1.75}}>{r.interpretation}</div>
         </Card>
+        </>)}
       </div>
     </div>
   );

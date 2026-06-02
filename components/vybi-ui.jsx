@@ -18,7 +18,8 @@ export function Badge({ text, color }) {
 
 export function BiomeRing({ biome, size=80, showLabel=true }) {
   const circ = 2 * Math.PI * 30;
-  const offset = circ - (biome.score / 100) * circ;
+  const hasScore = biome.score != null && !Number.isNaN(biome.score);
+  const offset = circ - ((hasScore ? biome.score : 0) / 100) * circ;
   return (
     <div style={{display:"flex",flexDirection:"column",alignItems:"center",gap:6}}>
       <div style={{position:"relative",width:size,height:size}}>
@@ -30,7 +31,7 @@ export function BiomeRing({ biome, size=80, showLabel=true }) {
         </svg>
         <div style={{position:"absolute",inset:0,display:"flex",flexDirection:"column",alignItems:"center",justifyContent:"center"}}>
           <span style={{fontSize:16,color:biome.color}}>{biome.icon}</span>
-          <span style={{fontSize:11,fontWeight:700,color:C.pearl,fontFamily:"DM Sans,sans-serif"}}>{biome.score}</span>
+          <span style={{fontSize:11,fontWeight:700,color:C.pearl,fontFamily:"DM Sans,sans-serif"}}>{hasScore?biome.score:"—"}</span>
         </div>
       </div>
       {showLabel && <span style={{fontSize:9,color:"rgba(245,230,255,0.6)",textAlign:"center",fontFamily:"DM Sans,sans-serif",maxWidth:60,lineHeight:1.2}}>{biome.name.split(" ")[0]}</span>}

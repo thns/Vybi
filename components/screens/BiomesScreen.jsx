@@ -1,15 +1,18 @@
 import { useState } from "react";
+import { useSession } from "next-auth/react";
 import { C, BIOMES } from "../vybi-data.js";
 import { Card, GlowOrb, Badge, BiomeRing } from "../vybi-ui.jsx";
 import { useDashboard } from "../useVybiData.ts";
 
 export function BiomesScreen() {
+  const { data: session } = useSession();
+  const isLive = !!session?.user; // signed-in: real data only, no demo fallbacks
   const [selected, setSelected] = useState(0);
   const { biome } = useDashboard();
   const liveScores = biome
     ? { vaginal: biome.vaginalScore, gut: biome.gutScore, skin: biome.skinScore, oral: biome.oralScore }
     : {};
-  const biomes = BIOMES.map((x) => ({ ...x, score: liveScores[x.id] ?? x.score }));
+  const biomes = BIOMES.map((x) => ({ ...x, score: liveScores[x.id] ?? (isLive ? null : x.score) }));
   const b = biomes[selected];
   return (
     <div style={{height:"100%",display:"flex",flexDirection:"column",overflow:"hidden"}}>
@@ -30,7 +33,7 @@ export function BiomesScreen() {
             <BiomeRing biome={b} size={88} showLabel={false}/>
             <div style={{flex:1}}>
               <div style={{fontFamily:"Cormorant Garamond,Georgia,serif",fontSize:22,color:C.pearl,marginBottom:4}}>{b.name}</div>
-              <Badge text={b.status} color={b.color}/>
+              {b.score!=null ? <Badge text={b.status} color={b.color}/> : <Badge text="No data yet" color={C.lavender}/>}
               <div style={{fontFamily:"DM Sans,sans-serif",fontSize:11,color:"rgba(245,230,255,0.55)",marginTop:6}}>Dominant: <em style={{color:b.color}}>{b.bacteria}</em></div>
               <div style={{display:"flex",flexWrap:"wrap",gap:5,marginTop:8}}>
                 {b.tags.map(t=><span key={t} style={{fontSize:9,padding:"2px 7px",borderRadius:10,background:"rgba(255,255,255,0.06)",color:"rgba(245,230,255,0.6)",fontFamily:"DM Sans,sans-serif"}}>{t}</span>)}
@@ -40,8 +43,9 @@ export function BiomesScreen() {
         </Card>
         {b.id==="vaginal"&&<Card style={{borderColor:`${C.coral}40`,background:`rgba(233,30,140,0.07)`}}>
           <div style={{fontFamily:"DM Sans,sans-serif",fontSize:10,color:C.coral,textTransform:"uppercase",letterSpacing:"0.08em",marginBottom:6}}>Layer 3 · Live signal</div>
-          <div style={{fontFamily:"DM Sans,sans-serif",fontSize:12,color:"rgba(245,230,255,0.75)",lineHeight:1.7}}>{biome?.lCrispatusPct!=null?`L. crispatus at ${biome.lCrispatusPct}%${biome.phValue!=null?` · pH ${biome.phValue}`:""}${biome.diversityIndex!=null?` · diversity ${biome.diversityIndex}`:""}. This biome composition feeds Layer 3's hormonal inference for your cycle predictions.`:"L. crispatus at 61% — declining from 75% (March test). This biome shift predicted your luteal phase transition 3 days before your symptoms appeared. Current signal: late luteal, period in ~7 days."}</div>
+          <div style={{fontFamily:"DM Sans,sans-serif",fontSize:12,color:"rgba(245,230,255,0.75)",lineHeight:1.7}}>{biome?.lCrispatusPct!=null?`L. crispatus at ${biome.lCrispatusPct}%${biome.phValue!=null?` · pH ${biome.phValue}`:""}${biome.diversityIndex!=null?` · diversity ${biome.diversityIndex}`:""}. This biome composition feeds Layer 3's hormonal inference for your cycle predictions.`:(isLive?"Upload a vaginal biome test kit to activate Layer 3 and see your live L. crispatus, pH and diversity here.":"L. crispatus at 61% — declining from 75% (March test). This biome shift predicted your luteal phase transition 3 days before your symptoms appeared. Current signal: late luteal, period in ~7 days.")}</div>
         </Card>}
+        {!isLive && (
         <Card>
           <div style={{fontFamily:"DM Sans,sans-serif",fontSize:10,color:C.mint,textTransform:"uppercase",letterSpacing:"0.08em",marginBottom:10}}>Score History</div>
           <div style={{display:"flex",alignItems:"flex-end",gap:6,height:60}}>
@@ -53,6 +57,7 @@ export function BiomesScreen() {
             ))}
           </div>
         </Card>
+        )}
         <Card>
           <div style={{fontFamily:"DM Sans,sans-serif",fontSize:10,color:C.mint,textTransform:"uppercase",letterSpacing:"0.08em",marginBottom:10}}>Recommendations</div>
           {[

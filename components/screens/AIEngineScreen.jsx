@@ -1,18 +1,27 @@
 import { useState } from "react";
+import { useSession } from "next-auth/react";
 import { C, AI_LAYERS, CONFIDENCE_SIGNALS, calcAccuracy } from "../vybi-data.js";
 import { Card, GlowOrb, Badge } from "../vybi-ui.jsx";
 import { useDashboard } from "../useVybiData.ts";
 
 export function AIEngineScreen() {
+  const { data: session } = useSession();
+  const isLive = !!session?.user; // signed-in: real data only, no demo fallbacks
   const [expanded, setExpanded] = useState(null);
   const { prediction } = useDashboard();
   const hasWearable = prediction?.layersUsed?.includes("Wearable Fusion") ?? false;
   const [cyclesLogged] = useState(3);
   const [hasKit] = useState(true);
   const [symptomsLogged] = useState(47);
-  // Live accuracy from the most recent engine run, with mock fallback.
-  const currentAccuracy = prediction?.accuracyPct ?? calcAccuracy(cyclesLogged, hasKit, hasWearable, symptomsLogged);
+  // Live accuracy from the most recent engine run. Signed-in users with no
+  // prediction yet see "—" rather than a demo accuracy.
+  const currentAccuracy = prediction?.accuracyPct ?? (isLive ? null : calcAccuracy(cyclesLogged, hasKit, hasWearable, symptomsLogged));
+  const accPct = currentAccuracy ?? 0;
+  const layersActive = prediction?.layersUsed?.length ?? (isLive ? 0 : 3);
   const maxAccuracy = calcAccuracy(6, true, true, 50);
+  // Confidence signals: demo shows the sample met-states; signed-in users see
+  // them un-met until real data wiring lands (avoid fabricated "on file" ticks).
+  const signals = isLive ? CONFIDENCE_SIGNALS.map((s) => ({ ...s, met: false, value: 0 })) : CONFIDENCE_SIGNALS;
 
   return (
     <div style={{height:"100%",display:"flex",flexDirection:"column",overflow:"hidden"}}>
@@ -31,7 +40,7 @@ export function AIEngineScreen() {
                 <circle cx={45} cy={45} r={36} fill="none" stroke="rgba(255,255,255,0.06)" strokeWidth={8}/>
                 <circle cx={45} cy={45} r={36} fill="none" stroke="url(#accGrad)" strokeWidth={8}
                   strokeDasharray={2*Math.PI*36}
-                  strokeDashoffset={2*Math.PI*36*(1-currentAccuracy/100)}
+                  strokeDashoffset={2*Math.PI*36*(1-accPct/100)}
                   strokeLinecap="round" style={{filter:`drop-shadow(0 0 8px ${C.fuchsia})`}}/>
                 <defs>
                   <linearGradient id="accGrad" x1="0%" y1="0%" x2="100%" y2="0%">
@@ -42,16 +51,16 @@ export function AIEngineScreen() {
                 </defs>
               </svg>
               <div style={{position:"absolute",inset:0,display:"flex",flexDirection:"column",alignItems:"center",justifyContent:"center"}}>
-                <span style={{fontSize:22,fontWeight:700,color:C.pearl,fontFamily:"DM Sans,sans-serif"}}>{currentAccuracy}%</span>
+                <span style={{fontSize:22,fontWeight:700,color:C.pearl,fontFamily:"DM Sans,sans-serif"}}>{currentAccuracy!=null?`${currentAccuracy}%`:"—"}</span>
                 <span style={{fontSize:7,color:C.lavender,fontFamily:"DM Sans,sans-serif",letterSpacing:"0.06em"}}>ACCURACY</span>
               </div>
             </div>
             <div style={{flex:1}}>
               <div style={{fontFamily:"Cormorant Garamond,Georgia,serif",fontSize:20,color:C.pearl,marginBottom:4}}>Your current accuracy</div>
-              <div style={{fontFamily:"DM Sans,sans-serif",fontSize:11,color:"rgba(245,230,255,0.6)",lineHeight:1.6,marginBottom:8}}>3 layers active. Connect a wearable + log 3 more cycles to reach <span style={{color:C.gold,fontWeight:600}}>{maxAccuracy}%</span></div>
+              <div style={{fontFamily:"DM Sans,sans-serif",fontSize:11,color:"rgba(245,230,255,0.6)",lineHeight:1.6,marginBottom:8}}>{layersActive} layer{layersActive===1?"":"s"} active. Connect a wearable + log more cycles to reach <span style={{color:C.gold,fontWeight:600}}>{maxAccuracy}%</span></div>
               <div style={{display:"flex",gap:6,alignItems:"center"}}>
                 <div style={{height:4,flex:1,borderRadius:2,background:"rgba(255,255,255,0.08)"}}>
-                  <div style={{width:`${(currentAccuracy/maxAccuracy)*100}%`,height:"100%",borderRadius:2,background:`linear-gradient(90deg,${C.aqua},${C.fuchsia})`}}/>
+                  <div style={{width:`${(accPct/maxAccuracy)*100}%`,height:"100%",borderRadius:2,background:`linear-gradient(90deg,${C.aqua},${C.fuchsia})`}}/>
                 </div>
                 <span style={{fontFamily:"DM Sans,sans-serif",fontSize:10,color:C.gold}}>{maxAccuracy}% max</span>
               </div>
@@ -60,7 +69,7 @@ export function AIEngineScreen() {
 
           <div style={{fontFamily:"DM Sans,sans-serif",fontSize:10,color:C.mint,textTransform:"uppercase",letterSpacing:"0.08em",marginBottom:8}}>What's powering your accuracy</div>
           <div style={{display:"flex",flexDirection:"column",gap:7}}>
-            {CONFIDENCE_SIGNALS.map((s,i)=>(
+            {signals.map((s,i)=>(
               <div key={i} style={{display:"flex",alignItems:"center",gap:10}}>
                 <div style={{width:18,height:18,borderRadius:"50%",background:s.met?`${s.color}30`:"rgba(255,255,255,0.06)",border:`1px solid ${s.met?s.color:"rgba(255,255,255,0.12)"}`,display:"flex",alignItems:"center",justifyContent:"center",flexShrink:0}}>
                   <span style={{fontSize:9,color:s.met?s.color:"rgba(255,255,255,0.3)"}}>{s.met?"✓":"○"}</span>
@@ -82,7 +91,7 @@ export function AIEngineScreen() {
         <Card style={{borderColor:`${C.gold}40`,background:`rgba(255,215,0,0.06)`}}>
           <div style={{fontFamily:"DM Sans,sans-serif",fontSize:10,color:C.gold,textTransform:"uppercase",letterSpacing:"0.08em",marginBottom:10}}>✦ How Vybi compares</div>
           {[
-            {label:"Regular cycles accuracy",flo:"90%",vybi:`${currentAccuracy}%`,vybiMax:"90%+",note:"Matches at 6 cycles + wearable"},
+            {label:"Regular cycles accuracy",flo:"90%",vybi:currentAccuracy!=null?`${currentAccuracy}%`:"—",vybiMax:"90%+",note:"Matches at 6 cycles + wearable"},
             {label:"Irregular cycles accuracy",flo:"65-70%",vybi:"~72%",vybiMax:"~85%",note:"Biome layer uniquely helps here"},
             {label:"Cold start (new user)",flo:"~60%",vybi:"~72%",vybiMax:"—",note:"Biome test gives day-1 advantage"},
             {label:"Biome-hormonal signal",flo:"❌ None",vybi:"✅ Unique",vybiMax:"—",note:"No competitor has this layer"},
@@ -160,7 +169,7 @@ export function AIEngineScreen() {
                   </div>
                 ))}
               </>}
-              {layer.patterns&&<>
+              {layer.patterns&&!isLive&&<>
                 <div style={{fontFamily:"DM Sans,sans-serif",fontSize:10,color:layer.color,textTransform:"uppercase",letterSpacing:"0.07em",margin:"12px 0 6px"}}>Your Detected Symptom Patterns</div>
                 {layer.patterns.map((p,j)=>(
                   <div key={j} style={{display:"flex",justifyContent:"space-between",alignItems:"center",padding:"7px 0",borderBottom:j<layer.patterns.length-1?"1px solid rgba(255,255,255,0.05)":"none"}}>
@@ -201,7 +210,7 @@ export function AIEngineScreen() {
         <Card>
           <div style={{fontFamily:"DM Sans,sans-serif",fontSize:10,color:C.mint,textTransform:"uppercase",letterSpacing:"0.08em",marginBottom:10}}>Your accuracy roadmap</div>
           {[
-            {milestone:"Today",accuracy:currentAccuracy,layers:"L1 + L2 + L3 active",color:C.mint,done:true},
+            {milestone:"Today",accuracy:currentAccuracy,layers:`${layersActive} layer${layersActive===1?"":"s"} active`,color:C.mint,done:true},
             {milestone:"Connect wearable",accuracy:90,layers:"L4 activates",color:C.purple,done:false},
             {milestone:"6 cycles logged",accuracy:91,layers:"L2 fully trained",color:C.gold,done:false},
             {milestone:"Vybi community grows",accuracy:93,layers:"L5 population model",color:C.saliva,done:false},
@@ -216,7 +225,7 @@ export function AIEngineScreen() {
               <div style={{flex:1,paddingTop:4}}>
                 <div style={{display:"flex",justifyContent:"space-between",marginBottom:3}}>
                   <span style={{fontFamily:"DM Sans,sans-serif",fontSize:12,fontWeight:600,color:step.done?C.cream:"rgba(245,230,255,0.5)"}}>{step.milestone}</span>
-                  <span style={{fontFamily:"Cormorant Garamond,Georgia,serif",fontSize:18,color:step.color}}>{step.accuracy}%</span>
+                  <span style={{fontFamily:"Cormorant Garamond,Georgia,serif",fontSize:18,color:step.color}}>{step.accuracy!=null?`${step.accuracy}%`:"—"}</span>
                 </div>
                 <div style={{fontFamily:"DM Sans,sans-serif",fontSize:10,color:"rgba(245,230,255,0.4)"}}>{step.layers}</div>
               </div>

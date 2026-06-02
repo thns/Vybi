@@ -1,16 +1,23 @@
 import { useState, useEffect, useRef } from "react";
+import { useSession } from "next-auth/react";
 import { C, calcAccuracy } from "../vybi-data.js";
 import { sendChat } from "../../lib/client-api.ts";
 import { useDashboard } from "../useVybiData.ts";
 
 export function ChatScreen() {
-  const init = [
+  const { data: session } = useSession();
+  // Demo screenplay only for guests/preview. Signed-in users start clean so
+  // they never see fabricated personal data.
+  const demoScript = [
     {role:"vybi",text:"Hello! I'm Vybi. I can see your cycle data, biome scores, symptom logs and AI layer status. What would you like to explore?"},
     {role:"user",text:"Why did my vaginal score drop?"},
     {role:"vybi",text:"Layer 3 flagged this. Your L. crispatus fell from 75% (March test) to 61% (May test) — an 18% decline.\n\nCross-referencing with Layer 1 and Layer 2: you're on Day 22 (luteal phase), which is the most common time for this. Rising progesterone reduces vaginal glycogen, starving Lactobacillus.\n\nYour logged stress on Days 18-20 compounded this. pH is still 4.2 (safe range), so no infection — but the trend needs reversing.\n\nShall I build your restore plan?"},
     {role:"user",text:"How accurate is your period prediction?"},
     {role:"vybi",text:"Currently 82% for your next period (3 layers active).\n\nBreakdown:\n• Layer 1 (Kalman): ±2.1 days baseline\n• Layer 2 (Symptom pattern): refined to ±1.4 days\n• Layer 3 (Biome inference): L. crispatus trend confirms late luteal\n\nTo reach 90%: connect a wearable. BBT data activates Layer 4, cutting error to ±0.8 days. Flo's 90% took 8 cycles + wearable. You're on track for cycle 6."},
   ];
+  const init = session?.user
+    ? [{role:"vybi",text:"Hi, I'm Vybi — your cycle & biome assistant. I can read the data you've logged (cycles, symptoms, biome tests, wearables) and explain your predictions. What would you like to know?"}]
+    : demoScript;
   const { prediction } = useDashboard();
   const accuracy = prediction?.accuracyPct ?? calcAccuracy(3,true,false,47);
   const layers = prediction?.layersUsed?.length ?? 3;

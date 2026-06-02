@@ -3,8 +3,11 @@ import { Card, GlowOrb, BiomeRing } from "../vybi-ui.jsx";
 import { useDashboard, useCycles } from "../useVybiData.ts";
 import { daysUntil, cycleDayFrom, phaseForDay } from "../../lib/client-api.ts";
 import { getDailyTip } from "../content-data.js";
+import { useSession } from "next-auth/react";
 
 export function HomeScreen({ setScreen }) {
+  const { data: session } = useSession();
+  const isLive = !!session?.user; // signed-in: real data only, no demo fallbacks
   const { prediction, biome, prevention } = useDashboard();
   const { cycles } = useCycles();
 
@@ -16,18 +19,21 @@ export function HomeScreen({ setScreen }) {
   const cycleDay = hasCycleData ? ((realDay - 1) % cycleLen) + 1 : null;
   const phase = phaseForDay(cycleDay, cycleLen);
 
-  // Live biome rings (fall back to mock scores when no test kit on file).
+  // Biome rings: real scores when a test kit is on file; demo scores only for
+  // preview/guest. Signed-in with no biome data → empty rings (—).
   const liveScores = biome
     ? { vaginal: biome.vaginalScore, gut: biome.gutScore, skin: biome.skinScore, oral: biome.oralScore }
     : {};
-  const biomes = BIOMES.map((b) => ({ ...b, score: liveScores[b.id] ?? b.score }));
-  const overall = Math.round(biomes.reduce((a, b) => a + b.score, 0) / biomes.length);
+  const biomes = BIOMES.map((b) => ({ ...b, score: liveScores[b.id] ?? (isLive ? null : b.score) }));
+  const validScores = biomes.map((b) => b.score).filter((s) => s != null);
+  const overall = validScores.length ? Math.round(validScores.reduce((a, b) => a + b, 0) / validScores.length) : null;
+  const hasBiome = !!biome;
 
-  const accuracy = prediction?.accuracyPct ?? calcAccuracy(3, true, false, 47);
-  const layersActive = prediction?.layersUsed?.length ?? 3;
+  const accuracy = prediction?.accuracyPct ?? (isLive ? null : calcAccuracy(3, true, false, 47));
+  const layersActive = prediction?.layersUsed?.length ?? (isLive ? 0 : 3);
   const periodDays = daysUntil(prediction?.predictedPeriodStart ?? null);
   const ovulationDays = daysUntil(prediction?.predictedOvulation ?? null);
-  const confidence = prediction?.confidencePct ?? 82;
+  const confidence = prediction?.confidencePct ?? (isLive ? null : 82);
   const bvRisk = prevention?.bv_risk_score ?? null;
 
   const periodText = periodDays != null && periodDays >= 0 ? `Period in ${periodDays} days` : "Log a period to predict";
@@ -47,10 +53,10 @@ export function HomeScreen({ setScreen }) {
               <span style={{fontFamily:"DM Sans,sans-serif",fontSize:11,color:phaseColor(phase),fontWeight:600,textTransform:"uppercase",letterSpacing:"0.06em"}}>{hasCycleData?`${phaseLabel(phase)} Phase`:"No cycle logged"}</span>
             </div>
             <div style={{fontFamily:"Cormorant Garamond,Georgia,serif",fontSize:20,color:C.pearl,marginBottom:2}}>{periodText}</div>
-            <div style={{fontFamily:"DM Sans,sans-serif",fontSize:11,color:"rgba(245,230,255,0.55)"}}>AI confidence: <span style={{color:C.mint,fontWeight:600}}>{accuracy}%</span> · {layersActive} layers active</div>
+            <div style={{fontFamily:"DM Sans,sans-serif",fontSize:11,color:"rgba(245,230,255,0.55)"}}>AI confidence: <span style={{color:C.mint,fontWeight:600}}>{accuracy!=null?`${accuracy}%`:"—"}</span> · {layersActive} layer{layersActive===1?"":"s"} active</div>
           </div>
           <div style={{textAlign:"right"}}>
-            <div style={{fontFamily:"Cormorant Garamond,Georgia,serif",fontSize:32,color:C.gold}}>{overall}</div>
+            <div style={{fontFamily:"Cormorant Garamond,Georgia,serif",fontSize:32,color:C.gold}}>{overall!=null?overall:"—"}</div>
             <div style={{fontFamily:"DM Sans,sans-serif",fontSize:8,color:C.mint,letterSpacing:"0.1em"}}>VYBI SCORE</div>
           </div>
         </div>
@@ -58,7 +64,7 @@ export function HomeScreen({ setScreen }) {
           {[
             {label: periodDays != null && periodDays >= 0 ? `Period in ${periodDays}d` : "Period —", color:C.rose},
             {label: ovulationDays != null && ovulationDays >= 0 ? `Ovulation in ${ovulationDays}d` : "Ovulation —", color:C.gold},
-            {label: `AI: ${confidence}% confident`, color:C.mint},
+            {label: confidence!=null?`AI: ${confidence}% confident`:"AI: —", color:C.mint},
           ].map(item=>(
             <div key={item.label} style={{flex:1,padding:"6px 8px",borderRadius:8,background:`${item.color}15`,border:`1px solid ${item.color}30`,textAlign:"center"}}>
               <div style={{fontFamily:"DM Sans,sans-serif",fontSize:9,color:item.color,fontWeight:600}}>{item.label}</div>
@@ -78,7 +84,7 @@ export function HomeScreen({ setScreen }) {
         <div style={{display:"flex",gap:10,alignItems:"flex-start"}}>
           <div style={{width:32,height:32,borderRadius:8,background:`${C.purple}25`,display:"flex",alignItems:"center",justifyContent:"center",fontSize:16,flexShrink:0}}>◉</div>
           <div style={{flex:1}}>
-            <div style={{fontFamily:"DM Sans,sans-serif",fontSize:10,color:C.purple,textTransform:"uppercase",letterSpacing:"0.06em",marginBottom:2}}>AI Accuracy: {accuracy}%</div>
+            <div style={{fontFamily:"DM Sans,sans-serif",fontSize:10,color:C.purple,textTransform:"uppercase",letterSpacing:"0.06em",marginBottom:2}}>AI Accuracy: {accuracy!=null?`${accuracy}%`:"—"}</div>
             <div style={{fontFamily:"Cormorant Garamond,Georgia,serif",fontSize:17,color:C.pearl,marginBottom:4}}>Connect wearable → unlock 90%</div>
             <div style={{fontFamily:"DM Sans,sans-serif",fontSize:11,color:"rgba(245,230,255,0.6)"}}>{layersActive} of 5 algorithm layers active. View your AI engine →</div>
           </div>
@@ -89,9 +95,9 @@ export function HomeScreen({ setScreen }) {
         <div style={{display:"flex",gap:10,alignItems:"flex-start"}}>
           <div style={{width:32,height:32,borderRadius:8,background:`${C.amber}25`,display:"flex",alignItems:"center",justifyContent:"center",fontSize:16,flexShrink:0}}>△</div>
           <div style={{flex:1}}>
-            <div style={{fontFamily:"DM Sans,sans-serif",fontSize:10,color:C.amber,textTransform:"uppercase",letterSpacing:"0.06em",marginBottom:2}}>Prevention Alert{bvRisk!=null?` · BV ${bvRisk}/100`:""}</div>
-            <div style={{fontFamily:"Cormorant Garamond,Georgia,serif",fontSize:17,color:C.pearl,marginBottom:4}}>{bvRisk!=null?(bvRisk>=40?"BV risk elevated this week":"BV risk currently low"):"BV risk elevated this week"}</div>
-            <div style={{fontFamily:"DM Sans,sans-serif",fontSize:11,color:"rgba(245,230,255,0.6)"}}>L. crispatus -18% post-period. Biome layer flagged. Take action →</div>
+            <div style={{fontFamily:"DM Sans,sans-serif",fontSize:10,color:C.amber,textTransform:"uppercase",letterSpacing:"0.06em",marginBottom:2}}>Prevention{bvRisk!=null?` · BV ${bvRisk}/100`:""}</div>
+            <div style={{fontFamily:"Cormorant Garamond,Georgia,serif",fontSize:17,color:C.pearl,marginBottom:4}}>{bvRisk!=null?(bvRisk>=40?"BV risk elevated this week":"BV risk currently low"):(isLive?"See your prevention scores":"BV risk elevated this week")}</div>
+            <div style={{fontFamily:"DM Sans,sans-serif",fontSize:11,color:"rgba(245,230,255,0.6)"}}>{bvRisk!=null?"Based on your cycle, symptoms & biome signals. View details →":(isLive?"Log cycles, symptoms or a biome test to assess your risk →":"L. crispatus -18% post-period. Biome layer flagged. Take action →")}</div>
           </div>
         </div>
       </Card>
@@ -124,11 +130,13 @@ export function HomeScreen({ setScreen }) {
         <div style={{fontFamily:"DM Sans,sans-serif",fontSize:10,color:C.gold,marginTop:6}}>Open the library →</div>
       </Card>
 
-      <Card>
-        <div style={{fontFamily:"DM Sans,sans-serif",fontSize:10,color:C.gold,textTransform:"uppercase",letterSpacing:"0.08em",marginBottom:8}}>✦ Biome-Cycle Insight</div>
-        <div style={{fontFamily:"Cormorant Garamond,Georgia,serif",fontSize:18,color:C.pearl,marginBottom:6}}>Your biome predicted this dip</div>
-        <div style={{fontFamily:"DM Sans,sans-serif",fontSize:12,color:"rgba(245,230,255,0.65)",lineHeight:1.7}}>Layer 3 detected L. crispatus declining 4 days before your symptoms appeared. Biome data gives Vybi a 3-5 day early warning that calendar-only apps cannot see.</div>
-      </Card>
+      {(!isLive || hasBiome) && (
+        <Card>
+          <div style={{fontFamily:"DM Sans,sans-serif",fontSize:10,color:C.gold,textTransform:"uppercase",letterSpacing:"0.08em",marginBottom:8}}>✦ Biome-Cycle Insight</div>
+          <div style={{fontFamily:"Cormorant Garamond,Georgia,serif",fontSize:18,color:C.pearl,marginBottom:6}}>Your biome predicted this dip</div>
+          <div style={{fontFamily:"DM Sans,sans-serif",fontSize:12,color:"rgba(245,230,255,0.65)",lineHeight:1.7}}>Layer 3 detected L. crispatus declining 4 days before your symptoms appeared. Biome data gives Vybi a 3-5 day early warning that calendar-only apps cannot see.</div>
+        </Card>
+      )}
     </div>
   );
 }

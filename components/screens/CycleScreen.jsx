@@ -1,4 +1,5 @@
 import { useState, useEffect } from "react";
+import { useSession } from "next-auth/react";
 import { C, CYCLE_DAYS, SYMPTOM_GROUPS, calcAccuracy, phaseColor, phaseLabel } from "../vybi-data.js";
 import { Card, GlowOrb, Badge } from "../vybi-ui.jsx";
 import { useDashboard, useCycles } from "../useVybiData.ts";
@@ -8,8 +9,10 @@ const dText = (d, fallback) =>
   d == null ? fallback : d === 0 ? "Today" : d > 0 ? `In ${d} days` : `${-d} days ago`;
 
 export function CycleScreen() {
+  const { data: session } = useSession();
+  const isLive = !!session?.user; // signed-in: real data only, no demo fallbacks
   const [reload, setReload] = useState(0);
-  const { prediction } = useDashboard(reload);
+  const { prediction, biome } = useDashboard(reload);
   const { cycles } = useCycles(reload);
   const latestCycle = cycles[0] ?? null;
   const cycleLen = latestCycle?.cycleLength ?? 28;
@@ -31,7 +34,7 @@ export function CycleScreen() {
   const [logMsg, setLogMsg] = useState(null);
 
   const today = CYCLE_DAYS[Math.min(Math.max(currentDay,1),35)-1];
-  const accuracy = prediction?.accuracyPct ?? calcAccuracy(3, true, false, 47);
+  const accuracy = prediction?.accuracyPct ?? (isLive ? null : calcAccuracy(3, true, false, 47));
   const toggleSymptom = (id) => setLoggedSymptoms(s=>s.includes(id)?s.filter(x=>x!==id):[...s,id]);
 
   const saveSymptoms = async () => {
@@ -57,12 +60,41 @@ export function CycleScreen() {
     }
   };
 
-  // Live prediction rows (fall back to the demo values when none on file yet).
+  // Live prediction rows. Signed-in users see only real predictions ("—" /
+  // "Log a period" until enough data); demo values appear in preview only.
+  const fb = (demo) => (isLive ? null : demo);
+  const noData = isLive ? "Log a period" : null;
   const predRows = [
-    {label:"Next Period",   value: formatShort(prediction?.predictedPeriodStart) ?? "Jun 2",   days: dText(daysUntil(prediction?.predictedPeriodStart), "7 days"),      color:C.rose,   icon:"◎", conf: prediction?.confidencePct ?? 82},
-    {label:"Ovulation",     value: formatShort(prediction?.predictedOvulation) ?? "Jun 9",      days: dText(daysUntil(prediction?.predictedOvulation), "14 days"),       color:C.gold,   icon:"○", conf: prediction?.confidencePct ?? 74},
-    {label:"Fertile Window",value: (formatShort(prediction?.fertileWindowStart) && formatShort(prediction?.fertileWindowEnd)) ? `${formatShort(prediction.fertileWindowStart)}–${formatShort(prediction.fertileWindowEnd)}` : "Jun 7–12", days: dText(daysUntil(prediction?.fertileWindowStart), "Opens in 12d"), color:C.mint, icon:"◈", conf: prediction?.confidencePct ?? 70},
+    {label:"Next Period",   value: formatShort(prediction?.predictedPeriodStart) ?? fb("Jun 2") ?? "—",   days: dText(daysUntil(prediction?.predictedPeriodStart), fb("7 days") ?? noData),      color:C.rose,   icon:"◎", conf: prediction?.confidencePct ?? fb(82)},
+    {label:"Ovulation",     value: formatShort(prediction?.predictedOvulation) ?? fb("Jun 9") ?? "—",      days: dText(daysUntil(prediction?.predictedOvulation), fb("14 days") ?? noData),       color:C.gold,   icon:"○", conf: prediction?.confidencePct ?? fb(74)},
+    {label:"Fertile Window",value: (formatShort(prediction?.fertileWindowStart) && formatShort(prediction?.fertileWindowEnd)) ? `${formatShort(prediction.fertileWindowStart)}–${formatShort(prediction.fertileWindowEnd)}` : (fb("Jun 7–12") ?? "—"), days: dText(daysUntil(prediction?.fertileWindowStart), fb("Opens in 12d") ?? noData), color:C.mint, icon:"◈", conf: prediction?.confidencePct ?? fb(70)},
   ];
+  // PMS window: ~5 days before the predicted period (real), demo otherwise.
+  const pmsRow = prediction?.predictedPeriodStart
+    ? (() => { const d = new Date(`${prediction.predictedPeriodStart}T00:00:00`); const e = new Date(d); e.setDate(e.getDate()-1); const s = new Date(d); s.setDate(s.getDate()-5); const f=(x)=>x.toLocaleDateString("en-GB",{day:"numeric",month:"short"}); return {label:"PMS Window",value:`${f(s)}–${f(e)}`,days:dText(daysUntil(s.toISOString().slice(0,10)),null),color:C.purple,icon:"△",conf:prediction?.confidencePct ?? null}; })()
+    : (isLive ? null : {label:"PMS Window",value:"May 28–Jun 2",days:"Starts in 3d",color:C.purple,icon:"△",conf:88});
+  const allPredRows = pmsRow ? [...predRows, pmsRow] : predRows;
+
+  // Insights — computed from the user's real cycles when signed in.
+  const lengths = cycles.map((c) => c.cycleLength).filter((n) => typeof n === "number" && n > 0);
+  const avgLen = lengths.length ? lengths.reduce((a, b) => a + b, 0) / lengths.length : null;
+  const sd = lengths.length > 1 ? Math.sqrt(lengths.reduce((a, b) => a + (b - avgLen) ** 2, 0) / lengths.length) : null;
+  const regularity = sd == null ? null : sd <= 2 ? "Very Regular" : sd <= 4 ? "Regular" : "Irregular";
+  const liveInsights = [
+    {label:"Regularity", value: regularity ?? "—", detail: sd!=null?`±${sd.toFixed(1)} days variance`:"Log ≥2 cycles to assess", color:C.mint},
+    {label:"Avg cycle length", value: avgLen!=null?`${avgLen.toFixed(1)} days`:"—", detail:`Based on ${lengths.length} cycle${lengths.length===1?"":"s"}`, color:C.mint},
+    {label:"AI accuracy", value: accuracy!=null?`${accuracy}%`:"—", detail: accuracy!=null?"Improves with each cycle":"Log a period to start", color:C.gold},
+    {label:"Biome confidence", value: biome?"Layer 3 active":"Not active", detail: biome?"Hormonal inference enabled":"Upload a biome test", color:C.vaginal},
+    {label:"Next upgrade", value:"Add wearable", detail:"BBT layer → tighter predictions", color:C.purple},
+  ];
+  const demoInsights = [
+    {label:"Regularity",value:"Very Regular",detail:"±1.2 days variance",color:C.mint},
+    {label:"Avg cycle length",value:"28.1 days",detail:"Based on 3 cycles",color:C.mint},
+    {label:"AI prediction error",value:"±1.4 days",detail:"Improving with each cycle",color:C.gold},
+    {label:"Biome confidence",value:"Layer 3 active",detail:"Hormonal inference enabled",color:C.vaginal},
+    {label:"Next upgrade",value:"Add wearable",detail:"BBT layer → ±0.8 days",color:C.purple},
+  ];
+  const insights = isLive ? liveInsights : demoInsights;
 
   // Build the current month grid, marking real period / fertile / ovulation days.
   const cal = (() => {
@@ -143,16 +175,13 @@ export function CycleScreen() {
           <Card>
             <div style={{fontFamily:"DM Sans,sans-serif",fontSize:10,color:C.mint,textTransform:"uppercase",letterSpacing:"0.08em",marginBottom:10}}>Predictions</div>
             <div style={{display:"flex",flexDirection:"column",gap:8}}>
-              {[
-                ...predRows,
-                {label:"PMS Window",value:"May 28–Jun 2",days:"Starts in 3d",color:C.purple,icon:"△",conf:88},
-              ].map(item=>(
+              {allPredRows.map(item=>(
                 <div key={item.label} style={{display:"flex",justifyContent:"space-between",alignItems:"center",padding:"8px 10px",borderRadius:10,background:`${item.color}12`,border:`1px solid ${item.color}25`}}>
                   <div style={{display:"flex",gap:8,alignItems:"center"}}>
                     <span style={{color:item.color,fontSize:14}}>{item.icon}</span>
                     <div>
                       <div style={{fontFamily:"DM Sans,sans-serif",fontSize:11,color:C.pearl}}>{item.label}</div>
-                      <div style={{fontFamily:"DM Sans,sans-serif",fontSize:9,color:"rgba(245,230,255,0.4)"}}>{item.days} · AI: {item.conf}%</div>
+                      <div style={{fontFamily:"DM Sans,sans-serif",fontSize:9,color:"rgba(245,230,255,0.4)"}}>{[item.days, item.conf!=null?`AI: ${item.conf}%`:null].filter(Boolean).join(" · ")||"—"}</div>
                     </div>
                   </div>
                   <div style={{fontFamily:"Cormorant Garamond,Georgia,serif",fontSize:16,color:item.color}}>{item.value}</div>
@@ -161,6 +190,7 @@ export function CycleScreen() {
             </div>
           </Card>
 
+          {(!isLive || biome) && (
           <Card style={{borderColor:`${C.vaginal}30`,background:`rgba(233,30,140,0.05)`}}>
             <div style={{fontFamily:"DM Sans,sans-serif",fontSize:10,color:C.vaginal,textTransform:"uppercase",letterSpacing:"0.08em",marginBottom:6}}>Layer 3 · Biome Signal Today</div>
             <div style={{fontFamily:"DM Sans,sans-serif",fontSize:12,color:"rgba(245,230,255,0.75)",lineHeight:1.7}}>
@@ -170,6 +200,7 @@ export function CycleScreen() {
               {today.phase==="menstrual"&&"Vaginal diversity increasing. L. crispatus declining. Layer 3 confirms menstrual phase. This is normal — microbiome will restabilise in follicular phase."}
             </div>
           </Card>
+          )}
 
           <Card>
             <div style={{fontFamily:"DM Sans,sans-serif",fontSize:10,color:C.mint,textTransform:"uppercase",letterSpacing:"0.08em",marginBottom:10}}>Log Symptoms & Mood · Feeds Layer 2</div>
@@ -197,6 +228,7 @@ export function CycleScreen() {
             {savedMsg&&<div style={{marginTop:8,fontFamily:"DM Sans,sans-serif",fontSize:10,color:C.mint,textAlign:"center"}}>{savedMsg}</div>}
           </Card>
 
+          {(!isLive || hasCycleData) && (
           <Card>
             <div style={{fontFamily:"DM Sans,sans-serif",fontSize:10,color:C.mint,textTransform:"uppercase",letterSpacing:"0.08em",marginBottom:10}}>Estimated Hormones</div>
             {[
@@ -216,6 +248,7 @@ export function CycleScreen() {
             ))}
             <div style={{fontFamily:"DM Sans,sans-serif",fontSize:10,color:"rgba(245,230,255,0.35)",marginTop:4}}>Estimates from Layers 1 & 2 + biome inference. Add BBT for higher precision →</div>
           </Card>
+          )}
         </>}
 
         {activeTab==="calendar"&&<>
@@ -247,13 +280,7 @@ export function CycleScreen() {
         {activeTab==="insights"&&<>
           <Card>
             <div style={{fontFamily:"DM Sans,sans-serif",fontSize:10,color:C.gold,textTransform:"uppercase",letterSpacing:"0.08em",marginBottom:8}}>✦ AI Cycle Intelligence</div>
-            {[
-              {label:"Regularity",value:"Very Regular",detail:"±1.2 days variance",color:C.mint},
-              {label:"Avg cycle length",value:"28.1 days",detail:"Based on 3 cycles",color:C.mint},
-              {label:"AI prediction error",value:"±1.4 days",detail:"Improving with each cycle",color:C.gold},
-              {label:"Biome confidence",value:"Layer 3 active",detail:"Hormonal inference enabled",color:C.vaginal},
-              {label:"Next upgrade",value:"Add wearable",detail:"BBT layer → ±0.8 days",color:C.purple},
-            ].map((item,i)=>(
+            {insights.map((item,i)=>(
               <div key={item.label} style={{display:"flex",justifyContent:"space-between",alignItems:"center",padding:"8px 0",borderBottom:i<4?"1px solid rgba(255,255,255,0.05)":"none"}}>
                 <div>
                   <div style={{fontFamily:"DM Sans,sans-serif",fontSize:12,color:C.pearl}}>{item.label}</div>
