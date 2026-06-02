@@ -23,16 +23,31 @@ import { CommunityScreen } from "./screens/CommunityScreen.jsx";
 import { AccountMenu } from "./AccountMenu.tsx";
 
 export default function VybiApp() {
-  const [screen, setScreen] = useState("Onboarding");
+  const [screen, _setScreen] = useState("Onboarding");
+  const [history, setHistory] = useState([]);
   const [onboarded, setOnboarded] = useState(false);
-  const handleComplete = () => { setOnboarded(true); setScreen("Home"); };
+
+  // History-aware navigation so the top bar can offer a Back action.
+  const setScreen = (next) => {
+    const target = typeof next === "function" ? next(screen) : next;
+    if (target !== screen) setHistory((h) => [...h, screen]);
+    _setScreen(target);
+  };
+  const goBack = () => {
+    if (!history.length) return;
+    const prev = history[history.length - 1];
+    setHistory(history.slice(0, -1));
+    _setScreen(prev);
+  };
+  const handleComplete = () => { setOnboarded(true); setHistory([]); _setScreen("Home"); };
 
   // Returning users who already onboarded skip straight to the app.
   const { data: session } = useSession();
   useEffect(() => {
     if (session?.user?.onboarded) {
       setOnboarded(true);
-      setScreen((s) => (s === "Onboarding" ? "Home" : s));
+      _setScreen((s) => (s === "Onboarding" ? "Home" : s));
+      setHistory([]);
     }
   }, [session]);
 
@@ -89,7 +104,11 @@ export default function VybiApp() {
 
   // Persistent brand bar — top-left logo on every screen; click returns Home.
   const TopBar = ({ inset = false }) => (
-    <div style={{display:"flex",alignItems:"center",height:46,padding:"0 12px",paddingTop:inset?"env(safe-area-inset-top)":undefined,flexShrink:0,zIndex:40}}>
+    <div style={{display:"flex",alignItems:"center",gap:8,height:46,padding:"0 12px",paddingTop:inset?"env(safe-area-inset-top)":undefined,flexShrink:0,zIndex:40}}>
+      {onboarded && history.length>0 && (
+        <button onClick={goBack} aria-label="Back"
+          style={{width:30,height:30,borderRadius:"50%",flexShrink:0,background:"rgba(255,255,255,0.07)",border:"1px solid rgba(195,155,211,0.25)",color:C.pearl,fontSize:18,lineHeight:1,cursor:"pointer",display:"flex",alignItems:"center",justifyContent:"center"}}>‹</button>
+      )}
       <button onClick={()=>{ if(onboarded) setScreen("Home"); }} aria-label="Vybi — home"
         style={{display:"flex",alignItems:"center",gap:7,background:"none",border:"none",padding:0,cursor:onboarded?"pointer":"default"}}>
         <img src="/logo-mark.png" alt="Vybi" width={30} height={30} style={{display:"block",filter:"drop-shadow(0 2px 8px rgba(233,30,140,0.35))"}}/>
