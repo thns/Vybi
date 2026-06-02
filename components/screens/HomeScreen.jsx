@@ -1,11 +1,20 @@
 import { C, BIOMES, calcAccuracy, phaseColor, phaseLabel } from "../vybi-data.js";
 import { Card, GlowOrb, BiomeRing } from "../vybi-ui.jsx";
-import { useDashboard } from "../useVybiData.ts";
-import { daysUntil } from "../../lib/client-api.ts";
+import { useDashboard, useCycles } from "../useVybiData.ts";
+import { daysUntil, cycleDayFrom, phaseForDay } from "../../lib/client-api.ts";
 import { getDailyTip } from "../content-data.js";
 
 export function HomeScreen({ setScreen }) {
   const { prediction, biome, prevention } = useDashboard();
+  const { cycles } = useCycles();
+
+  // Current cycle day + phase from the user's most recent logged period.
+  const latestCycle = cycles[0] ?? null;
+  const cycleLen = latestCycle?.cycleLength ?? 28;
+  const realDay = cycleDayFrom(latestCycle?.periodStartDate ?? null);
+  const hasCycleData = realDay != null && realDay >= 1;
+  const cycleDay = hasCycleData ? ((realDay - 1) % cycleLen) + 1 : null;
+  const phase = phaseForDay(cycleDay, cycleLen);
 
   // Live biome rings (fall back to mock scores when no test kit on file).
   const liveScores = biome
@@ -26,7 +35,7 @@ export function HomeScreen({ setScreen }) {
     <div style={{padding:"0 16px 28px",display:"flex",flexDirection:"column",gap:12,overflowY:"auto",height:"100%"}}>
       <GlowOrb color={C.fuchsia} size={200} opacity={0.15} x={100} y={-30}/>
       <div style={{paddingTop:16}}>
-        <div style={{fontFamily:"DM Sans,sans-serif",fontSize:11,color:C.mint,letterSpacing:"0.1em",textTransform:"uppercase"}}>Day 22 · Luteal Phase</div>
+        <div style={{fontFamily:"DM Sans,sans-serif",fontSize:11,color:C.mint,letterSpacing:"0.1em",textTransform:"uppercase"}}>{hasCycleData?`Day ${cycleDay} · ${phaseLabel(phase)} Phase`:"Log a period to begin"}</div>
         <div style={{fontFamily:"Cormorant Garamond,Georgia,serif",fontSize:28,color:C.pearl}}>Your Vybi Today</div>
       </div>
 
@@ -34,8 +43,8 @@ export function HomeScreen({ setScreen }) {
         <div style={{display:"flex",gap:12,alignItems:"center",marginBottom:12}}>
           <div style={{flex:1}}>
             <div style={{display:"flex",gap:6,alignItems:"center",marginBottom:4}}>
-              <div style={{width:10,height:10,borderRadius:"50%",background:phaseColor("luteal"),boxShadow:`0 0 8px ${phaseColor("luteal")}`}}/>
-              <span style={{fontFamily:"DM Sans,sans-serif",fontSize:11,color:phaseColor("luteal"),fontWeight:600,textTransform:"uppercase",letterSpacing:"0.06em"}}>Luteal Phase</span>
+              <div style={{width:10,height:10,borderRadius:"50%",background:phaseColor(phase),boxShadow:`0 0 8px ${phaseColor(phase)}`}}/>
+              <span style={{fontFamily:"DM Sans,sans-serif",fontSize:11,color:phaseColor(phase),fontWeight:600,textTransform:"uppercase",letterSpacing:"0.06em"}}>{hasCycleData?`${phaseLabel(phase)} Phase`:"No cycle logged"}</span>
             </div>
             <div style={{fontFamily:"Cormorant Garamond,Georgia,serif",fontSize:20,color:C.pearl,marginBottom:2}}>{periodText}</div>
             <div style={{fontFamily:"DM Sans,sans-serif",fontSize:11,color:"rgba(245,230,255,0.55)"}}>AI confidence: <span style={{color:C.mint,fontWeight:600}}>{accuracy}%</span> · {layersActive} layers active</div>
