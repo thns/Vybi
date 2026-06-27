@@ -2,7 +2,7 @@ import { C } from "./vybi-data.js";
 
 export function Card({ children, style = {}, onClick }) {
   return (
-    <div onClick={onClick} style={{background:"rgba(45,17,85,0.55)",borderRadius:18,border:"1px solid rgba(195,155,211,0.2)",padding:16,backdropFilter:"blur(12px)",position:"relative",overflow:"hidden",flexShrink:0,...style}}>
+    <div onClick={onClick} style={{background:"rgba(var(--velvet-rgb),0.55)",borderRadius:18,border:"1px solid var(--card-border)",padding:16,backdropFilter:"blur(12px)",boxShadow:"var(--card-shadow)",position:"relative",overflow:"hidden",flexShrink:0,...style}}>
       {children}
     </div>
   );
@@ -24,7 +24,7 @@ export function BiomeRing({ biome, size=80, showLabel=true }) {
     <div style={{display:"flex",flexDirection:"column",alignItems:"center",gap:6}}>
       <div style={{position:"relative",width:size,height:size}}>
         <svg width={size} height={size} style={{transform:"rotate(-90deg)"}}>
-          <circle cx={size/2} cy={size/2} r={30} fill="none" stroke="rgba(255,255,255,0.08)" strokeWidth={6}/>
+          <circle cx={size/2} cy={size/2} r={30} fill="none" style={{stroke:"rgba(var(--surface-rgb),0.18)"}} strokeWidth={6}/>
           <circle cx={size/2} cy={size/2} r={30} fill="none" stroke={biome.color} strokeWidth={6}
             strokeDasharray={circ} strokeDashoffset={offset} strokeLinecap="round"
             style={{filter:`drop-shadow(0 0 8px ${biome.color})`,transition:"stroke-dashoffset 1s ease"}}/>
@@ -34,7 +34,7 @@ export function BiomeRing({ biome, size=80, showLabel=true }) {
           <span style={{fontSize:11,fontWeight:700,color:C.pearl,fontFamily:"DM Sans,sans-serif"}}>{hasScore?biome.score:"—"}</span>
         </div>
       </div>
-      {showLabel && <span style={{fontSize:9,color:"rgba(245,230,255,0.6)",textAlign:"center",fontFamily:"DM Sans,sans-serif",maxWidth:60,lineHeight:1.2}}>{biome.name.split(" ")[0]}</span>}
+      {showLabel && <span style={{fontSize:9,color:"rgba(var(--ink-rgb),0.6)",textAlign:"center",fontFamily:"DM Sans,sans-serif",maxWidth:60,lineHeight:1.2}}>{biome.name.split(" ")[0]}</span>}
     </div>
   );
 }

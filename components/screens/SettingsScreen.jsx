@@ -3,6 +3,7 @@ import { useSession, signOut } from "next-auth/react";
 import { useRouter } from "next/navigation";
 import { C } from "../vybi-data.js";
 import { Card } from "../vybi-ui.jsx";
+import { useTheme, THEMES } from "../theme.js";
 import { enablePush, disablePush, isPushEnabled, sendTestPush, pushSupported, isIOS, isStandalone } from "../../lib/push-client.ts";
 import { api } from "../../lib/client-api.ts";
 
@@ -18,6 +19,7 @@ const TOGGLES = [
 ];
 
 export function SettingsScreen({ setScreen }) {
+  const { theme, setTheme } = useTheme();
   const [states, setStates] = useState(TOGGLES.map(t=>t.on));
   const [pushOn, setPushOn] = useState(false);
   const [pushMsg, setPushMsg] = useState(null);
@@ -71,10 +73,25 @@ export function SettingsScreen({ setScreen }) {
           <div style={{flex:1,minWidth:0}}>
             <div style={{fontFamily:"Cormorant Garamond,Georgia,serif",fontSize:18,color:C.pearl,whiteSpace:"nowrap",overflow:"hidden",textOverflow:"ellipsis"}}>{display}</div>
             <div style={{fontFamily:"DM Sans,sans-serif",fontSize:11,color:C.mint}}>{tier}</div>
-            {user?.email&&user?.name&&<div style={{fontFamily:"DM Sans,sans-serif",fontSize:10,color:"rgba(245,230,255,0.4)",whiteSpace:"nowrap",overflow:"hidden",textOverflow:"ellipsis"}}>{user.email}</div>}
+            {user?.email&&user?.name&&<div style={{fontFamily:"DM Sans,sans-serif",fontSize:10,color:"rgba(var(--ink-rgb),0.4)",whiteSpace:"nowrap",overflow:"hidden",textOverflow:"ellipsis"}}>{user.email}</div>}
             {goal&&GOAL_LABEL[goal]&&<div style={{fontFamily:"DM Sans,sans-serif",fontSize:10,color:C.lavender,marginTop:3}}>{GOAL_LABEL[goal]}</div>}
           </div>
         </div>
+      </Card>
+      <Card>
+        <div style={{fontFamily:"DM Sans,sans-serif",fontSize:10,color:C.mint,textTransform:"uppercase",letterSpacing:"0.08em",marginBottom:12}}>Appearance</div>
+        <div style={{display:"flex",gap:10}}>
+          {THEMES.map((t)=>{
+            const active = theme===t.id;
+            return (
+              <button key={t.id} onClick={()=>setTheme(t.id)} style={{flex:1,display:"flex",flexDirection:"column",alignItems:"center",gap:7,padding:"12px 6px",borderRadius:14,cursor:"pointer",background:active?`${C.fuchsia}14`:"rgba(var(--surface-rgb),0.04)",border:`1.5px solid ${active?C.fuchsia:"rgba(var(--surface-rgb),0.12)"}`,transition:"all 0.2s"}}>
+                <span style={{width:34,height:34,borderRadius:"50%",background:t.swatch,border:`2px solid ${active?C.fuchsia:t.ring}`,boxShadow:"0 2px 8px rgba(0,0,0,0.18)"}}/>
+                <span style={{fontFamily:"DM Sans,sans-serif",fontSize:11,fontWeight:active?700:500,color:active?C.fuchsia:C.pearl}}>{t.label}</span>
+              </button>
+            );
+          })}
+        </div>
+        <div style={{fontFamily:"DM Sans,sans-serif",fontSize:10,color:"rgba(var(--ink-rgb),0.45)",marginTop:9,lineHeight:1.5}}>Choose your background. Saved on this device.</div>
       </Card>
       <Card>
         <div style={{fontFamily:"DM Sans,sans-serif",fontSize:10,color:C.mint,textTransform:"uppercase",letterSpacing:"0.08em",marginBottom:12}}>Privacy & Preferences</div>
@@ -83,12 +100,12 @@ export function SettingsScreen({ setScreen }) {
           const on = isPush ? pushOn : states[i];
           const toggle = isPush ? togglePush : ()=>setStates(s=>s.map((v,j)=>j===i?!v:v));
           return (
-          <div key={i} style={{display:"flex",justifyContent:"space-between",alignItems:"center",marginBottom:i<TOGGLES.length-1?14:0,paddingBottom:i<TOGGLES.length-1?14:0,borderBottom:i<TOGGLES.length-1?"1px solid rgba(255,255,255,0.05)":"none"}}>
+          <div key={i} style={{display:"flex",justifyContent:"space-between",alignItems:"center",marginBottom:i<TOGGLES.length-1?14:0,paddingBottom:i<TOGGLES.length-1?14:0,borderBottom:i<TOGGLES.length-1?"1px solid rgba(var(--surface-rgb),0.05)":"none"}}>
             <div style={{flex:1}}>
               <div style={{fontFamily:"DM Sans,sans-serif",fontSize:13,color:C.pearl}}>{t.label}{isPush&&pushOn&&<span onClick={test} style={{marginLeft:8,fontSize:10,color:C.mint,cursor:"pointer",textDecoration:"underline"}}>Send test</span>}</div>
-              <div style={{fontFamily:"DM Sans,sans-serif",fontSize:11,color:"rgba(245,230,255,0.4)"}}>{isPush&&pushMsg?pushMsg:t.desc}</div>
+              <div style={{fontFamily:"DM Sans,sans-serif",fontSize:11,color:"rgba(var(--ink-rgb),0.4)"}}>{isPush&&pushMsg?pushMsg:t.desc}</div>
             </div>
-            <div onClick={pushBusy&&isPush?undefined:toggle} style={{width:44,height:24,borderRadius:12,background:on?t.color:"rgba(255,255,255,0.1)",position:"relative",cursor:"pointer",transition:"background 0.2s",flexShrink:0,opacity:pushBusy&&isPush?0.6:1}}>
+            <div onClick={pushBusy&&isPush?undefined:toggle} style={{width:44,height:24,borderRadius:12,background:on?t.color:"rgba(var(--surface-rgb),0.1)",position:"relative",cursor:"pointer",transition:"background 0.2s",flexShrink:0,opacity:pushBusy&&isPush?0.6:1}}>
               <div style={{width:18,height:18,borderRadius:"50%",background:"white",position:"absolute",top:3,left:on?23:3,transition:"left 0.2s",boxShadow:"0 1px 4px rgba(0,0,0,0.3)"}}/>
             </div>
           </div>
@@ -97,7 +114,7 @@ export function SettingsScreen({ setScreen }) {
       {iosTip&&!pushOn&&(
         <Card style={{borderColor:`${C.gold}40`,background:`rgba(255,215,0,0.06)`}}>
           <div style={{fontFamily:"DM Sans,sans-serif",fontSize:10,color:C.gold,textTransform:"uppercase",letterSpacing:"0.08em",marginBottom:6}}>📲 Enable on iPhone</div>
-          <div style={{fontFamily:"DM Sans,sans-serif",fontSize:12,color:"rgba(245,230,255,0.75)",lineHeight:1.6}}>To get notifications on iOS, add Vybi to your Home Screen: tap the <strong>Share</strong> button, then <strong>Add to Home Screen</strong>. Open it from there and turn on notifications.</div>
+          <div style={{fontFamily:"DM Sans,sans-serif",fontSize:12,color:"rgba(var(--ink-rgb),0.75)",lineHeight:1.6}}>To get notifications on iOS, add Vybi to your Home Screen: tap the <strong>Share</strong> button, then <strong>Add to Home Screen</strong>. Open it from there and turn on notifications.</div>
         </Card>
       )}
       {[
@@ -114,10 +131,10 @@ export function SettingsScreen({ setScreen }) {
               <span style={{fontSize:20}}>{item.icon}</span>
               <div>
                 <div style={{fontFamily:"DM Sans,sans-serif",fontSize:13,color:C.pearl}}>{item.label}</div>
-                <div style={{fontFamily:"DM Sans,sans-serif",fontSize:11,color:"rgba(245,230,255,0.4)"}}>{item.sub}</div>
+                <div style={{fontFamily:"DM Sans,sans-serif",fontSize:11,color:"rgba(var(--ink-rgb),0.4)"}}>{item.sub}</div>
               </div>
             </div>
-            <span style={{color:"rgba(255,255,255,0.2)",fontSize:16}}>›</span>
+            <span style={{color:"rgba(var(--surface-rgb),0.2)",fontSize:16}}>›</span>
           </div>
         </Card>
       ))}
@@ -125,7 +142,7 @@ export function SettingsScreen({ setScreen }) {
       <button onClick={logout} style={{marginTop:4,width:"100%",padding:"13px",borderRadius:14,border:"1px solid rgba(255,120,120,0.35)",background:"rgba(255,80,80,0.10)",color:"#ff9d9d",fontFamily:"DM Sans,sans-serif",fontSize:14,fontWeight:600,cursor:"pointer"}}>
         {user?"Log out":"Sign in / Create account"}
       </button>
-      <div style={{textAlign:"center",fontFamily:"DM Sans,sans-serif",fontSize:10,color:"rgba(245,230,255,0.3)",paddingBottom:8}}>VYBI · View Your Biome Intelligence</div>
+      <div style={{textAlign:"center",fontFamily:"DM Sans,sans-serif",fontSize:10,color:"rgba(var(--ink-rgb),0.3)",paddingBottom:8}}>VYBI · View Your Biome Intelligence</div>
     </div>
   );
 }

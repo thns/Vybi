@@ -38,14 +38,14 @@ export function OnboardingScreen({ onComplete }) {
           <div style={{textAlign:"center"}}>
             <div style={{fontSize:40,color:C.fuchsia,filter:`drop-shadow(0 0 20px ${C.fuchsia})`}}>◎</div>
             <div style={{fontFamily:"Cormorant Garamond,Georgia,serif",fontSize:26,color:C.pearl,marginTop:6}}>Let's start your cycle</div>
-            <div style={{fontFamily:"DM Sans,sans-serif",fontSize:12,color:"rgba(245,230,255,0.6)",marginTop:4,lineHeight:1.6}}>This activates Layer 1 of the AI engine right away.</div>
+            <div style={{fontFamily:"DM Sans,sans-serif",fontSize:12,color:"rgba(var(--ink-rgb),0.6)",marginTop:4,lineHeight:1.6}}>This activates Layer 1 of the AI engine right away.</div>
           </div>
 
           <div>
-            <label style={{display:"block",fontFamily:"DM Sans,sans-serif",fontSize:12,color:"rgba(245,230,255,0.7)",marginBottom:8}}>What's your goal?</label>
+            <label style={{display:"block",fontFamily:"DM Sans,sans-serif",fontSize:12,color:"rgba(var(--ink-rgb),0.7)",marginBottom:8}}>What's your goal?</label>
             <div style={{display:"flex",flexDirection:"column",gap:7}}>
               {[{k:"track",l:"Track my cycle",icon:"🌙"},{k:"conceive",l:"Trying to conceive",icon:"🤍"},{k:"avoid",l:"Avoiding pregnancy",icon:"🛡"}].map(g=>(
-                <button key={g.k} onClick={()=>setGoal(g.k)} style={{display:"flex",alignItems:"center",gap:10,padding:"10px 12px",borderRadius:12,border:`1px solid ${goal===g.k?C.fuchsia:"rgba(255,255,255,0.12)"}`,background:goal===g.k?`${C.fuchsia}18`:"rgba(255,255,255,0.03)",color:goal===g.k?C.pearl:"rgba(245,230,255,0.6)",fontFamily:"DM Sans,sans-serif",fontSize:13,fontWeight:goal===g.k?600:400,cursor:"pointer",textAlign:"left"}}>
+                <button key={g.k} onClick={()=>setGoal(g.k)} style={{display:"flex",alignItems:"center",gap:10,padding:"10px 12px",borderRadius:12,border:`1px solid ${goal===g.k?C.fuchsia:"rgba(var(--surface-rgb),0.12)"}`,background:goal===g.k?`${C.fuchsia}18`:"rgba(var(--surface-rgb),0.03)",color:goal===g.k?C.pearl:"rgba(var(--ink-rgb),0.6)",fontFamily:"DM Sans,sans-serif",fontSize:13,fontWeight:goal===g.k?600:400,cursor:"pointer",textAlign:"left"}}>
                   <span style={{fontSize:18}}>{g.icon}</span>{g.l}
                   {goal===g.k&&<span style={{marginLeft:"auto",color:C.fuchsia}}>✓</span>}
                 </button>
@@ -54,16 +54,16 @@ export function OnboardingScreen({ onComplete }) {
           </div>
 
           <div>
-            <label style={{display:"block",fontFamily:"DM Sans,sans-serif",fontSize:12,color:"rgba(245,230,255,0.7)",marginBottom:6}}>When did your last period start?</label>
+            <label style={{display:"block",fontFamily:"DM Sans,sans-serif",fontSize:12,color:"rgba(var(--ink-rgb),0.7)",marginBottom:6}}>When did your last period start?</label>
             <input type="date" value={periodDate} max={new Date().toISOString().slice(0,10)} onChange={(e)=>setPeriodDate(e.target.value)}
-              style={{width:"100%",background:"rgba(26,10,46,0.6)",border:"1px solid rgba(195,155,211,0.3)",borderRadius:12,padding:"12px 14px",color:C.pearl,fontFamily:"DM Sans,sans-serif",fontSize:14,outline:"none",colorScheme:"dark"}}/>
+              style={{width:"100%",background:"rgba(var(--deep-rgb),0.6)",border:"1px solid rgba(var(--lav-rgb),0.3)",borderRadius:12,padding:"12px 14px",color:C.pearl,fontFamily:"DM Sans,sans-serif",fontSize:14,outline:"none",colorScheme:"var(--scheme)"}}/>
           </div>
 
           <div>
-            <label style={{display:"block",fontFamily:"DM Sans,sans-serif",fontSize:12,color:"rgba(245,230,255,0.7)",marginBottom:6}}>Typical cycle length: <span style={{color:C.fuchsia,fontWeight:600}}>{cycleLength} days</span></label>
+            <label style={{display:"block",fontFamily:"DM Sans,sans-serif",fontSize:12,color:"rgba(var(--ink-rgb),0.7)",marginBottom:6}}>Typical cycle length: <span style={{color:C.fuchsia,fontWeight:600}}>{cycleLength} days</span></label>
             <input type="range" min={21} max={40} value={cycleLength} onChange={(e)=>setCycleLength(e.target.value)}
               style={{width:"100%",accentColor:C.fuchsia}}/>
-            <div style={{display:"flex",justifyContent:"space-between",fontFamily:"DM Sans,sans-serif",fontSize:9,color:"rgba(245,230,255,0.35)"}}><span>21</span><span>40</span></div>
+            <div style={{display:"flex",justifyContent:"space-between",fontFamily:"DM Sans,sans-serif",fontSize:9,color:"rgba(var(--ink-rgb),0.35)"}}><span>21</span><span>40</span></div>
           </div>
         </div>
 
@@ -72,7 +72,7 @@ export function OnboardingScreen({ onComplete }) {
             style={{width:"100%",padding:14,borderRadius:12,background:`linear-gradient(135deg,${C.fuchsia},${C.amethyst})`,boxShadow:`0 8px 24px rgba(233,30,140,0.4)`,border:"none",color:"white",fontFamily:"DM Sans,sans-serif",fontSize:15,fontWeight:600,cursor:busy||!periodDate?"default":"pointer",opacity:busy||!periodDate?0.6:1}}>
             {busy?"Setting up…":"Start tracking"}
           </button>
-          <button onClick={()=>finish(false)} disabled={busy} style={{background:"none",border:"none",color:"rgba(245,230,255,0.4)",fontFamily:"DM Sans,sans-serif",fontSize:13,cursor:"pointer"}}>I'll add this later</button>
+          <button onClick={()=>finish(false)} disabled={busy} style={{background:"none",border:"none",color:"rgba(var(--ink-rgb),0.4)",fontFamily:"DM Sans,sans-serif",fontSize:13,cursor:"pointer"}}>I'll add this later</button>
         </div>
       </div>
     );
@@ -90,16 +90,16 @@ export function OnboardingScreen({ onComplete }) {
           <div style={{fontFamily:"Cormorant Garamond,Georgia,serif",fontSize:32,color:C.pearl,lineHeight:1.1,marginBottom:6}}>{s.title}</div>
           <div style={{fontFamily:"DM Sans,sans-serif",fontSize:12,color:C.mint,letterSpacing:"0.08em",textTransform:"uppercase"}}>{s.sub}</div>
         </div>
-        <p style={{fontFamily:"DM Sans,sans-serif",fontSize:14,color:"rgba(245,230,255,0.75)",lineHeight:1.7,maxWidth:280,margin:"0 auto"}}>{s.body}</p>
+        <p style={{fontFamily:"DM Sans,sans-serif",fontSize:14,color:"rgba(var(--ink-rgb),0.75)",lineHeight:1.7,maxWidth:280,margin:"0 auto"}}>{s.body}</p>
         <div style={{display:"flex",gap:6,justifyContent:"center"}}>
-          {STEPS.map((_,i)=><div key={i} style={{width:i===step?20:6,height:6,borderRadius:3,background:i===step?s.color:"rgba(255,255,255,0.2)",transition:"all 0.3s"}}/>)}
+          {STEPS.map((_,i)=><div key={i} style={{width:i===step?20:6,height:6,borderRadius:3,background:i===step?s.color:"rgba(var(--surface-rgb),0.2)",transition:"all 0.3s"}}/>)}
         </div>
       </div>
       <div style={{width:"100%",zIndex:1,flexShrink:0,display:"flex",flexDirection:"column",gap:10,paddingBottom:"max(8px,env(safe-area-inset-bottom))"}}>
         {step<STEPS.length-1
           ?<button onClick={()=>setStep(step+1)} style={{width:"100%",padding:14,borderRadius:12,background:s.color,border:"none",color:"white",fontFamily:"DM Sans,sans-serif",fontSize:15,fontWeight:600,cursor:"pointer"}}>Continue</button>
           :<button onClick={()=>setCapturing(true)} style={{width:"100%",padding:14,borderRadius:12,background:`linear-gradient(135deg,${C.fuchsia},${C.amethyst})`,boxShadow:`0 8px 24px rgba(233,30,140,0.4)`,border:"none",color:"white",fontFamily:"DM Sans,sans-serif",fontSize:15,fontWeight:600,cursor:"pointer"}}>Begin My Biome Journey</button>}
-        {step<STEPS.length-1&&<button onClick={()=>setCapturing(true)} style={{background:"none",border:"none",color:"rgba(245,230,255,0.4)",fontFamily:"DM Sans,sans-serif",fontSize:13,cursor:"pointer"}}>Skip</button>}
+        {step<STEPS.length-1&&<button onClick={()=>setCapturing(true)} style={{background:"none",border:"none",color:"rgba(var(--ink-rgb),0.4)",fontFamily:"DM Sans,sans-serif",fontSize:13,cursor:"pointer"}}>Skip</button>}
       </div>
     </div>
   );
