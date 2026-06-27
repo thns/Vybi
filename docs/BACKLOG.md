@@ -37,22 +37,6 @@ Microbe Report, Chat (+ `BiomeRing` renders `—` for null score).
 - [ ] **Gut / skin / oral biomes** — no sequencing source exists; signed-in users see "not available". Vaginal biome is fully live.
 - [ ] **Estimated Hormones** — replace the mock 35-day curve with a real model-based estimate.
 
-## Theming — light/white/pink backgrounds  ✅ (shipped)
-Light (white) is now the **default** app theme, with **Blush (pink)** and **Midnight (dark)**
-options selectable in **Settings → Appearance** (persisted per-device in `localStorage`).
-Implemented as CSS custom properties in `components/theme.js` + `THEME_CSS` in `VybiApp`;
-surface/text colours are exposed as rgb channels (`--ink-rgb`, `--surface-rgb`, `--lav-rgb`,
-`--deep-rgb`, `--velvet-rgb`, `--text`, `--app-bg`, `--card-shadow`, `--card-border`) so the
-existing inline `rgba()` alpha values re-skin automatically across every screen.
-- [x] App background + cards + primary text + nav + inputs all theme-aware.
-- [x] Cards gain a soft shadow on light themes (`--card-shadow`) so they lift off the page.
-- [x] Settings → Appearance picker (White / Blush / Midnight) with live switch + persistence.
-- [ ] **Accent-label contrast on light** — small uppercase eyebrow labels using pale accents
-      (`C.mint`, `C.gold`, `C.lavender`, `C.aqua`) read as soft pastels on white; tune to
-      deeper on-light variants if legibility feedback warrants.
-- [ ] **Persist theme to the user account** (DB column) so it follows the user across devices;
-      currently device-local. Login/signup (AuthShell) still use their own dark styling.
-
 ## Recently shipped — UX / branding / navigation
 - [x] **New Vybi logo + icons** — three-petal mark on brand dark `#1a0a2e`; regenerated PWA icons (192/512), apple-touch, favicon-32, transparent `logo-mark`; master source at `brand/vybi-logo-source.png`.
 - [x] **Persistent top bar** — clickable logo + white "VYBI" wordmark on every screen (→ Home), above the scroll area so it never overlaps screen titles.

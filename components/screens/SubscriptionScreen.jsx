@@ -37,7 +37,7 @@ export function SubscriptionScreen() {
         <div style={{fontFamily:"DM Sans,sans-serif",fontSize:12,color:C.mint}}>More layers = more accuracy</div>
       </div>
       {plans.map(plan=>(
-        <div key={plan.id} onClick={()=>setSel(plan.id)} style={{borderRadius:16,border:`2px solid ${sel===plan.id?plan.color:"rgba(var(--surface-rgb),0.08)"}`,background:sel===plan.id?`${plan.color}10`:"rgba(var(--velvet-rgb),0.4)",padding:16,cursor:"pointer",position:"relative"}}>
+        <div key={plan.id} onClick={()=>setSel(plan.id)} style={{borderRadius:16,border:`2px solid ${sel===plan.id?plan.color:"rgba(255,255,255,0.08)"}`,background:sel===plan.id?`${plan.color}10`:"rgba(45,17,85,0.4)",padding:16,cursor:"pointer",position:"relative"}}>
           {plan.popular&&<div style={{position:"absolute",top:-10,right:16,padding:"3px 12px",borderRadius:20,background:plan.color,fontFamily:"DM Sans,sans-serif",fontSize:10,fontWeight:700,color:"white"}}>MOST POPULAR</div>}
           <div style={{display:"flex",justifyContent:"space-between",alignItems:"flex-start",marginBottom:10}}>
             <div>
@@ -47,22 +47,22 @@ export function SubscriptionScreen() {
               </div>
               <div style={{display:"flex",alignItems:"baseline",gap:2}}>
                 <span style={{fontFamily:"Cormorant Garamond,Georgia,serif",fontSize:28,color:plan.color}}>{plan.price}</span>
-                <span style={{fontFamily:"DM Sans,sans-serif",fontSize:12,color:"rgba(var(--ink-rgb),0.5)"}}>{plan.period}</span>
+                <span style={{fontFamily:"DM Sans,sans-serif",fontSize:12,color:"rgba(245,230,255,0.5)"}}>{plan.period}</span>
               </div>
             </div>
-            <div style={{width:22,height:22,borderRadius:"50%",border:`2px solid ${sel===plan.id?plan.color:"rgba(var(--surface-rgb),0.2)"}`,background:sel===plan.id?plan.color:"transparent",display:"flex",alignItems:"center",justifyContent:"center"}}>
+            <div style={{width:22,height:22,borderRadius:"50%",border:`2px solid ${sel===plan.id?plan.color:"rgba(255,255,255,0.2)"}`,background:sel===plan.id?plan.color:"transparent",display:"flex",alignItems:"center",justifyContent:"center"}}>
               {sel===plan.id&&<div style={{width:8,height:8,borderRadius:"50%",background:"white"}}/>}
             </div>
           </div>
-          {plan.features.map(f=><div key={f} style={{display:"flex",gap:8,alignItems:"center",marginBottom:5}}><span style={{color:plan.color,fontSize:12}}>✓</span><span style={{fontFamily:"DM Sans,sans-serif",fontSize:12,color:"rgba(var(--ink-rgb),0.75)"}}>{f}</span></div>)}
-          {plan.locked?.map(f=><div key={f} style={{display:"flex",gap:8,alignItems:"center",marginBottom:5}}><span style={{color:"rgba(var(--surface-rgb),0.2)",fontSize:12}}>✗</span><span style={{fontFamily:"DM Sans,sans-serif",fontSize:12,color:"rgba(var(--ink-rgb),0.25)"}}>{f}</span></div>)}
+          {plan.features.map(f=><div key={f} style={{display:"flex",gap:8,alignItems:"center",marginBottom:5}}><span style={{color:plan.color,fontSize:12}}>✓</span><span style={{fontFamily:"DM Sans,sans-serif",fontSize:12,color:"rgba(245,230,255,0.75)"}}>{f}</span></div>)}
+          {plan.locked?.map(f=><div key={f} style={{display:"flex",gap:8,alignItems:"center",marginBottom:5}}><span style={{color:"rgba(255,255,255,0.2)",fontSize:12}}>✗</span><span style={{fontFamily:"DM Sans,sans-serif",fontSize:12,color:"rgba(245,230,255,0.25)"}}>{f}</span></div>)}
         </div>
       ))}
       <button onClick={startCheckout} disabled={busy||sel===currentTier} style={{width:"100%",padding:14,borderRadius:12,background:`linear-gradient(135deg,${C.fuchsia},${C.amethyst})`,boxShadow:`0 8px 24px rgba(233,30,140,0.4)`,border:"none",color:"white",fontFamily:"DM Sans,sans-serif",fontSize:15,fontWeight:600,cursor:busy||sel===currentTier?"default":"pointer",opacity:busy||sel===currentTier?0.6:1}}>
         {busy?"Redirecting…":sel===currentTier?`Current plan · ${plans.find(p=>p.id===sel)?.name}`:sel==="free"?"Continue Free":`Start ${plans.find(p=>p.id===sel)?.name} — 7 days free`}
       </button>
       {msg&&<div style={{textAlign:"center",fontFamily:"DM Sans,sans-serif",fontSize:11,color:C.amber}}>{msg}</div>}
-      <div style={{textAlign:"center",fontFamily:"DM Sans,sans-serif",fontSize:11,color:"rgba(var(--ink-rgb),0.35)"}}>Cancel anytime · ISO 27001 · vybi.health</div>
+      <div style={{textAlign:"center",fontFamily:"DM Sans,sans-serif",fontSize:11,color:"rgba(245,230,255,0.35)"}}>Cancel anytime · ISO 27001 · vybi.health</div>
     </div>
   );
 }

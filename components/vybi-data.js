@@ -5,7 +5,7 @@ export const C = {
   amethyst:   "#9b59b6",
   lavender:   "#c39bd3",
   lilac:      "#e8d5f5",
-  pearl:      "var(--text)",   // themed primary text (see components/theme.js)
+  pearl:      "#f5e6ff",
   fuchsia:    "#e91e8c",
   bubblegum:  "#ff6eb4",
   blush:      "#ff9dc6",
@@ -17,7 +17,7 @@ export const C = {
   gut:        "#ffd700",
   skin:       "#b8f0e6",
   oral:       "#c39bd3",
-  cream:      "var(--text)",  // themed primary text
+  cream:      "#f5e6ff",
   mint:       "#b8f0e6",
   coral:      "#e91e8c",
   sage:       "#9b59b6",
