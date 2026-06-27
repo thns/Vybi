@@ -45,7 +45,7 @@ export function HomeScreen({ setScreen }) {
         <div style={{fontFamily:"Cormorant Garamond,Georgia,serif",fontSize:28,color:C.pearl}}>Your Vybi Today</div>
       </div>
 
-      <Card style={{background:`linear-gradient(135deg,rgba(45,17,85,0.9),rgba(74,32,128,0.7))`}}>
+      <Card style={{background:`linear-gradient(135deg,rgba(var(--velvet-rgb),0.9),rgba(74,32,128,0.7))`}}>
         <div style={{display:"flex",gap:12,alignItems:"center",marginBottom:12}}>
           <div style={{flex:1}}>
             <div style={{display:"flex",gap:6,alignItems:"center",marginBottom:4}}>
@@ -53,7 +53,7 @@ export function HomeScreen({ setScreen }) {
               <span style={{fontFamily:"DM Sans,sans-serif",fontSize:11,color:phaseColor(phase),fontWeight:600,textTransform:"uppercase",letterSpacing:"0.06em"}}>{hasCycleData?`${phaseLabel(phase)} Phase`:"No cycle logged"}</span>
             </div>
             <div style={{fontFamily:"Cormorant Garamond,Georgia,serif",fontSize:20,color:C.pearl,marginBottom:2}}>{periodText}</div>
-            <div style={{fontFamily:"DM Sans,sans-serif",fontSize:11,color:"rgba(245,230,255,0.55)"}}>AI confidence: <span style={{color:C.mint,fontWeight:600}}>{accuracy!=null?`${accuracy}%`:"—"}</span> · {layersActive} layer{layersActive===1?"":"s"} active</div>
+            <div style={{fontFamily:"DM Sans,sans-serif",fontSize:11,color:"rgba(var(--ink-rgb),0.55)"}}>AI confidence: <span style={{color:C.mint,fontWeight:600}}>{accuracy!=null?`${accuracy}%`:"—"}</span> · {layersActive} layer{layersActive===1?"":"s"} active</div>
           </div>
           <div style={{textAlign:"right"}}>
             <div style={{fontFamily:"Cormorant Garamond,Georgia,serif",fontSize:32,color:C.gold}}>{overall!=null?overall:"—"}</div>
@@ -86,7 +86,7 @@ export function HomeScreen({ setScreen }) {
           <div style={{flex:1}}>
             <div style={{fontFamily:"DM Sans,sans-serif",fontSize:10,color:C.purple,textTransform:"uppercase",letterSpacing:"0.06em",marginBottom:2}}>AI Accuracy: {accuracy!=null?`${accuracy}%`:"—"}</div>
             <div style={{fontFamily:"Cormorant Garamond,Georgia,serif",fontSize:17,color:C.pearl,marginBottom:4}}>Connect wearable → unlock 90%</div>
-            <div style={{fontFamily:"DM Sans,sans-serif",fontSize:11,color:"rgba(245,230,255,0.6)"}}>{layersActive} of 5 algorithm layers active. View your AI engine →</div>
+            <div style={{fontFamily:"DM Sans,sans-serif",fontSize:11,color:"rgba(var(--ink-rgb),0.6)"}}>{layersActive} of 5 algorithm layers active. View your AI engine →</div>
           </div>
         </div>
       </Card>
@@ -97,7 +97,7 @@ export function HomeScreen({ setScreen }) {
           <div style={{flex:1}}>
             <div style={{fontFamily:"DM Sans,sans-serif",fontSize:10,color:C.amber,textTransform:"uppercase",letterSpacing:"0.06em",marginBottom:2}}>Prevention{bvRisk!=null?` · BV ${bvRisk}/100`:""}</div>
             <div style={{fontFamily:"Cormorant Garamond,Georgia,serif",fontSize:17,color:C.pearl,marginBottom:4}}>{bvRisk!=null?(bvRisk>=40?"BV risk elevated this week":"BV risk currently low"):(isLive?"See your prevention scores":"BV risk elevated this week")}</div>
-            <div style={{fontFamily:"DM Sans,sans-serif",fontSize:11,color:"rgba(245,230,255,0.6)"}}>{bvRisk!=null?"Based on your cycle, symptoms & biome signals. View details →":(isLive?"Log cycles, symptoms or a biome test to assess your risk →":"L. crispatus -18% post-period. Biome layer flagged. Take action →")}</div>
+            <div style={{fontFamily:"DM Sans,sans-serif",fontSize:11,color:"rgba(var(--ink-rgb),0.6)"}}>{bvRisk!=null?"Based on your cycle, symptoms & biome signals. View details →":(isLive?"Log cycles, symptoms or a biome test to assess your risk →":"L. crispatus -18% post-period. Biome layer flagged. Take action →")}</div>
           </div>
         </div>
       </Card>
@@ -126,7 +126,7 @@ export function HomeScreen({ setScreen }) {
 
       <Card style={{borderColor:`${C.gold}30`,background:`rgba(255,215,0,0.05)`,cursor:"pointer"}} onClick={()=>setScreen("Learn")}>
         <div style={{fontFamily:"DM Sans,sans-serif",fontSize:10,color:C.gold,textTransform:"uppercase",letterSpacing:"0.08em",marginBottom:6}}>✦ Insight of the day</div>
-        <div style={{fontFamily:"DM Sans,sans-serif",fontSize:12,color:"rgba(245,230,255,0.75)",lineHeight:1.7}}>{getDailyTip()}</div>
+        <div style={{fontFamily:"DM Sans,sans-serif",fontSize:12,color:"rgba(var(--ink-rgb),0.75)",lineHeight:1.7}}>{getDailyTip()}</div>
         <div style={{fontFamily:"DM Sans,sans-serif",fontSize:10,color:C.gold,marginTop:6}}>Open the library →</div>
       </Card>
 
@@ -134,7 +134,7 @@ export function HomeScreen({ setScreen }) {
         <Card>
           <div style={{fontFamily:"DM Sans,sans-serif",fontSize:10,color:C.gold,textTransform:"uppercase",letterSpacing:"0.08em",marginBottom:8}}>✦ Biome-Cycle Insight</div>
           <div style={{fontFamily:"Cormorant Garamond,Georgia,serif",fontSize:18,color:C.pearl,marginBottom:6}}>Your biome predicted this dip</div>
-          <div style={{fontFamily:"DM Sans,sans-serif",fontSize:12,color:"rgba(245,230,255,0.65)",lineHeight:1.7}}>Layer 3 detected L. crispatus declining 4 days before your symptoms appeared. Biome data gives Vybi a 3-5 day early warning that calendar-only apps cannot see.</div>
+          <div style={{fontFamily:"DM Sans,sans-serif",fontSize:12,color:"rgba(var(--ink-rgb),0.65)",lineHeight:1.7}}>Layer 3 detected L. crispatus declining 4 days before your symptoms appeared. Biome data gives Vybi a 3-5 day early warning that calendar-only apps cannot see.</div>
         </Card>
       )}
     </div>

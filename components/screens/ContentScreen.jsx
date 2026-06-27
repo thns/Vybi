@@ -22,9 +22,9 @@ export function ContentScreen() {
           <div style={{ fontFamily: "DM Sans,sans-serif", fontSize: 10, color: article.color, textTransform: "uppercase", letterSpacing: "0.08em" }}>{article.category} · {article.readMins} min read</div>
           <h1 style={{ fontFamily: "Cormorant Garamond,Georgia,serif", fontSize: 26, color: C.pearl, lineHeight: 1.2, margin: "6px 0 14px" }}>{article.title}</h1>
           {article.body.map((p, i) => (
-            <p key={i} style={{ fontFamily: "DM Sans,sans-serif", fontSize: 14, color: "rgba(245,230,255,0.8)", lineHeight: 1.8, marginBottom: 14 }}>{p}</p>
+            <p key={i} style={{ fontFamily: "DM Sans,sans-serif", fontSize: 14, color: "rgba(var(--ink-rgb),0.8)", lineHeight: 1.8, marginBottom: 14 }}>{p}</p>
           ))}
-          <div style={{ fontFamily: "DM Sans,sans-serif", fontSize: 10, color: "rgba(245,230,255,0.35)", marginTop: 12, lineHeight: 1.6 }}>Educational content — not a substitute for medical advice.</div>
+          <div style={{ fontFamily: "DM Sans,sans-serif", fontSize: 10, color: "rgba(var(--ink-rgb),0.35)", marginTop: 12, lineHeight: 1.6 }}>Educational content — not a substitute for medical advice.</div>
         </div>
       </div>
     );
@@ -42,12 +42,12 @@ export function ContentScreen() {
 
         <Card style={{ borderColor: `${C.gold}40`, background: `rgba(255,215,0,0.06)` }}>
           <div style={{ fontFamily: "DM Sans,sans-serif", fontSize: 10, color: C.gold, textTransform: "uppercase", letterSpacing: "0.08em", marginBottom: 6 }}>✦ Insight of the day</div>
-          <div style={{ fontFamily: "DM Sans,sans-serif", fontSize: 13, color: "rgba(245,230,255,0.85)", lineHeight: 1.7 }}>{getDailyTip()}</div>
+          <div style={{ fontFamily: "DM Sans,sans-serif", fontSize: 13, color: "rgba(var(--ink-rgb),0.85)", lineHeight: 1.7 }}>{getDailyTip()}</div>
         </Card>
 
         {cats.map((cat) => (
           <div key={cat}>
-            <div style={{ fontFamily: "DM Sans,sans-serif", fontSize: 10, color: "rgba(245,230,255,0.45)", textTransform: "uppercase", letterSpacing: "0.08em", margin: "4px 0 8px" }}>{cat}</div>
+            <div style={{ fontFamily: "DM Sans,sans-serif", fontSize: 10, color: "rgba(var(--ink-rgb),0.45)", textTransform: "uppercase", letterSpacing: "0.08em", margin: "4px 0 8px" }}>{cat}</div>
             <div style={{ display: "flex", flexDirection: "column", gap: 8 }}>
               {ARTICLES.filter((a) => a.category === cat).map((a) => (
                 <Card key={a.id} style={{ cursor: "pointer", padding: 14 }} onClick={() => setOpenId(a.id)}>
@@ -55,7 +55,7 @@ export function ContentScreen() {
                     <span style={{ fontSize: 22 }}>{a.icon}</span>
                     <div style={{ flex: 1 }}>
                       <div style={{ fontFamily: "Cormorant Garamond,Georgia,serif", fontSize: 17, color: C.pearl, lineHeight: 1.2 }}>{a.title}</div>
-                      <div style={{ fontFamily: "DM Sans,sans-serif", fontSize: 11, color: "rgba(245,230,255,0.55)", lineHeight: 1.5, marginTop: 4 }}>{a.excerpt}</div>
+                      <div style={{ fontFamily: "DM Sans,sans-serif", fontSize: 11, color: "rgba(var(--ink-rgb),0.55)", lineHeight: 1.5, marginTop: 4 }}>{a.excerpt}</div>
                       <div style={{ fontFamily: "DM Sans,sans-serif", fontSize: 9, color: a.color, marginTop: 6 }}>{a.readMins} min read →</div>
                     </div>
                   </div>

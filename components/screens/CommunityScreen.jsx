@@ -58,7 +58,7 @@ export function CommunityScreen() {
         <div style={{ fontFamily: "DM Sans,sans-serif", fontSize: 11, color: C.mint, marginBottom: 10 }}>Anonymous · Be kind · You're “{posts[0]?.mine ? posts.find((p) => p.mine)?.anonName : "anonymous"}”</div>
         <div style={{ display: "flex", gap: 6, marginBottom: 12, overflowX: "auto", paddingBottom: 4 }}>
           {ROOMS.map((r) => (
-            <button key={r.id} onClick={() => setRoom(r.id)} style={{ padding: "6px 12px", borderRadius: 20, border: `1px solid ${room === r.id ? C.fuchsia : "rgba(255,255,255,0.1)"}`, background: room === r.id ? `${C.fuchsia}20` : "transparent", color: room === r.id ? C.fuchsia : "rgba(245,230,255,0.5)", fontFamily: "DM Sans,sans-serif", fontSize: 11, fontWeight: 600, cursor: "pointer", whiteSpace: "nowrap" }}>{r.icon} {r.label}</button>
+            <button key={r.id} onClick={() => setRoom(r.id)} style={{ padding: "6px 12px", borderRadius: 20, border: `1px solid ${room === r.id ? C.fuchsia : "rgba(var(--surface-rgb),0.1)"}`, background: room === r.id ? `${C.fuchsia}20` : "transparent", color: room === r.id ? C.fuchsia : "rgba(var(--ink-rgb),0.5)", fontFamily: "DM Sans,sans-serif", fontSize: 11, fontWeight: 600, cursor: "pointer", whiteSpace: "nowrap" }}>{r.icon} {r.label}</button>
           ))}
         </div>
       </div>
@@ -68,23 +68,23 @@ export function CommunityScreen() {
 
         <Card>
           <textarea value={draft} onChange={(e) => setDraft(e.target.value)} placeholder={`Share with the ${ROOMS.find((r) => r.id === room)?.label} room…`} rows={2}
-            style={{ width: "100%", background: "rgba(26,10,46,0.6)", border: "1px solid rgba(195,155,211,0.25)", borderRadius: 10, padding: "10px 12px", color: C.pearl, fontFamily: "DM Sans,sans-serif", fontSize: 13, outline: "none", resize: "none" }} />
+            style={{ width: "100%", background: "rgba(var(--deep-rgb),0.6)", border: "1px solid rgba(var(--lav-rgb),0.25)", borderRadius: 10, padding: "10px 12px", color: C.pearl, fontFamily: "DM Sans,sans-serif", fontSize: 13, outline: "none", resize: "none" }} />
           <button onClick={submit} disabled={busy || draft.trim().length < 2} style={{ width: "100%", marginTop: 8, padding: 10, borderRadius: 10, border: "none", background: `linear-gradient(135deg,${C.fuchsia},${C.amethyst})`, color: "#fff", fontFamily: "DM Sans,sans-serif", fontSize: 13, fontWeight: 600, cursor: "pointer", opacity: busy || draft.trim().length < 2 ? 0.6 : 1 }}>{busy ? "Posting…" : "Post anonymously"}</button>
           {msg && <div style={{ marginTop: 8, fontFamily: "DM Sans,sans-serif", fontSize: 12, color: C.gold, textAlign: "center", lineHeight: 1.5 }}>{msg}</div>}
         </Card>
 
         {loading ? (
-          <div style={{ color: "rgba(245,230,255,0.4)", fontFamily: "DM Sans,sans-serif", fontSize: 12 }}>Loading…</div>
+          <div style={{ color: "rgba(var(--ink-rgb),0.4)", fontFamily: "DM Sans,sans-serif", fontSize: 12 }}>Loading…</div>
         ) : posts.length === 0 ? (
-          <div style={{ color: "rgba(245,230,255,0.4)", fontFamily: "DM Sans,sans-serif", fontSize: 12, textAlign: "center", padding: 20 }}>No posts yet — start the conversation 💬</div>
+          <div style={{ color: "rgba(var(--ink-rgb),0.4)", fontFamily: "DM Sans,sans-serif", fontSize: 12, textAlign: "center", padding: 20 }}>No posts yet — start the conversation 💬</div>
         ) : (
           posts.map((p) => (
             <Card key={p.id} style={{ cursor: "pointer" }} onClick={() => setOpen(p.id)}>
               <div style={{ display: "flex", justifyContent: "space-between", marginBottom: 6 }}>
                 <span style={{ fontFamily: "DM Sans,sans-serif", fontSize: 11, fontWeight: 600, color: p.mine ? C.fuchsia : C.lavender }}>{p.anonName}{p.mine ? " · you" : ""}</span>
-                <span style={{ fontFamily: "DM Sans,sans-serif", fontSize: 10, color: "rgba(245,230,255,0.35)" }}>{ago(p.createdAt)}</span>
+                <span style={{ fontFamily: "DM Sans,sans-serif", fontSize: 10, color: "rgba(var(--ink-rgb),0.35)" }}>{ago(p.createdAt)}</span>
               </div>
-              <div style={{ fontFamily: "DM Sans,sans-serif", fontSize: 13, color: "rgba(245,230,255,0.85)", lineHeight: 1.6, whiteSpace: "pre-line" }}>{p.body}</div>
+              <div style={{ fontFamily: "DM Sans,sans-serif", fontSize: 13, color: "rgba(var(--ink-rgb),0.85)", lineHeight: 1.6, whiteSpace: "pre-line" }}>{p.body}</div>
               <div style={{ fontFamily: "DM Sans,sans-serif", fontSize: 11, color: C.mint, marginTop: 8 }}>💬 {p.replyCount || 0} {p.replyCount === 1 ? "reply" : "replies"}</div>
             </Card>
           ))
@@ -124,30 +124,30 @@ function PostDetail({ postId, onBack }) {
         <button onClick={onBack} style={{ background: "none", border: "none", color: C.lavender, fontFamily: "DM Sans,sans-serif", fontSize: 13, cursor: "pointer", padding: 0 }}>‹ Community</button>
       </div>
       <div style={{ flex: 1, overflowY: "auto", padding: "4px 16px 28px", display: "flex", flexDirection: "column", gap: 10 }}>
-        {!data ? <div style={{ color: "rgba(245,230,255,0.4)", fontFamily: "DM Sans,sans-serif", fontSize: 12 }}>Loading…</div> : (
+        {!data ? <div style={{ color: "rgba(var(--ink-rgb),0.4)", fontFamily: "DM Sans,sans-serif", fontSize: 12 }}>Loading…</div> : (
           <>
             <Card>
               <div style={{ display: "flex", justifyContent: "space-between", marginBottom: 6 }}>
                 <span style={{ fontFamily: "DM Sans,sans-serif", fontSize: 11, fontWeight: 600, color: data.post.mine ? C.fuchsia : C.lavender }}>{data.post.anonName}{data.post.mine ? " · you" : ""}</span>
-                {!data.post.mine && <span onClick={() => report({ postId })} style={{ fontFamily: "DM Sans,sans-serif", fontSize: 10, color: "rgba(245,230,255,0.4)", cursor: "pointer" }}>Report</span>}
+                {!data.post.mine && <span onClick={() => report({ postId })} style={{ fontFamily: "DM Sans,sans-serif", fontSize: 10, color: "rgba(var(--ink-rgb),0.4)", cursor: "pointer" }}>Report</span>}
               </div>
-              <div style={{ fontFamily: "DM Sans,sans-serif", fontSize: 14, color: "rgba(245,230,255,0.9)", lineHeight: 1.7, whiteSpace: "pre-line" }}>{data.post.body}</div>
+              <div style={{ fontFamily: "DM Sans,sans-serif", fontSize: 14, color: "rgba(var(--ink-rgb),0.9)", lineHeight: 1.7, whiteSpace: "pre-line" }}>{data.post.body}</div>
             </Card>
 
-            <div style={{ fontFamily: "DM Sans,sans-serif", fontSize: 10, color: "rgba(245,230,255,0.4)", textTransform: "uppercase", letterSpacing: "0.08em" }}>{data.replies.length} {data.replies.length === 1 ? "reply" : "replies"}</div>
+            <div style={{ fontFamily: "DM Sans,sans-serif", fontSize: 10, color: "rgba(var(--ink-rgb),0.4)", textTransform: "uppercase", letterSpacing: "0.08em" }}>{data.replies.length} {data.replies.length === 1 ? "reply" : "replies"}</div>
             {data.replies.map((r) => (
               <Card key={r.id} style={{ padding: 12 }}>
                 <div style={{ display: "flex", justifyContent: "space-between", marginBottom: 4 }}>
                   <span style={{ fontFamily: "DM Sans,sans-serif", fontSize: 11, fontWeight: 600, color: r.mine ? C.fuchsia : C.lavender }}>{r.anonName}{r.mine ? " · you" : ""}</span>
-                  {!r.mine && <span onClick={() => report({ replyId: r.id })} style={{ fontFamily: "DM Sans,sans-serif", fontSize: 9, color: "rgba(245,230,255,0.35)", cursor: "pointer" }}>Report</span>}
+                  {!r.mine && <span onClick={() => report({ replyId: r.id })} style={{ fontFamily: "DM Sans,sans-serif", fontSize: 9, color: "rgba(var(--ink-rgb),0.35)", cursor: "pointer" }}>Report</span>}
                 </div>
-                <div style={{ fontFamily: "DM Sans,sans-serif", fontSize: 13, color: "rgba(245,230,255,0.82)", lineHeight: 1.6, whiteSpace: "pre-line" }}>{r.body}</div>
+                <div style={{ fontFamily: "DM Sans,sans-serif", fontSize: 13, color: "rgba(var(--ink-rgb),0.82)", lineHeight: 1.6, whiteSpace: "pre-line" }}>{r.body}</div>
               </Card>
             ))}
 
             <Card>
               <textarea value={draft} onChange={(e) => setDraft(e.target.value)} placeholder="Add a kind reply…" rows={2}
-                style={{ width: "100%", background: "rgba(26,10,46,0.6)", border: "1px solid rgba(195,155,211,0.25)", borderRadius: 10, padding: "10px 12px", color: C.pearl, fontFamily: "DM Sans,sans-serif", fontSize: 13, outline: "none", resize: "none" }} />
+                style={{ width: "100%", background: "rgba(var(--deep-rgb),0.6)", border: "1px solid rgba(var(--lav-rgb),0.25)", borderRadius: 10, padding: "10px 12px", color: C.pearl, fontFamily: "DM Sans,sans-serif", fontSize: 13, outline: "none", resize: "none" }} />
               <button onClick={reply} disabled={busy || draft.trim().length < 2} style={{ width: "100%", marginTop: 8, padding: 10, borderRadius: 10, border: "none", background: `linear-gradient(135deg,${C.fuchsia},${C.amethyst})`, color: "#fff", fontFamily: "DM Sans,sans-serif", fontSize: 13, fontWeight: 600, cursor: "pointer", opacity: busy || draft.trim().length < 2 ? 0.6 : 1 }}>{busy ? "Sending…" : "Reply"}</button>
               {msg && <div style={{ marginTop: 8, fontFamily: "DM Sans,sans-serif", fontSize: 12, color: C.gold, textAlign: "center", lineHeight: 1.5 }}>{msg}</div>}
             </Card>

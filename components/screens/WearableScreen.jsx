@@ -35,9 +35,9 @@ export function WearableScreen() {
 
   const field = (label, val, set, ph, step) => (
     <div style={{ flex: 1 }}>
-      <label style={{ display: "block", fontFamily: "DM Sans,sans-serif", fontSize: 10, color: "rgba(245,230,255,0.6)", marginBottom: 5 }}>{label}</label>
+      <label style={{ display: "block", fontFamily: "DM Sans,sans-serif", fontSize: 10, color: "rgba(var(--ink-rgb),0.6)", marginBottom: 5 }}>{label}</label>
       <input type="number" step={step} inputMode="decimal" value={val} onChange={(e) => set(e.target.value)} placeholder={ph}
-        style={{ width: "100%", background: "rgba(26,10,46,0.6)", border: "1px solid rgba(195,155,211,0.3)", borderRadius: 10, padding: "9px 10px", color: C.pearl, fontFamily: "DM Sans,sans-serif", fontSize: 14, outline: "none", colorScheme: "dark" }} />
+        style={{ width: "100%", background: "rgba(var(--deep-rgb),0.6)", border: "1px solid rgba(var(--lav-rgb),0.3)", borderRadius: 10, padding: "9px 10px", color: C.pearl, fontFamily: "DM Sans,sans-serif", fontSize: 14, outline: "none", colorScheme:"var(--scheme)" }} />
     </div>
   );
 
@@ -51,22 +51,22 @@ export function WearableScreen() {
       <div style={{ flex: 1, overflowY: "auto", padding: "8px 16px 28px", display: "flex", flexDirection: "column", gap: 12 }}>
         <GlowOrb color={C.aqua} size={220} opacity={0.12} x={70} y={-20} />
 
-        <Card style={{ borderColor: layer4 ? `${C.mint}40` : `${C.aqua}30`, background: layer4 ? `rgba(184,240,230,0.06)` : "rgba(45,17,85,0.55)" }}>
+        <Card style={{ borderColor: layer4 ? `${C.mint}40` : `${C.aqua}30`, background: layer4 ? `rgba(184,240,230,0.06)` : "rgba(var(--velvet-rgb),0.55)" }}>
           <div style={{ display: "flex", alignItems: "center", gap: 12 }}>
             <div style={{ fontSize: 30 }}>{layer4 ? "✅" : "⌚"}</div>
             <div style={{ flex: 1 }}>
               <div style={{ fontFamily: "DM Sans,sans-serif", fontSize: 10, color: layer4 ? C.mint : C.aqua, textTransform: "uppercase", letterSpacing: "0.08em" }}>Layer 4 · Wearable Fusion</div>
               <div style={{ fontFamily: "Cormorant Garamond,Georgia,serif", fontSize: 18, color: C.pearl }}>{layer4 ? "Active — boosting your accuracy" : "Log readings to activate"}</div>
-              <div style={{ fontFamily: "DM Sans,sans-serif", fontSize: 11, color: "rgba(245,230,255,0.5)" }}>BBT rises ~0.3°C after ovulation. HRV dips in the luteal phase.</div>
+              <div style={{ fontFamily: "DM Sans,sans-serif", fontSize: 11, color: "rgba(var(--ink-rgb),0.5)" }}>BBT rises ~0.3°C after ovulation. HRV dips in the luteal phase.</div>
             </div>
           </div>
         </Card>
 
         <Card>
           <div style={{ fontFamily: "DM Sans,sans-serif", fontSize: 10, color: C.aqua, textTransform: "uppercase", letterSpacing: "0.08em", marginBottom: 10 }}>Log today's readings</div>
-          <label style={{ display: "block", fontFamily: "DM Sans,sans-serif", fontSize: 10, color: "rgba(245,230,255,0.6)", marginBottom: 5 }}>Date</label>
+          <label style={{ display: "block", fontFamily: "DM Sans,sans-serif", fontSize: 10, color: "rgba(var(--ink-rgb),0.6)", marginBottom: 5 }}>Date</label>
           <input type="date" value={date} max={new Date().toISOString().slice(0, 10)} onChange={(e) => setDate(e.target.value)}
-            style={{ width: "100%", background: "rgba(26,10,46,0.6)", border: "1px solid rgba(195,155,211,0.3)", borderRadius: 10, padding: "9px 12px", color: C.pearl, fontFamily: "DM Sans,sans-serif", fontSize: 13, outline: "none", colorScheme: "dark", marginBottom: 12 }} />
+            style={{ width: "100%", background: "rgba(var(--deep-rgb),0.6)", border: "1px solid rgba(var(--lav-rgb),0.3)", borderRadius: 10, padding: "9px 12px", color: C.pearl, fontFamily: "DM Sans,sans-serif", fontSize: 13, outline: "none", colorScheme:"var(--scheme)", marginBottom: 12 }} />
           <div style={{ display: "flex", gap: 8, marginBottom: 12 }}>
             {field("BBT (°C)", bbt, setBbt, "36.6", "0.01")}
             {field("Resting HR", hr, setHr, "62", "1")}
@@ -74,16 +74,16 @@ export function WearableScreen() {
           </div>
           <button onClick={log} disabled={busy} style={{ width: "100%", padding: 12, borderRadius: 12, border: "none", background: `linear-gradient(135deg,${C.aqua},${C.amethyst})`, color: "#1a0a2e", fontFamily: "DM Sans,sans-serif", fontSize: 14, fontWeight: 700, cursor: "pointer", opacity: busy ? 0.6 : 1 }}>{busy ? "Saving…" : "Log readings"}</button>
           {msg && <div style={{ marginTop: 8, fontFamily: "DM Sans,sans-serif", fontSize: 10, color: C.mint, textAlign: "center" }}>{msg}</div>}
-          <div style={{ marginTop: 8, fontFamily: "DM Sans,sans-serif", fontSize: 10, color: "rgba(245,230,255,0.35)", textAlign: "center" }}>Apple Health / Oura / Garmin auto-sync needs the native app — manual entry works today.</div>
+          <div style={{ marginTop: 8, fontFamily: "DM Sans,sans-serif", fontSize: 10, color: "rgba(var(--ink-rgb),0.35)", textAlign: "center" }}>Apple Health / Oura / Garmin auto-sync needs the native app — manual entry works today.</div>
         </Card>
 
         {readings.length > 0 && (
           <Card>
             <div style={{ fontFamily: "DM Sans,sans-serif", fontSize: 10, color: C.mint, textTransform: "uppercase", letterSpacing: "0.08em", marginBottom: 10 }}>Recent readings</div>
             {readings.slice(0, 10).map((r, i) => (
-              <div key={i} style={{ display: "flex", justifyContent: "space-between", alignItems: "center", padding: "7px 0", borderBottom: i < Math.min(readings.length, 10) - 1 ? "1px solid rgba(255,255,255,0.05)" : "none" }}>
+              <div key={i} style={{ display: "flex", justifyContent: "space-between", alignItems: "center", padding: "7px 0", borderBottom: i < Math.min(readings.length, 10) - 1 ? "1px solid rgba(var(--surface-rgb),0.05)" : "none" }}>
                 <span style={{ fontFamily: "DM Sans,sans-serif", fontSize: 12, color: C.pearl }}>{formatShort(r.date)}</span>
-                <div style={{ display: "flex", gap: 12, fontFamily: "DM Sans,sans-serif", fontSize: 11, color: "rgba(245,230,255,0.6)" }}>
+                <div style={{ display: "flex", gap: 12, fontFamily: "DM Sans,sans-serif", fontSize: 11, color: "rgba(var(--ink-rgb),0.6)" }}>
                   <span>{r.bbt != null ? `${r.bbt}°C` : "—"}</span>
                   <span>{r.restingHr != null ? `${r.restingHr} bpm` : "—"}</span>
                   <span>{r.hrv != null ? `${r.hrv} ms` : "—"}</span>
