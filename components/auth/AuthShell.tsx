@@ -16,13 +16,13 @@ export function AuthShell({
         display: "flex",
         alignItems: "center",
         justifyContent: "center",
-        background: "linear-gradient(180deg,#1a0a2e 0%,#2d1155 100%)",
+        background: "var(--app-bg)",
         fontFamily: "DM Sans,sans-serif",
         padding: 20,
       }}
     >
       <style>{`@import url('https://fonts.googleapis.com/css2?family=Cormorant+Garamond:ital,wght@0,400;0,600&family=DM+Sans:wght@300;400;500;600;700&display=swap');
-        input::placeholder{color:rgba(245,230,255,0.3);}`}</style>
+        input::placeholder{color:rgba(var(--ink-rgb),0.3);}`}</style>
       <div style={{ width: 360, maxWidth: "100%", marginBottom: 64 }}>
         <div style={{ textAlign: "center", marginBottom: 16 }}>
           { /* eslint-disable-next-line @next/next/no-img-element */ }
@@ -38,7 +38,7 @@ export function AuthShell({
               fontFamily: "Cormorant Garamond,Georgia,serif",
               fontSize: 40,
               lineHeight: 1,
-              color: "#ffffff",
+              color: "var(--text)",
               letterSpacing: "0.02em",
             }}
           >
@@ -47,7 +47,7 @@ export function AuthShell({
           <div
             style={{
               fontSize: 10,
-              color: "#c39bd3",
+              color: "rgba(var(--ink-rgb),0.55)",
               letterSpacing: "0.15em",
               textTransform: "uppercase",
               marginTop: 4,
@@ -59,17 +59,18 @@ export function AuthShell({
 
         <div
           style={{
-            background: "rgba(45,17,85,0.55)",
+            background: "rgba(var(--velvet-rgb),0.55)",
             borderRadius: 22,
-            border: "1px solid rgba(195,155,211,0.2)",
+            border: "1px solid var(--card-border)",
             padding: 22,
             backdropFilter: "blur(12px)",
+            boxShadow: "var(--card-shadow)",
           }}
         >
-          <h1 style={{ color: "#f5e6ff", fontSize: 21, fontWeight: 600, marginBottom: 2 }}>
+          <h1 style={{ color: "var(--text)", fontSize: 21, fontWeight: 600, marginBottom: 2 }}>
             {title}
           </h1>
-          <p style={{ color: "rgba(245,230,255,0.5)", fontSize: 13, marginBottom: 16 }}>
+          <p style={{ color: "rgba(var(--ink-rgb),0.5)", fontSize: 13, marginBottom: 16 }}>
             {subtitle}
           </p>
           {children}
@@ -83,22 +84,23 @@ export function AuthShell({
 export const authStyles = {
   label: {
     display: "block",
-    color: "rgba(245,230,255,0.7)",
+    color: "rgba(var(--ink-rgb),0.7)",
     fontSize: 12,
     marginBottom: 6,
     fontFamily: "DM Sans,sans-serif",
   } as const,
   input: {
     width: "100%",
-    background: "rgba(26,10,46,0.6)",
-    border: "1px solid rgba(195,155,211,0.25)",
+    background: "rgba(var(--deep-rgb),0.6)",
+    border: "1px solid rgba(var(--lav-rgb),0.25)",
     borderRadius: 12,
     padding: "10px 14px",
-    color: "#f5e6ff",
+    color: "var(--text)",
     fontSize: 14,
     marginBottom: 12,
     fontFamily: "DM Sans,sans-serif",
     outline: "none",
+    colorScheme: "var(--scheme)",
   } as const,
   primary: {
     width: "100%",
@@ -114,11 +116,11 @@ export const authStyles = {
   } as const,
   google: {
     width: "100%",
-    background: "rgba(245,230,255,0.07)",
-    border: "1px solid rgba(195,155,211,0.3)",
+    background: "rgba(var(--ink-rgb),0.07)",
+    border: "1px solid rgba(var(--lav-rgb),0.3)",
     borderRadius: 12,
     padding: "11px 14px",
-    color: "#f5e6ff",
+    color: "var(--text)",
     fontSize: 14,
     fontWeight: 500,
     cursor: "pointer",
@@ -134,5 +136,5 @@ export const authStyles = {
     padding: "9px 12px",
     marginBottom: 16,
   } as const,
-  note: { color: "rgba(245,230,255,0.45)", fontSize: 12, textAlign: "center" as const, marginTop: 12 },
+  note: { color: "rgba(var(--ink-rgb),0.45)", fontSize: 12, textAlign: "center" as const, marginTop: 12 },
 };

@@ -36,6 +36,14 @@ export default function RootLayout({ children }: { children: ReactNode }) {
   return (
     <html lang="en">
       <body>
+        {/* Apply the saved theme before paint so every route (auth included)
+            renders in the right palette with no flash. */}
+        <script
+          dangerouslySetInnerHTML={{
+            __html:
+              "try{var t=localStorage.getItem('vybi-theme');document.documentElement.dataset.vybiTheme=(t==='dark'||t==='pink'||t==='light')?t:'light';}catch(e){document.documentElement.dataset.vybiTheme='light';}",
+          }}
+        />
         <Providers>{children}</Providers>
       </body>
     </html>

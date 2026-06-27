@@ -82,9 +82,9 @@ export function SignupForm({ googleEnabled }: { googleEnabled: boolean }) {
       {googleEnabled && (
         <>
           <div style={{ display: "flex", alignItems: "center", gap: 10, margin: "16px 0" }}>
-            <div style={{ flex: 1, height: 1, background: "rgba(195,155,211,0.18)" }} />
-            <span style={{ color: "rgba(245,230,255,0.35)", fontSize: 11 }}>or</span>
-            <div style={{ flex: 1, height: 1, background: "rgba(195,155,211,0.18)" }} />
+            <div style={{ flex: 1, height: 1, background: "rgba(var(--lav-rgb),0.18)" }} />
+            <span style={{ color: "rgba(var(--ink-rgb),0.35)", fontSize: 11 }}>or</span>
+            <div style={{ flex: 1, height: 1, background: "rgba(var(--lav-rgb),0.18)" }} />
           </div>
           <button style={s.google} onClick={() => signIn("google", { callbackUrl: "/" })}>
             Continue with Google
