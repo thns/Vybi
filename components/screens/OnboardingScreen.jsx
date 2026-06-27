@@ -69,7 +69,7 @@ export function OnboardingScreen({ onComplete }) {
 
         <div style={{width:"100%",zIndex:1,flexShrink:0,display:"flex",flexDirection:"column",gap:10,paddingTop:16,paddingBottom:"max(8px,env(safe-area-inset-bottom))"}}>
           <button onClick={()=>finish(true)} disabled={busy||!periodDate}
-            style={{width:"100%",padding:14,borderRadius:12,background:`linear-gradient(135deg,${C.fuchsia},${C.amethyst})`,boxShadow:`0 8px 24px rgba(233,30,140,0.4)`,border:"none",color:"white",fontFamily:"DM Sans,sans-serif",fontSize:15,fontWeight:600,cursor:busy||!periodDate?"default":"pointer",opacity:busy||!periodDate?0.6:1}}>
+            style={{width:"100%",padding:14,borderRadius:12,background:`var(--brand-grad)`,boxShadow:`0 8px 24px rgba(180,40,140,0.26)`,border:"none",color:"white",fontFamily:"DM Sans,sans-serif",fontSize:15,fontWeight:600,cursor:busy||!periodDate?"default":"pointer",opacity:busy||!periodDate?0.6:1}}>
             {busy?"Setting up…":"Start tracking"}
           </button>
           <button onClick={()=>finish(false)} disabled={busy} style={{background:"none",border:"none",color:"rgba(var(--ink-rgb),0.4)",fontFamily:"DM Sans,sans-serif",fontSize:13,cursor:"pointer"}}>I'll add this later</button>
@@ -98,7 +98,7 @@ export function OnboardingScreen({ onComplete }) {
       <div style={{width:"100%",zIndex:1,flexShrink:0,display:"flex",flexDirection:"column",gap:10,paddingBottom:"max(8px,env(safe-area-inset-bottom))"}}>
         {step<STEPS.length-1
           ?<button onClick={()=>setStep(step+1)} style={{width:"100%",padding:14,borderRadius:12,background:s.color,border:"none",color:"white",fontFamily:"DM Sans,sans-serif",fontSize:15,fontWeight:600,cursor:"pointer"}}>Continue</button>
-          :<button onClick={()=>setCapturing(true)} style={{width:"100%",padding:14,borderRadius:12,background:`linear-gradient(135deg,${C.fuchsia},${C.amethyst})`,boxShadow:`0 8px 24px rgba(233,30,140,0.4)`,border:"none",color:"white",fontFamily:"DM Sans,sans-serif",fontSize:15,fontWeight:600,cursor:"pointer"}}>Begin My Biome Journey</button>}
+          :<button onClick={()=>setCapturing(true)} style={{width:"100%",padding:14,borderRadius:12,background:`var(--brand-grad)`,boxShadow:`0 8px 24px rgba(180,40,140,0.26)`,border:"none",color:"white",fontFamily:"DM Sans,sans-serif",fontSize:15,fontWeight:600,cursor:"pointer"}}>Begin My Biome Journey</button>}
         {step<STEPS.length-1&&<button onClick={()=>setCapturing(true)} style={{background:"none",border:"none",color:"rgba(var(--ink-rgb),0.4)",fontFamily:"DM Sans,sans-serif",fontSize:13,cursor:"pointer"}}>Skip</button>}
       </div>
     </div>

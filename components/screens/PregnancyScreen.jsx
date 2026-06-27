@@ -81,7 +81,7 @@ export function PregnancyScreen() {
                 <input type="date" value={lmp} max={new Date().toISOString().slice(0,10)} onChange={(e)=>setLmp(e.target.value)} style={inputStyle}/>
               </>
             )}
-            <button onClick={start} disabled={busy||(mode==="due"?!dueDate:!lmp)} style={{width:"100%",marginTop:6,padding:13,borderRadius:12,border:"none",background:`linear-gradient(135deg,${C.fuchsia},${C.amethyst})`,color:"#fff",fontFamily:"DM Sans,sans-serif",fontSize:15,fontWeight:600,cursor:"pointer",opacity:busy||(mode==="due"?!dueDate:!lmp)?0.6:1}}>{busy?"Starting…":"Start pregnancy tracking"}</button>
+            <button onClick={start} disabled={busy||(mode==="due"?!dueDate:!lmp)} style={{width:"100%",marginTop:6,padding:13,borderRadius:12,border:"none",background:`var(--brand-grad)`,color:"#fff",fontFamily:"DM Sans,sans-serif",fontSize:15,fontWeight:600,cursor:"pointer",opacity:busy||(mode==="due"?!dueDate:!lmp)?0.6:1}}>{busy?"Starting…":"Start pregnancy tracking"}</button>
             {msg&&<div style={{marginTop:10,fontFamily:"DM Sans,sans-serif",fontSize:12,color:C.gold,textAlign:"center",lineHeight:1.5}}>{msg}</div>}
           </Card>
         </div>

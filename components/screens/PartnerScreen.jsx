@@ -49,7 +49,7 @@ export function PartnerScreen() {
               <div style={{ fontFamily: "DM Sans,sans-serif", fontSize: 10, color: C.mint, textTransform: "uppercase", letterSpacing: "0.08em", marginBottom: 8 }}>Your share link · Active</div>
               <div style={{ background: "rgba(var(--deep-rgb),0.6)", border: "1px solid rgba(var(--lav-rgb),0.25)", borderRadius: 10, padding: "10px 12px", fontFamily: "DM Sans,sans-serif", fontSize: 11, color: "rgba(var(--ink-rgb),0.8)", wordBreak: "break-all", marginBottom: 10 }}>{link}</div>
               <div style={{ display: "flex", gap: 8 }}>
-                <button onClick={share} style={{ flex: 1, padding: 11, borderRadius: 10, border: "none", background: `linear-gradient(135deg,${C.fuchsia},${C.amethyst})`, color: "#fff", fontFamily: "DM Sans,sans-serif", fontSize: 13, fontWeight: 600, cursor: "pointer" }}>Share</button>
+                <button onClick={share} style={{ flex: 1, padding: 11, borderRadius: 10, border: "none", background: `var(--brand-grad)`, color: "#fff", fontFamily: "DM Sans,sans-serif", fontSize: 13, fontWeight: 600, cursor: "pointer" }}>Share</button>
                 <button onClick={copy} style={{ flex: 1, padding: 11, borderRadius: 10, border: "1px solid rgba(var(--lav-rgb),0.3)", background: "transparent", color: C.lavender, fontFamily: "DM Sans,sans-serif", fontSize: 13, fontWeight: 600, cursor: "pointer" }}>{copied ? "Copied ✓" : "Copy link"}</button>
               </div>
             </Card>
@@ -57,7 +57,7 @@ export function PartnerScreen() {
           </>
         ) : (
           <>
-            <button onClick={create} disabled={busy} style={{ width: "100%", padding: 14, borderRadius: 12, border: "none", background: `linear-gradient(135deg,${C.fuchsia},${C.amethyst})`, boxShadow: `0 8px 24px rgba(233,30,140,0.4)`, color: "#fff", fontFamily: "DM Sans,sans-serif", fontSize: 15, fontWeight: 600, cursor: "pointer", opacity: busy ? 0.6 : 1 }}>{busy ? "Creating…" : "Create share link"}</button>
+            <button onClick={create} disabled={busy} style={{ width: "100%", padding: 14, borderRadius: 12, border: "none", background: `var(--brand-grad)`, boxShadow: `0 8px 24px rgba(180,40,140,0.26)`, color: "#fff", fontFamily: "DM Sans,sans-serif", fontSize: 15, fontWeight: 600, cursor: "pointer", opacity: busy ? 0.6 : 1 }}>{busy ? "Creating…" : "Create share link"}</button>
             {msg && <div style={{ marginTop: 10, fontFamily: "DM Sans,sans-serif", fontSize: 12, color: C.gold, textAlign: "center", lineHeight: 1.5 }}>{msg}</div>}
           </>
         )}

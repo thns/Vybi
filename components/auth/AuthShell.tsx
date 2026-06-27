@@ -104,7 +104,8 @@ export const authStyles = {
   } as const,
   primary: {
     width: "100%",
-    background: "linear-gradient(135deg,#e91e8c,#ff6eb4)",
+    background: "var(--brand-grad)",
+    boxShadow: "var(--brand-glow)",
     border: "none",
     borderRadius: 12,
     padding: "12px 14px",

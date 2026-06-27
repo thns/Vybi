@@ -2,10 +2,10 @@
 
 import { createContext, useContext, useEffect, useState } from "react";
 
-// Selectable app themes. `light` (white) is the default per product direction;
+// Selectable app themes. `light` is the default Lavender (satin) palette;
 // `pink` is a soft blush; `dark` preserves the original midnight palette.
 export const THEMES = [
-  { id: "light", label: "White",    swatch: "linear-gradient(135deg,#ffffff,#f1eafc)", ring: "#caa9e6" },
+  { id: "light", label: "Lavender", swatch: "linear-gradient(135deg,#efe3fb,#dcc9f1)", ring: "#9c1fc9" },
   { id: "pink",  label: "Blush",    swatch: "linear-gradient(135deg,#fff2f8,#ffd9e6)", ring: "#ff9dc6" },
   { id: "dark",  label: "Midnight", swatch: "linear-gradient(135deg,#2d1155,#1a0a2e)", ring: "#9b59b6" },
 ];

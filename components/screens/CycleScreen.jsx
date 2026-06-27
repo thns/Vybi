@@ -166,7 +166,7 @@ export function CycleScreen() {
             <div style={{display:"flex",gap:8}}>
               <input type="date" value={periodDate} max={new Date().toISOString().slice(0,10)} onChange={(e)=>setPeriodDate(e.target.value)}
                 style={{flex:1,background:"rgba(var(--deep-rgb),0.6)",border:"1px solid rgba(var(--lav-rgb),0.3)",borderRadius:10,padding:"9px 12px",color:C.pearl,fontFamily:"DM Sans,sans-serif",fontSize:13,outline:"none",colorScheme:"var(--scheme)"}}/>
-              <button onClick={logPeriod} disabled={logging||!periodDate} style={{padding:"9px 16px",borderRadius:10,border:"none",background:`linear-gradient(135deg,${C.fuchsia},${C.coral})`,color:"#fff",fontFamily:"DM Sans,sans-serif",fontSize:13,fontWeight:600,cursor:logging||!periodDate?"default":"pointer",opacity:logging||!periodDate?0.6:1}}>{logging?"…":"Log"}</button>
+              <button onClick={logPeriod} disabled={logging||!periodDate} style={{padding:"9px 16px",borderRadius:10,border:"none",background:`var(--brand-grad)`,color:"#fff",fontFamily:"DM Sans,sans-serif",fontSize:13,fontWeight:600,cursor:logging||!periodDate?"default":"pointer",opacity:logging||!periodDate?0.6:1}}>{logging?"…":"Log"}</button>
             </div>
             {logMsg&&<div style={{marginTop:8,fontFamily:"DM Sans,sans-serif",fontSize:10,color:C.mint}}>{logMsg}</div>}
             {hasCycleData&&<div style={{marginTop:8,fontFamily:"DM Sans,sans-serif",fontSize:10,color:"rgba(var(--ink-rgb),0.45)"}}>Last logged: {formatShort(latestCycle.periodStartDate)} · {cycles.length} cycle{cycles.length===1?"":"s"} on file</div>}
@@ -222,7 +222,7 @@ export function CycleScreen() {
             {loggedSymptoms.length>0&&<div style={{marginTop:10,padding:"8px 10px",borderRadius:8,background:"rgba(233,30,140,0.1)",border:`1px solid ${C.coral}30`}}>
               <div style={{fontFamily:"DM Sans,sans-serif",fontSize:11,color:C.coral}}>{loggedSymptoms.length} symptoms selected → improving Layer 2 pattern recognition</div>
             </div>}
-            <button onClick={saveSymptoms} disabled={saving||loggedSymptoms.length===0} style={{marginTop:10,width:"100%",padding:"9px 12px",borderRadius:10,border:"none",background:`linear-gradient(135deg,${C.fuchsia},${C.coral})`,color:"#fff",fontFamily:"DM Sans,sans-serif",fontSize:12,fontWeight:600,cursor:saving||loggedSymptoms.length===0?"default":"pointer",opacity:saving||loggedSymptoms.length===0?0.6:1}}>
+            <button onClick={saveSymptoms} disabled={saving||loggedSymptoms.length===0} style={{marginTop:10,width:"100%",padding:"9px 12px",borderRadius:10,border:"none",background:`var(--brand-grad)`,color:"#fff",fontFamily:"DM Sans,sans-serif",fontSize:12,fontWeight:600,cursor:saving||loggedSymptoms.length===0?"default":"pointer",opacity:saving||loggedSymptoms.length===0?0.6:1}}>
               {saving?"Logging…":`Log Day ${currentDay} symptoms`}
             </button>
             {savedMsg&&<div style={{marginTop:8,fontFamily:"DM Sans,sans-serif",fontSize:10,color:C.mint,textAlign:"center"}}>{savedMsg}</div>}

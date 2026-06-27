@@ -69,7 +69,7 @@ export function SettingsScreen({ setScreen }) {
       <div style={{fontFamily:"Cormorant Garamond,Georgia,serif",fontSize:26,color:C.pearl}}>Settings</div>
       <Card>
         <div style={{display:"flex",gap:12,alignItems:"center"}}>
-          <div style={{width:48,height:48,borderRadius:"50%",background:`linear-gradient(135deg,${C.fuchsia},${C.amethyst})`,display:"flex",alignItems:"center",justifyContent:"center",fontSize:20,fontWeight:700,color:"#fff",fontFamily:"DM Sans,sans-serif",overflow:"hidden"}}>{user?.image?<img src={user.image} alt="" style={{width:"100%",height:"100%",objectFit:"cover"}}/>:initial}</div>
+          <div style={{width:48,height:48,borderRadius:"50%",background:`var(--brand-grad)`,display:"flex",alignItems:"center",justifyContent:"center",fontSize:20,fontWeight:700,color:"#fff",fontFamily:"DM Sans,sans-serif",overflow:"hidden"}}>{user?.image?<img src={user.image} alt="" style={{width:"100%",height:"100%",objectFit:"cover"}}/>:initial}</div>
           <div style={{flex:1,minWidth:0}}>
             <div style={{fontFamily:"Cormorant Garamond,Georgia,serif",fontSize:18,color:C.pearl,whiteSpace:"nowrap",overflow:"hidden",textOverflow:"ellipsis"}}>{display}</div>
             <div style={{fontFamily:"DM Sans,sans-serif",fontSize:11,color:C.mint}}>{tier}</div>

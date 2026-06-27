@@ -2,7 +2,7 @@ import { C } from "./vybi-data.js";
 
 export function Card({ children, style = {}, onClick }) {
   return (
-    <div onClick={onClick} style={{background:"rgba(var(--velvet-rgb),0.55)",borderRadius:18,border:"1px solid var(--card-border)",padding:16,backdropFilter:"blur(12px)",boxShadow:"var(--card-shadow)",position:"relative",overflow:"hidden",flexShrink:0,...style}}>
+    <div onClick={onClick} style={{background:"var(--card-bg)",borderRadius:18,border:"1px solid var(--card-border)",padding:16,backdropFilter:"blur(12px)",boxShadow:"var(--card-shadow)",position:"relative",overflow:"hidden",flexShrink:0,...style}}>
       {children}
     </div>
   );

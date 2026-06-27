@@ -69,7 +69,7 @@ export function CommunityScreen() {
         <Card>
           <textarea value={draft} onChange={(e) => setDraft(e.target.value)} placeholder={`Share with the ${ROOMS.find((r) => r.id === room)?.label} room…`} rows={2}
             style={{ width: "100%", background: "rgba(var(--deep-rgb),0.6)", border: "1px solid rgba(var(--lav-rgb),0.25)", borderRadius: 10, padding: "10px 12px", color: C.pearl, fontFamily: "DM Sans,sans-serif", fontSize: 13, outline: "none", resize: "none" }} />
-          <button onClick={submit} disabled={busy || draft.trim().length < 2} style={{ width: "100%", marginTop: 8, padding: 10, borderRadius: 10, border: "none", background: `linear-gradient(135deg,${C.fuchsia},${C.amethyst})`, color: "#fff", fontFamily: "DM Sans,sans-serif", fontSize: 13, fontWeight: 600, cursor: "pointer", opacity: busy || draft.trim().length < 2 ? 0.6 : 1 }}>{busy ? "Posting…" : "Post anonymously"}</button>
+          <button onClick={submit} disabled={busy || draft.trim().length < 2} style={{ width: "100%", marginTop: 8, padding: 10, borderRadius: 10, border: "none", background: `var(--brand-grad)`, color: "#fff", fontFamily: "DM Sans,sans-serif", fontSize: 13, fontWeight: 600, cursor: "pointer", opacity: busy || draft.trim().length < 2 ? 0.6 : 1 }}>{busy ? "Posting…" : "Post anonymously"}</button>
           {msg && <div style={{ marginTop: 8, fontFamily: "DM Sans,sans-serif", fontSize: 12, color: C.gold, textAlign: "center", lineHeight: 1.5 }}>{msg}</div>}
         </Card>
 
@@ -148,7 +148,7 @@ function PostDetail({ postId, onBack }) {
             <Card>
               <textarea value={draft} onChange={(e) => setDraft(e.target.value)} placeholder="Add a kind reply…" rows={2}
                 style={{ width: "100%", background: "rgba(var(--deep-rgb),0.6)", border: "1px solid rgba(var(--lav-rgb),0.25)", borderRadius: 10, padding: "10px 12px", color: C.pearl, fontFamily: "DM Sans,sans-serif", fontSize: 13, outline: "none", resize: "none" }} />
-              <button onClick={reply} disabled={busy || draft.trim().length < 2} style={{ width: "100%", marginTop: 8, padding: 10, borderRadius: 10, border: "none", background: `linear-gradient(135deg,${C.fuchsia},${C.amethyst})`, color: "#fff", fontFamily: "DM Sans,sans-serif", fontSize: 13, fontWeight: 600, cursor: "pointer", opacity: busy || draft.trim().length < 2 ? 0.6 : 1 }}>{busy ? "Sending…" : "Reply"}</button>
+              <button onClick={reply} disabled={busy || draft.trim().length < 2} style={{ width: "100%", marginTop: 8, padding: 10, borderRadius: 10, border: "none", background: `var(--brand-grad)`, color: "#fff", fontFamily: "DM Sans,sans-serif", fontSize: 13, fontWeight: 600, cursor: "pointer", opacity: busy || draft.trim().length < 2 ? 0.6 : 1 }}>{busy ? "Sending…" : "Reply"}</button>
               {msg && <div style={{ marginTop: 8, fontFamily: "DM Sans,sans-serif", fontSize: 12, color: C.gold, textAlign: "center", lineHeight: 1.5 }}>{msg}</div>}
             </Card>
           </>

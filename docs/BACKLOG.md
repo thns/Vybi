@@ -37,6 +37,17 @@ Microbe Report, Chat (+ `BiomeRing` renders `—` for null score).
 - [ ] **Gut / skin / oral biomes** — no sequencing source exists; signed-in users see "not available". Vaginal biome is fully live.
 - [ ] **Estimated Hormones** — replace the mock 35-day curve with a real model-based estimate.
 
+## Theming — Lavender satin refresh  ✅ (shipped)
+Default theme is now **Lavender** (satin finish): luminous radial-bloom background,
+white→lilac gradient cards with a lit top edge + soft shadow (`--card-bg`,
+`--card-shadow`, `--card-border`), deep indigo ink (`#2C2350`), and primary buttons on
+the **logo violet→magenta gradient** with a gentle sheen (`--brand-grad` + `--brand-glow`).
+Blush and Midnight inherit the same satin treatment. Tokens live in `globals.css`
+(mirrored in `VybiApp` THEME_CSS).
+- [ ] Ad-hoc nested panels still use translucent `--velvet-rgb` (flat) rather than the
+      satin `--card-bg`; promote the important ones if they look weak on lavender.
+- [ ] Active bottom-nav icon uses brand magenta; preview used violet `#9B30D4` — optional.
+
 ## Theming — light/white/pink backgrounds  ✅ (shipped)
 Light (white) is now the **default** app theme, with **Blush (pink)** and **Midnight (dark)**
 options selectable in **Settings → Appearance** (persisted per-device in `localStorage`).

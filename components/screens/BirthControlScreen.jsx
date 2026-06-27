@@ -99,7 +99,7 @@ export function BirthControlScreen() {
                   <input type="time" value={pillTime} onChange={(e)=>setPillTime(e.target.value)} style={{background:"rgba(var(--deep-rgb),0.6)",border:"1px solid rgba(var(--lav-rgb),0.3)",borderRadius:10,padding:"8px 12px",color:C.pearl,fontFamily:"DM Sans,sans-serif",fontSize:13,outline:"none",colorScheme:"var(--scheme)"}}/>
                 </div>
               )}
-              <button onClick={save} disabled={busy||!selected||selected===config?.method&&selected!=="pill"} style={{width:"100%",marginTop:12,padding:12,borderRadius:12,border:"none",background:`linear-gradient(135deg,${C.fuchsia},${C.amethyst})`,color:"#fff",fontFamily:"DM Sans,sans-serif",fontSize:14,fontWeight:600,cursor:"pointer",opacity:busy||!selected?0.6:1}}>{busy?"Saving…":config?"Update method":"Save method"}</button>
+              <button onClick={save} disabled={busy||!selected||selected===config?.method&&selected!=="pill"} style={{width:"100%",marginTop:12,padding:12,borderRadius:12,border:"none",background:`var(--brand-grad)`,color:"#fff",fontFamily:"DM Sans,sans-serif",fontSize:14,fontWeight:600,cursor:"pointer",opacity:busy||!selected?0.6:1}}>{busy?"Saving…":config?"Update method":"Save method"}</button>
               {msg&&<div style={{marginTop:10,fontFamily:"DM Sans,sans-serif",fontSize:12,color:C.gold,textAlign:"center",lineHeight:1.5}}>{msg}</div>}
             </Card>
 
@@ -114,7 +114,7 @@ export function BirthControlScreen() {
                     </div>
                   ))}
                 </div>
-                <button onClick={takeToday} disabled={busy||tookToday} style={{width:"100%",padding:12,borderRadius:12,border:"none",background:tookToday?"rgba(184,240,230,0.15)":`linear-gradient(135deg,${C.fuchsia},${C.coral})`,color:tookToday?C.mint:"#fff",fontFamily:"DM Sans,sans-serif",fontSize:14,fontWeight:600,cursor:tookToday?"default":"pointer",opacity:busy?0.6:1}}>{tookToday?"✓ Taken today":"Take today's pill"}</button>
+                <button onClick={takeToday} disabled={busy||tookToday} style={{width:"100%",padding:12,borderRadius:12,border:"none",background:tookToday?"rgba(184,240,230,0.15)":`var(--brand-grad)`,color:tookToday?C.mint:"#fff",fontFamily:"DM Sans,sans-serif",fontSize:14,fontWeight:600,cursor:tookToday?"default":"pointer",opacity:busy?0.6:1}}>{tookToday?"✓ Taken today":"Take today's pill"}</button>
                 <div style={{fontFamily:"DM Sans,sans-serif",fontSize:10,color:"rgba(var(--ink-rgb),0.4)",textAlign:"center",marginTop:8}}>Reminder set for {config.pillTime||pillTime} daily</div>
               </Card>
             )}

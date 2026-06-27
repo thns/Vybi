@@ -4,33 +4,37 @@
 
 /* ── Theme tokens ───────────────────────────────────────────────────────────
    Available on every route (auth pages included). `:root` defaults to the
-   light/white palette so first paint matches the default theme; the
-   data-attribute blocks override per selected theme. Surface/text colours are
-   exposed as rgb channels so existing inline rgba() alpha values re-skin. */
+   Lavender palette so first paint matches the default theme; the data-attribute
+   blocks override per selected theme. Surface/text colours are exposed as rgb
+   channels so existing inline rgba() alpha values re-skin. Satin finish:
+   luminous bloom backgrounds, gradient cards with a lit top edge + soft shadow,
+   and a brand violet→magenta button gradient with a gentle sheen. */
 :root,
 [data-vybi-theme="light"] {
-  --app-bg: linear-gradient(180deg, #fbf8ff 0%, #f1eafc 100%);
-  --text: #2a1240;
-  --ink-rgb: 46, 20, 66;
+  --app-bg: radial-gradient(130% 80% at 20% 0%, #f3ebfc 0%, #e9ddf8 52%, #e3d5f4 100%);
+  --text: #2c2350;
+  --ink-rgb: 44, 35, 80;
   --surface-rgb: 70, 40, 100;
-  --lav-rgb: 150, 110, 175;
-  --deep-rgb: 244, 236, 251;
+  --lav-rgb: 150, 110, 190;
+  --deep-rgb: 248, 243, 254;
   --velvet-rgb: 255, 255, 255;
   --scheme: light;
-  --card-shadow: 0 6px 22px rgba(90, 50, 130, 0.10);
-  --card-border: rgba(150, 110, 175, 0.30);
+  --card-bg: linear-gradient(170deg, #ffffff 0%, #fbf7ff 100%);
+  --card-border: rgba(150, 110, 190, 0.16);
+  --card-shadow: 0 6px 16px rgba(110, 70, 160, 0.10), inset 0 1px 0 rgba(255, 255, 255, 0.7);
 }
 [data-vybi-theme="pink"] {
-  --app-bg: linear-gradient(180deg, #fff2f8 0%, #ffe3ee 100%);
+  --app-bg: radial-gradient(130% 80% at 20% 0%, #fff1f8 0%, #ffe2ee 55%, #ffd6e8 100%);
   --text: #3a0f2a;
   --ink-rgb: 80, 22, 55;
   --surface-rgb: 120, 40, 80;
   --lav-rgb: 210, 120, 160;
-  --deep-rgb: 255, 235, 244;
+  --deep-rgb: 255, 243, 248;
   --velvet-rgb: 255, 255, 255;
   --scheme: light;
-  --card-shadow: 0 6px 22px rgba(190, 60, 120, 0.12);
-  --card-border: rgba(220, 130, 170, 0.35);
+  --card-bg: linear-gradient(170deg, #ffffff 0%, #fff4f9 100%);
+  --card-border: rgba(220, 130, 170, 0.22);
+  --card-shadow: 0 6px 16px rgba(190, 60, 120, 0.12), inset 0 1px 0 rgba(255, 255, 255, 0.7);
 }
 [data-vybi-theme="dark"] {
   --app-bg: linear-gradient(180deg, #1a0a2e 0%, #2d1155 100%);
@@ -41,8 +45,16 @@
   --deep-rgb: 26, 10, 46;
   --velvet-rgb: 45, 17, 85;
   --scheme: dark;
-  --card-shadow: none;
+  --card-bg: rgba(45, 17, 85, 0.55);
   --card-border: rgba(195, 155, 211, 0.20);
+  --card-shadow: 0 6px 16px rgba(0, 0, 0, 0.28), inset 0 1px 0 rgba(255, 255, 255, 0.05);
+}
+
+/* Brand button finish — logo violet→magenta gradient with a satin top sheen.
+   Theme-independent (the logo is constant), so defined once on :root. */
+:root {
+  --brand-grad: linear-gradient(180deg, rgba(255, 255, 255, 0.18), rgba(255, 255, 255, 0) 52%), linear-gradient(135deg, #9c1fc9, #e6199b);
+  --brand-glow: 0 5px 14px rgba(180, 40, 140, 0.24), inset 0 1px 0 rgba(255, 255, 255, 0.25);
 }
 
 html,
