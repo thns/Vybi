@@ -29,23 +29,23 @@ import { AccountMenu } from "./AccountMenu.tsx";
 // alpha values keep working across every theme.
 const THEME_CSS = `
   :root,[data-vybi-theme="light"]{
-    --app-bg:radial-gradient(130% 80% at 20% 0%, #f3ebfc 0%, #e9ddf8 52%, #e3d5f4 100%);
-    --text:#2c2350; --ink-rgb:44,35,80; --surface-rgb:70,40,100;
+    --app-bg:radial-gradient(125% 85% at 50% -10%, #fbf9fe 0%, #f3edfb 55%, #ebe3f6 100%);
+    --text:#19112e; --ink-rgb:26,18,46; --surface-rgb:60,36,92;
     --lav-rgb:150,110,190; --deep-rgb:248,243,254; --velvet-rgb:255,255,255;
     --scheme:light;
-    --card-bg:linear-gradient(170deg,#ffffff 0%,#fbf7ff 100%);
-    --card-hero:linear-gradient(135deg,#ffffff 0%,#efe6fb 100%);
+    --card-bg:#ffffff;
+    --card-hero:#ffffff;
     --card-border:rgba(150,110,190,0.16);
     --card-shadow:0 6px 16px rgba(110,70,160,0.10), inset 0 1px 0 rgba(255,255,255,0.7);
     --ey-mint:#0f7a5a; --ey-aqua:#0f7a5a; --ey-gold:#9a6b00; --ey-amber:#b5560b; --ey-rose:#b81e5e; --ey-blush:#b81e5e; --ey-bubblegum:#c01f8f; --ey-coral:#c41f7a; --ey-fuchsia:#c41f7a; --ey-lavender:#7a3fb0; --ey-saliva:#7a3fb0; --ey-amethyst:#6b3a9e; --ey-purple:#6b3a9e;
   }
   [data-vybi-theme="pink"]{
-    --app-bg:radial-gradient(130% 80% at 20% 0%, #fff1f8 0%, #ffe2ee 55%, #ffd6e8 100%);
-    --text:#3a0f2a; --ink-rgb:80,22,55; --surface-rgb:120,40,80;
+    --app-bg:radial-gradient(125% 85% at 50% -10%, #fff9fc 0%, #ffeef5 55%, #ffe2ec 100%);
+    --text:#2c0a1f; --ink-rgb:60,14,40; --surface-rgb:120,40,80;
     --lav-rgb:210,120,160; --deep-rgb:255,243,248; --velvet-rgb:255,255,255;
     --scheme:light;
-    --card-bg:linear-gradient(170deg,#ffffff 0%,#fff4f9 100%);
-    --card-hero:linear-gradient(135deg,#ffffff 0%,#ffeef5 100%);
+    --card-bg:#ffffff;
+    --card-hero:#ffffff;
     --card-border:rgba(220,130,170,0.22);
     --card-shadow:0 6px 16px rgba(190,60,120,0.12), inset 0 1px 0 rgba(255,255,255,0.7);
   }

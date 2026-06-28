@@ -8,8 +8,10 @@ export function Card({ children, style = {}, onClick }) {
   );
 }
 
-export function GlowOrb({ color, size=200, opacity=0.15, x=0, y=0 }) {
-  return <div style={{position:"absolute",width:size,height:size,borderRadius:"50%",background:color,opacity,filter:"blur(60px)",left:x,top:y,pointerEvents:"none",zIndex:0}}/>;
+export function GlowOrb() {
+  // Ambient colour blobs removed for the clean white finish (kept as a no-op so
+  // existing <GlowOrb/> call sites don't need touching).
+  return null;
 }
 
 export function Badge({ text, color }) {
