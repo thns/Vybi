@@ -40,7 +40,7 @@ export function MicrobeReportScreen() {
         </div>
       </div>
       <div style={{flex:1,overflowY:"auto",padding:"0 16px 28px",display:"flex",flexDirection:"column",gap:12}}>
-        <GlowOrb color={biome?.color||C.mint} size={180} opacity={0.1} x={100} y={0}/>
+        <div style={{position:"absolute",width:200,height:200,borderRadius:"50%",background:biome?.color||C.mint,opacity:0.09,filter:"blur(72px)",left:90,top:-10,pointerEvents:"none",zIndex:0}}/>
 
         {isLive && !hasReport ? (
           <Card style={{textAlign:"center"}}>

@@ -27,7 +27,7 @@ export function BiomesScreen() {
         </div>
       </div>
       <div style={{flex:1,overflowY:"auto",padding:"0 16px 28px",display:"flex",flexDirection:"column",gap:12}}>
-        <GlowOrb color={b.color} size={220} opacity={0.15} x={80} y={-20}/>
+        <div style={{position:"absolute",width:240,height:240,borderRadius:"50%",background:b.color,opacity:0.10,filter:"blur(72px)",left:70,top:-30,pointerEvents:"none",zIndex:0}}/>
         <Card style={{borderColor:`${b.color}40`}}>
           <div style={{display:"flex",alignItems:"center",gap:16}}>
             <BiomeRing biome={b} size={88} showLabel={false}/>
