@@ -34,8 +34,10 @@ const THEME_CSS = `
     --lav-rgb:150,110,190; --deep-rgb:248,243,254; --velvet-rgb:255,255,255;
     --scheme:light;
     --card-bg:linear-gradient(170deg,#ffffff 0%,#fbf7ff 100%);
+    --card-hero:linear-gradient(135deg,#ffffff 0%,#efe6fb 100%);
     --card-border:rgba(150,110,190,0.16);
     --card-shadow:0 6px 16px rgba(110,70,160,0.10), inset 0 1px 0 rgba(255,255,255,0.7);
+    --ey-mint:#0f7a5a; --ey-gold:#9a6b00; --ey-lavender:#7a3fb0; --ey-coral:#c41f7a; --ey-amber:#b5560b; --ey-saliva:#7a3fb0;
   }
   [data-vybi-theme="pink"]{
     --app-bg:radial-gradient(130% 80% at 20% 0%, #fff1f8 0%, #ffe2ee 55%, #ffd6e8 100%);
@@ -43,6 +45,7 @@ const THEME_CSS = `
     --lav-rgb:210,120,160; --deep-rgb:255,243,248; --velvet-rgb:255,255,255;
     --scheme:light;
     --card-bg:linear-gradient(170deg,#ffffff 0%,#fff4f9 100%);
+    --card-hero:linear-gradient(135deg,#ffffff 0%,#ffeef5 100%);
     --card-border:rgba(220,130,170,0.22);
     --card-shadow:0 6px 16px rgba(190,60,120,0.12), inset 0 1px 0 rgba(255,255,255,0.7);
   }
@@ -52,8 +55,10 @@ const THEME_CSS = `
     --lav-rgb:195,155,211; --deep-rgb:26,10,46; --velvet-rgb:45,17,85;
     --scheme:dark;
     --card-bg:rgba(45,17,85,0.55);
+    --card-hero:linear-gradient(135deg,rgba(45,17,85,0.92),rgba(74,32,128,0.72));
     --card-border:rgba(195,155,211,0.20);
     --card-shadow:0 6px 16px rgba(0,0,0,0.28), inset 0 1px 0 rgba(255,255,255,0.05);
+    --ey-mint:#b8f0e6; --ey-gold:#ffd700; --ey-lavender:#c39bd3; --ey-coral:#e91e8c; --ey-amber:#ff8c42; --ey-saliva:#c39bd3;
   }
   :root{
     --brand-grad:linear-gradient(180deg,rgba(255,255,255,0.18),rgba(255,255,255,0) 52%),linear-gradient(135deg,#9c1fc9,#e6199b);
@@ -181,8 +186,8 @@ function VybiAppInner() {
           <div style={{background:"rgba(var(--deep-rgb),0.95)",backdropFilter:"blur(20px)",borderTop:"1px solid rgba(var(--lav-rgb),0.15)",display:"flex",alignItems:"center",justifyContent:"space-around",padding:"8px 8px calc(8px + env(safe-area-inset-bottom))",flexShrink:0,zIndex:10}}>
             {NAV.map(item=>(
               <button key={item.id} onClick={()=>setScreen(item.id)} style={{display:"flex",flexDirection:"column",alignItems:"center",gap:3,background:"none",border:"none",cursor:"pointer",padding:"4px 8px",borderRadius:10,flex:1}}>
-                <span style={{fontSize:20,color:screen===item.id?C.fuchsia:"rgba(var(--ink-rgb),0.3)",filter:screen===item.id?`drop-shadow(0 0 6px ${C.fuchsia})`:"none"}}>{item.icon}</span>
-                <span style={{fontFamily:"DM Sans,sans-serif",fontSize:9,color:screen===item.id?C.fuchsia:"rgba(var(--ink-rgb),0.3)",fontWeight:screen===item.id?600:400}}>{item.label}</span>
+                <span style={{fontSize:20,color:screen===item.id?"#9b30d4":"rgba(var(--ink-rgb),0.3)",filter:screen===item.id?`drop-shadow(0 0 6px #9b30d4)`:"none"}}>{item.icon}</span>
+                <span style={{fontFamily:"DM Sans,sans-serif",fontSize:9,color:screen===item.id?"#9b30d4":"rgba(var(--ink-rgb),0.3)",fontWeight:screen===item.id?600:400}}>{item.label}</span>
               </button>
             ))}
           </div>
@@ -221,8 +226,8 @@ function VybiAppInner() {
             <div style={{height:64,background:"rgba(var(--deep-rgb),0.95)",backdropFilter:"blur(20px)",borderTop:"1px solid rgba(var(--lav-rgb),0.15)",display:"flex",alignItems:"center",justifyContent:"space-around",padding:"0 8px",flexShrink:0,zIndex:10}}>
               {NAV.map(item=>(
                 <button key={item.id} onClick={()=>setScreen(item.id)} style={{display:"flex",flexDirection:"column",alignItems:"center",gap:3,background:"none",border:"none",cursor:"pointer",padding:"4px 8px",borderRadius:10,flex:1}}>
-                  <span style={{fontSize:18,color:screen===item.id?C.fuchsia:"rgba(var(--ink-rgb),0.3)",filter:screen===item.id?`drop-shadow(0 0 6px ${C.fuchsia})`:"none"}}>{item.icon}</span>
-                  <span style={{fontFamily:"DM Sans,sans-serif",fontSize:9,color:screen===item.id?C.fuchsia:"rgba(var(--ink-rgb),0.3)",fontWeight:screen===item.id?600:400}}>{item.label}</span>
+                  <span style={{fontSize:18,color:screen===item.id?"#9b30d4":"rgba(var(--ink-rgb),0.3)",filter:screen===item.id?`drop-shadow(0 0 6px #9b30d4)`:"none"}}>{item.icon}</span>
+                  <span style={{fontFamily:"DM Sans,sans-serif",fontSize:9,color:screen===item.id?"#9b30d4":"rgba(var(--ink-rgb),0.3)",fontWeight:screen===item.id?600:400}}>{item.label}</span>
                 </button>
               ))}
             </div>
@@ -249,7 +254,7 @@ function VybiAppInner() {
             ))}
           </div>
           <div style={{marginTop:14,padding:"10px 12px",borderRadius:12,background:"rgba(233,30,140,0.08)",border:`1px solid ${C.coral}30`}}>
-            <div style={{fontFamily:"DM Sans,sans-serif",fontSize:10,color:C.coral,textTransform:"uppercase",letterSpacing:"0.08em",marginBottom:4}}>VYBI · Interactive App Concept</div>
+            <div style={{fontFamily:"DM Sans,sans-serif",fontSize:10,color:"var(--ey-coral)",textTransform:"uppercase",letterSpacing:"0.08em",marginBottom:4}}>VYBI · Interactive App Concept</div>
             <div style={{fontFamily:"DM Sans,sans-serif",fontSize:11,color:"rgba(var(--ink-rgb),0.5)",lineHeight:1.6}}>Click screens in this panel to navigate. The AI Engine screen shows the full algorithm stack. Chat explains how each layer works.</div>
           </div>
         </div>

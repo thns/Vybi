@@ -58,7 +58,7 @@ export function MicrobeReportScreen() {
         </Card>}
 
         <Card>
-          <div style={{fontFamily:"DM Sans,sans-serif",fontSize:10,color:C.mint,textTransform:"uppercase",letterSpacing:"0.08em",marginBottom:10}}>Dominant Microorganism</div>
+          <div style={{fontFamily:"DM Sans,sans-serif",fontSize:10,color:"var(--ey-mint)",textTransform:"uppercase",letterSpacing:"0.08em",marginBottom:10}}>Dominant Microorganism</div>
           <div style={{display:"flex",alignItems:"center",gap:12,marginBottom:12}}>
             <div style={{width:44,height:44,borderRadius:12,background:`${biome?.color||C.mint}20`,border:`1px solid ${biome?.color||C.mint}40`,display:"flex",alignItems:"center",justifyContent:"center",fontSize:22}}>🦠</div>
             <div>
@@ -78,12 +78,12 @@ export function MicrobeReportScreen() {
         </Card>
 
         {r.trend&&<Card style={{borderColor:`${C.amber}40`}}>
-          <div style={{fontFamily:"DM Sans,sans-serif",fontSize:10,color:C.amber,textTransform:"uppercase",letterSpacing:"0.08em",marginBottom:6}}>Trend → Layer 3 input</div>
+          <div style={{fontFamily:"DM Sans,sans-serif",fontSize:10,color:"var(--ey-amber)",textTransform:"uppercase",letterSpacing:"0.08em",marginBottom:6}}>Trend → Layer 3 input</div>
           <div style={{fontFamily:"DM Sans,sans-serif",fontSize:12,color:"rgba(var(--ink-rgb),0.75)"}}>{r.trend}</div>
         </Card>}
 
         <Card>
-          <div style={{fontFamily:"DM Sans,sans-serif",fontSize:10,color:C.gold,textTransform:"uppercase",letterSpacing:"0.08em",marginBottom:8}}>✦ Vybi Interpretation</div>
+          <div style={{fontFamily:"DM Sans,sans-serif",fontSize:10,color:"var(--ey-gold)",textTransform:"uppercase",letterSpacing:"0.08em",marginBottom:8}}>✦ Vybi Interpretation</div>
           <div style={{fontFamily:"DM Sans,sans-serif",fontSize:13,color:"rgba(var(--ink-rgb),0.8)",lineHeight:1.75}}>{r.interpretation}</div>
         </Card>
         </>)}

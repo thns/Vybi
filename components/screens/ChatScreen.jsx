@@ -66,7 +66,7 @@ export function ChatScreen() {
           ))}
         </div>
         <div style={{display:"flex",gap:8}}>
-          <input value={input} onChange={e=>setInput(e.target.value)} onKeyDown={e=>e.key==="Enter"&&send()} placeholder="Ask Vybi anything..." style={{flex:1,padding:"11px 14px",borderRadius:12,background:"rgba(var(--velvet-rgb),0.55)",border:"1px solid rgba(155,89,182,0.4)",color:C.pearl,fontFamily:"DM Sans,sans-serif",fontSize:13,outline:"none"}}/>
+          <input value={input} onChange={e=>setInput(e.target.value)} onKeyDown={e=>e.key==="Enter"&&send()} placeholder="Ask Vybi anything..." style={{flex:1,padding:"11px 14px",borderRadius:12,background:"rgba(var(--deep-rgb),0.6)",border:"1px solid rgba(var(--lav-rgb),0.4)",color:C.pearl,fontFamily:"DM Sans,sans-serif",fontSize:13,outline:"none"}}/>
           <button onClick={send} style={{padding:"11px 16px",borderRadius:12,background:`var(--brand-grad)`,boxShadow:`0 8px 24px rgba(180,40,140,0.26)`,border:"none",color:"white",fontSize:16,cursor:"pointer"}}>→</button>
         </div>
       </div>

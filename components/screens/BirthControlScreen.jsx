@@ -84,7 +84,7 @@ export function BirthControlScreen() {
         ) : (
           <>
             <Card>
-              <div style={{fontFamily:"DM Sans,sans-serif",fontSize:10,color:C.mint,textTransform:"uppercase",letterSpacing:"0.08em",marginBottom:10}}>Your method</div>
+              <div style={{fontFamily:"DM Sans,sans-serif",fontSize:10,color:"var(--ey-mint)",textTransform:"uppercase",letterSpacing:"0.08em",marginBottom:10}}>Your method</div>
               <div style={{display:"grid",gridTemplateColumns:"1fr 1fr 1fr",gap:8}}>
                 {METHODS.map(m=>(
                   <button key={m.k} onClick={()=>setSelected(m.k)} style={{padding:"10px 4px",borderRadius:12,border:`1px solid ${selected===m.k?C.fuchsia:"rgba(var(--surface-rgb),0.1)"}`,background:selected===m.k?`${C.fuchsia}18`:"rgba(var(--surface-rgb),0.03)",cursor:"pointer",display:"flex",flexDirection:"column",alignItems:"center",gap:4}}>

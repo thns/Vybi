@@ -44,9 +44,12 @@ white→lilac gradient cards with a lit top edge + soft shadow (`--card-bg`,
 the **logo violet→magenta gradient** with a gentle sheen (`--brand-grad` + `--brand-glow`).
 Blush and Midnight inherit the same satin treatment. Tokens live in `globals.css`
 (mirrored in `VybiApp` THEME_CSS).
-- [ ] Ad-hoc nested panels still use translucent `--velvet-rgb` (flat) rather than the
-      satin `--card-bg`; promote the important ones if they look weak on lavender.
-- [ ] Active bottom-nav icon uses brand magenta; preview used violet `#9B30D4` — optional.
+- [x] Hero cards (Home/AI/Pregnancy/Prevention) now use a themed `--card-hero` gradient
+      (was a hardcoded dark `rgba(74,32,128)` that half-rendered dark on lavender); standalone
+      list/plan/auth cards promoted to satin `--card-bg` + shadow.
+- [x] Active bottom-nav icon now violet `#9B30D4` (was brand magenta).
+- [x] Pale eyebrow labels (mint/gold/lavender/coral/amber) routed through theme-aware
+      `--ey-*` tokens — deep/readable on Lavender + Blush, pale on Midnight; hue preserved.
 
 ## Theming — light/white/pink backgrounds  ✅ (shipped)
 Light (white) is now the **default** app theme, with **Blush (pink)** and **Midnight (dark)**
@@ -58,9 +61,8 @@ existing inline `rgba()` alpha values re-skin automatically across every screen.
 - [x] App background + cards + primary text + nav + inputs all theme-aware.
 - [x] Cards gain a soft shadow on light themes (`--card-shadow`) so they lift off the page.
 - [x] Settings → Appearance picker (White / Blush / Midnight) with live switch + persistence.
-- [ ] **Accent-label contrast on light** — small uppercase eyebrow labels using pale accents
-      (`C.mint`, `C.gold`, `C.lavender`, `C.aqua`) read as soft pastels on white; tune to
-      deeper on-light variants if legibility feedback warrants.
+- [x] **Accent-label contrast on light** — fixed via theme-aware `--ey-*` eyebrow tokens
+      (deep on Lavender/Blush, pale on Midnight). See the Lavender satin section above.
 - [ ] **Persist theme to the user account** (DB column) so it follows the user across devices;
       currently device-local. Login/signup (AuthShell) still use their own dark styling.
 

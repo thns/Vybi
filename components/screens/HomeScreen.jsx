@@ -45,7 +45,7 @@ export function HomeScreen({ setScreen }) {
         <div style={{fontFamily:"Cormorant Garamond,Georgia,serif",fontSize:28,color:C.pearl}}>Your Vybi Today</div>
       </div>
 
-      <Card style={{background:`linear-gradient(135deg,rgba(var(--velvet-rgb),0.9),rgba(74,32,128,0.7))`}}>
+      <Card style={{background:`var(--card-hero)`}}>
         <div style={{display:"flex",gap:12,alignItems:"center",marginBottom:12}}>
           <div style={{flex:1}}>
             <div style={{display:"flex",gap:6,alignItems:"center",marginBottom:4}}>
@@ -74,7 +74,7 @@ export function HomeScreen({ setScreen }) {
       </Card>
 
       <Card>
-        <div style={{fontFamily:"DM Sans,sans-serif",fontSize:10,color:C.mint,textTransform:"uppercase",letterSpacing:"0.08em",marginBottom:12}}>All Biomes</div>
+        <div style={{fontFamily:"DM Sans,sans-serif",fontSize:10,color:"var(--ey-mint)",textTransform:"uppercase",letterSpacing:"0.08em",marginBottom:12}}>All Biomes</div>
         <div style={{display:"flex",justifyContent:"space-around"}}>
           {biomes.map(b=><BiomeRing key={b.id} biome={b} size={68}/>)}
         </div>
@@ -95,7 +95,7 @@ export function HomeScreen({ setScreen }) {
         <div style={{display:"flex",gap:10,alignItems:"flex-start"}}>
           <div style={{width:32,height:32,borderRadius:8,background:`${C.amber}25`,display:"flex",alignItems:"center",justifyContent:"center",fontSize:16,flexShrink:0}}>△</div>
           <div style={{flex:1}}>
-            <div style={{fontFamily:"DM Sans,sans-serif",fontSize:10,color:C.amber,textTransform:"uppercase",letterSpacing:"0.06em",marginBottom:2}}>Prevention{bvRisk!=null?` · BV ${bvRisk}/100`:""}</div>
+            <div style={{fontFamily:"DM Sans,sans-serif",fontSize:10,color:"var(--ey-amber)",textTransform:"uppercase",letterSpacing:"0.06em",marginBottom:2}}>Prevention{bvRisk!=null?` · BV ${bvRisk}/100`:""}</div>
             <div style={{fontFamily:"Cormorant Garamond,Georgia,serif",fontSize:17,color:C.pearl,marginBottom:4}}>{bvRisk!=null?(bvRisk>=40?"BV risk elevated this week":"BV risk currently low"):(isLive?"See your prevention scores":"BV risk elevated this week")}</div>
             <div style={{fontFamily:"DM Sans,sans-serif",fontSize:11,color:"rgba(var(--ink-rgb),0.6)"}}>{bvRisk!=null?"Based on your cycle, symptoms & biome signals. View details →":(isLive?"Log cycles, symptoms or a biome test to assess your risk →":"L. crispatus -18% post-period. Biome layer flagged. Take action →")}</div>
           </div>
@@ -125,14 +125,14 @@ export function HomeScreen({ setScreen }) {
       </div>
 
       <Card style={{borderColor:`${C.gold}30`,background:`rgba(255,215,0,0.05)`,cursor:"pointer"}} onClick={()=>setScreen("Learn")}>
-        <div style={{fontFamily:"DM Sans,sans-serif",fontSize:10,color:C.gold,textTransform:"uppercase",letterSpacing:"0.08em",marginBottom:6}}>✦ Insight of the day</div>
+        <div style={{fontFamily:"DM Sans,sans-serif",fontSize:10,color:"var(--ey-gold)",textTransform:"uppercase",letterSpacing:"0.08em",marginBottom:6}}>✦ Insight of the day</div>
         <div style={{fontFamily:"DM Sans,sans-serif",fontSize:12,color:"rgba(var(--ink-rgb),0.75)",lineHeight:1.7}}>{getDailyTip()}</div>
         <div style={{fontFamily:"DM Sans,sans-serif",fontSize:10,color:C.gold,marginTop:6}}>Open the library →</div>
       </Card>
 
       {(!isLive || hasBiome) && (
         <Card>
-          <div style={{fontFamily:"DM Sans,sans-serif",fontSize:10,color:C.gold,textTransform:"uppercase",letterSpacing:"0.08em",marginBottom:8}}>✦ Biome-Cycle Insight</div>
+          <div style={{fontFamily:"DM Sans,sans-serif",fontSize:10,color:"var(--ey-gold)",textTransform:"uppercase",letterSpacing:"0.08em",marginBottom:8}}>✦ Biome-Cycle Insight</div>
           <div style={{fontFamily:"Cormorant Garamond,Georgia,serif",fontSize:18,color:C.pearl,marginBottom:6}}>Your biome predicted this dip</div>
           <div style={{fontFamily:"DM Sans,sans-serif",fontSize:12,color:"rgba(var(--ink-rgb),0.65)",lineHeight:1.7}}>Layer 3 detected L. crispatus declining 4 days before your symptoms appeared. Biome data gives Vybi a 3-5 day early warning that calendar-only apps cannot see.</div>
         </Card>

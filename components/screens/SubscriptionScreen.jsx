@@ -37,7 +37,7 @@ export function SubscriptionScreen() {
         <div style={{fontFamily:"DM Sans,sans-serif",fontSize:12,color:C.mint}}>More layers = more accuracy</div>
       </div>
       {plans.map(plan=>(
-        <div key={plan.id} onClick={()=>setSel(plan.id)} style={{borderRadius:16,border:`2px solid ${sel===plan.id?plan.color:"rgba(var(--surface-rgb),0.08)"}`,background:sel===plan.id?`${plan.color}10`:"rgba(var(--velvet-rgb),0.4)",padding:16,cursor:"pointer",position:"relative"}}>
+        <div key={plan.id} onClick={()=>setSel(plan.id)} style={{borderRadius:16,border:`2px solid ${sel===plan.id?plan.color:"rgba(var(--surface-rgb),0.08)"}`,background:sel===plan.id?`${plan.color}10`:"var(--card-bg)",boxShadow:"var(--card-shadow)",padding:16,cursor:"pointer",position:"relative"}}>
           {plan.popular&&<div style={{position:"absolute",top:-10,right:16,padding:"3px 12px",borderRadius:20,background:plan.color,fontFamily:"DM Sans,sans-serif",fontSize:10,fontWeight:700,color:"white"}}>MOST POPULAR</div>}
           <div style={{display:"flex",justifyContent:"space-between",alignItems:"flex-start",marginBottom:10}}>
             <div>

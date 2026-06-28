@@ -97,7 +97,7 @@ export function PregnancyScreen() {
       <div style={{flex:1,overflowY:"auto",padding:"8px 16px 28px",display:"flex",flexDirection:"column",gap:12}}>
         <GlowOrb color={C.fuchsia} size={240} opacity={0.14} x={60} y={-30}/>
 
-        <Card style={{background:`linear-gradient(135deg,rgba(74,32,128,0.7),rgba(var(--velvet-rgb),0.9))`,textAlign:"center"}}>
+        <Card style={{background:`var(--card-hero)`,textAlign:"center"}}>
           <div style={{position:"relative",width:140,height:140,margin:"4px auto 8px"}}>
             <svg width={140} height={140} style={{transform:"rotate(-90deg)"}}>
               <circle cx={70} cy={70} r={52} fill="none" style={{stroke:"rgba(var(--surface-rgb),0.18)"}} strokeWidth={9}/>
@@ -109,7 +109,7 @@ export function PregnancyScreen() {
               <span style={{fontFamily:"DM Sans,sans-serif",fontSize:10,color:C.lavender,letterSpacing:"0.08em"}}>WEEKS{status.dayOfWeek?` +${status.dayOfWeek}d`:""}</span>
             </div>
           </div>
-          <div style={{fontFamily:"DM Sans,sans-serif",fontSize:12,color:C.mint,textTransform:"uppercase",letterSpacing:"0.08em"}}>{TRI[status.trimester]}</div>
+          <div style={{fontFamily:"DM Sans,sans-serif",fontSize:12,color:"var(--ey-mint)",textTransform:"uppercase",letterSpacing:"0.08em"}}>{TRI[status.trimester]}</div>
           <div style={{fontFamily:"Cormorant Garamond,Georgia,serif",fontSize:22,color:C.pearl,marginTop:4}}>
             {status.overdue?`${-status.daysRemaining} days overdue`:`${status.daysRemaining} days to go`}
           </div>
@@ -120,7 +120,7 @@ export function PregnancyScreen() {
           <div style={{display:"flex",alignItems:"center",gap:14}}>
             <div style={{fontSize:40}}>🍼</div>
             <div style={{flex:1}}>
-              <div style={{fontFamily:"DM Sans,sans-serif",fontSize:10,color:C.gold,textTransform:"uppercase",letterSpacing:"0.08em"}}>Baby is about the size of a</div>
+              <div style={{fontFamily:"DM Sans,sans-serif",fontSize:10,color:"var(--ey-gold)",textTransform:"uppercase",letterSpacing:"0.08em"}}>Baby is about the size of a</div>
               <div style={{fontFamily:"Cormorant Garamond,Georgia,serif",fontSize:22,color:C.pearl}}>{status.babySize}</div>
               {status.babyLengthCm!=null&&<div style={{fontFamily:"DM Sans,sans-serif",fontSize:11,color:"rgba(var(--ink-rgb),0.5)"}}>≈ {status.babyLengthCm} cm</div>}
             </div>

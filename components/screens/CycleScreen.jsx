@@ -173,7 +173,7 @@ export function CycleScreen() {
           </Card>
 
           <Card>
-            <div style={{fontFamily:"DM Sans,sans-serif",fontSize:10,color:C.mint,textTransform:"uppercase",letterSpacing:"0.08em",marginBottom:10}}>Predictions</div>
+            <div style={{fontFamily:"DM Sans,sans-serif",fontSize:10,color:"var(--ey-mint)",textTransform:"uppercase",letterSpacing:"0.08em",marginBottom:10}}>Predictions</div>
             <div style={{display:"flex",flexDirection:"column",gap:8}}>
               {allPredRows.map(item=>(
                 <div key={item.label} style={{display:"flex",justifyContent:"space-between",alignItems:"center",padding:"8px 10px",borderRadius:10,background:`${item.color}12`,border:`1px solid ${item.color}25`}}>
@@ -203,7 +203,7 @@ export function CycleScreen() {
           )}
 
           <Card>
-            <div style={{fontFamily:"DM Sans,sans-serif",fontSize:10,color:C.mint,textTransform:"uppercase",letterSpacing:"0.08em",marginBottom:10}}>Log Symptoms & Mood · Feeds Layer 2</div>
+            <div style={{fontFamily:"DM Sans,sans-serif",fontSize:10,color:"var(--ey-mint)",textTransform:"uppercase",letterSpacing:"0.08em",marginBottom:10}}>Log Symptoms & Mood · Feeds Layer 2</div>
             {SYMPTOM_GROUPS.map(g=>(
               <div key={g.category} style={{marginBottom:12}}>
                 <div style={{fontFamily:"DM Sans,sans-serif",fontSize:9,color:g.color,textTransform:"uppercase",letterSpacing:"0.06em",marginBottom:6}}>{g.category}</div>
@@ -230,7 +230,7 @@ export function CycleScreen() {
 
           {(!isLive || hasCycleData) && (
           <Card>
-            <div style={{fontFamily:"DM Sans,sans-serif",fontSize:10,color:C.mint,textTransform:"uppercase",letterSpacing:"0.08em",marginBottom:10}}>Estimated Hormones</div>
+            <div style={{fontFamily:"DM Sans,sans-serif",fontSize:10,color:"var(--ey-mint)",textTransform:"uppercase",letterSpacing:"0.08em",marginBottom:10}}>Estimated Hormones</div>
             {[
               {label:"Oestrogen",value:today.estrogen,max:100,color:C.rose},
               {label:"Progesterone",value:Math.min(today.progesterone*6,100),max:100,color:C.purple},
@@ -253,7 +253,7 @@ export function CycleScreen() {
 
         {activeTab==="calendar"&&<>
           <Card>
-            <div style={{fontFamily:"DM Sans,sans-serif",fontSize:10,color:C.mint,textTransform:"uppercase",letterSpacing:"0.08em",marginBottom:12}}>{cal.monthName}</div>
+            <div style={{fontFamily:"DM Sans,sans-serif",fontSize:10,color:"var(--ey-mint)",textTransform:"uppercase",letterSpacing:"0.08em",marginBottom:12}}>{cal.monthName}</div>
             <div style={{display:"grid",gridTemplateColumns:"repeat(7,1fr)",gap:4,marginBottom:8}}>
               {["M","T","W","T","F","S","S"].map((d,i)=><div key={i} style={{fontFamily:"DM Sans,sans-serif",fontSize:9,color:"rgba(var(--ink-rgb),0.3)",textAlign:"center"}}>{d}</div>)}
             </div>
@@ -279,7 +279,7 @@ export function CycleScreen() {
 
         {activeTab==="insights"&&<>
           <Card>
-            <div style={{fontFamily:"DM Sans,sans-serif",fontSize:10,color:C.gold,textTransform:"uppercase",letterSpacing:"0.08em",marginBottom:8}}>✦ AI Cycle Intelligence</div>
+            <div style={{fontFamily:"DM Sans,sans-serif",fontSize:10,color:"var(--ey-gold)",textTransform:"uppercase",letterSpacing:"0.08em",marginBottom:8}}>✦ AI Cycle Intelligence</div>
             {insights.map((item,i)=>(
               <div key={item.label} style={{display:"flex",justifyContent:"space-between",alignItems:"center",padding:"8px 0",borderBottom:i<4?"1px solid rgba(var(--surface-rgb),0.05)":"none"}}>
                 <div>

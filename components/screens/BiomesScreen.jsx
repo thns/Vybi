@@ -42,12 +42,12 @@ export function BiomesScreen() {
           </div>
         </Card>
         {b.id==="vaginal"&&<Card style={{borderColor:`${C.coral}40`,background:`rgba(233,30,140,0.07)`}}>
-          <div style={{fontFamily:"DM Sans,sans-serif",fontSize:10,color:C.coral,textTransform:"uppercase",letterSpacing:"0.08em",marginBottom:6}}>Layer 3 · Live signal</div>
+          <div style={{fontFamily:"DM Sans,sans-serif",fontSize:10,color:"var(--ey-coral)",textTransform:"uppercase",letterSpacing:"0.08em",marginBottom:6}}>Layer 3 · Live signal</div>
           <div style={{fontFamily:"DM Sans,sans-serif",fontSize:12,color:"rgba(var(--ink-rgb),0.75)",lineHeight:1.7}}>{biome?.lCrispatusPct!=null?`L. crispatus at ${biome.lCrispatusPct}%${biome.phValue!=null?` · pH ${biome.phValue}`:""}${biome.diversityIndex!=null?` · diversity ${biome.diversityIndex}`:""}. This biome composition feeds Layer 3's hormonal inference for your cycle predictions.`:(isLive?"Upload a vaginal biome test kit to activate Layer 3 and see your live L. crispatus, pH and diversity here.":"L. crispatus at 61% — declining from 75% (March test). This biome shift predicted your luteal phase transition 3 days before your symptoms appeared. Current signal: late luteal, period in ~7 days.")}</div>
         </Card>}
         {!isLive && (
         <Card>
-          <div style={{fontFamily:"DM Sans,sans-serif",fontSize:10,color:C.mint,textTransform:"uppercase",letterSpacing:"0.08em",marginBottom:10}}>Score History</div>
+          <div style={{fontFamily:"DM Sans,sans-serif",fontSize:10,color:"var(--ey-mint)",textTransform:"uppercase",letterSpacing:"0.08em",marginBottom:10}}>Score History</div>
           <div style={{display:"flex",alignItems:"flex-end",gap:6,height:60}}>
             {[65,70,78,72,68,b.score].map((v,i)=>(
               <div key={i} style={{flex:1,display:"flex",flexDirection:"column",alignItems:"center",gap:4}}>
@@ -59,7 +59,7 @@ export function BiomesScreen() {
         </Card>
         )}
         <Card>
-          <div style={{fontFamily:"DM Sans,sans-serif",fontSize:10,color:C.mint,textTransform:"uppercase",letterSpacing:"0.08em",marginBottom:10}}>Recommendations</div>
+          <div style={{fontFamily:"DM Sans,sans-serif",fontSize:10,color:"var(--ey-mint)",textTransform:"uppercase",letterSpacing:"0.08em",marginBottom:10}}>Recommendations</div>
           {[
             {icon:"💊",text:b.id==="vaginal"?"L. crispatus probiotic daily":b.id==="gut"?"Continue fermented foods":b.id==="skin"?"Microbiome-friendly cleanser":"Xylitol mints daily",type:"Supplement"},
             {icon:"🥗",text:b.id==="vaginal"?"Reduce sugar — feeds Gardnerella":b.id==="gut"?"30 plant types per week":b.id==="skin"?"Anti-inflammatory diet":"Limit mouthwash — disrupts oral microbiome",type:"Diet"},

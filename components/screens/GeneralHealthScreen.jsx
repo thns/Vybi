@@ -36,7 +36,7 @@ export function GeneralHealthScreen() {
         ))}
       </div>
       <Card>
-        <div style={{fontFamily:"DM Sans,sans-serif",fontSize:10,color:C.mint,textTransform:"uppercase",letterSpacing:"0.08em",marginBottom:10}}>Biome Impact · Lifestyle</div>
+        <div style={{fontFamily:"DM Sans,sans-serif",fontSize:10,color:"var(--ey-mint)",textTransform:"uppercase",letterSpacing:"0.08em",marginBottom:10}}>Biome Impact · Lifestyle</div>
         {metrics.map((m,i)=>(
           <div key={m.label} style={{display:"flex",gap:10,alignItems:"flex-start",marginBottom:i<metrics.length-1?12:0,paddingBottom:i<metrics.length-1?12:0,borderBottom:i<metrics.length-1?"1px solid rgba(var(--surface-rgb),0.05)":"none"}}>
             <span style={{fontSize:16,color:m.color}}>{m.icon}</span>
@@ -51,7 +51,7 @@ export function GeneralHealthScreen() {
         ))}
       </Card>
       <Card style={{borderColor:`${C.gold}40`,background:`rgba(255,215,0,0.06)`}}>
-        <div style={{fontFamily:"DM Sans,sans-serif",fontSize:10,color:C.gold,textTransform:"uppercase",letterSpacing:"0.08em",marginBottom:8}}>✦ Connect Wearable → Unlock Layer 4</div>
+        <div style={{fontFamily:"DM Sans,sans-serif",fontSize:10,color:"var(--ey-gold)",textTransform:"uppercase",letterSpacing:"0.08em",marginBottom:8}}>✦ Connect Wearable → Unlock Layer 4</div>
         <div style={{fontFamily:"DM Sans,sans-serif",fontSize:12,color:"rgba(var(--ink-rgb),0.7)",lineHeight:1.6,marginBottom:10}}>BBT + HRV data from your wearable activates Layer 4 of the AI engine, pushing prediction accuracy from {accuracy}% to ~90%.</div>
         <div style={{display:"flex",gap:8,flexWrap:"wrap"}}>
           {["Apple Health","Oura Ring","Garmin"].map(w=>(

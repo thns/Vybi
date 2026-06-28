@@ -79,7 +79,7 @@ export function SettingsScreen({ setScreen }) {
         </div>
       </Card>
       <Card>
-        <div style={{fontFamily:"DM Sans,sans-serif",fontSize:10,color:C.mint,textTransform:"uppercase",letterSpacing:"0.08em",marginBottom:12}}>Appearance</div>
+        <div style={{fontFamily:"DM Sans,sans-serif",fontSize:10,color:"var(--ey-mint)",textTransform:"uppercase",letterSpacing:"0.08em",marginBottom:12}}>Appearance</div>
         <div style={{display:"flex",gap:10}}>
           {THEMES.map((t)=>{
             const active = theme===t.id;
@@ -94,7 +94,7 @@ export function SettingsScreen({ setScreen }) {
         <div style={{fontFamily:"DM Sans,sans-serif",fontSize:10,color:"rgba(var(--ink-rgb),0.45)",marginTop:9,lineHeight:1.5}}>Choose your background. Saved on this device.</div>
       </Card>
       <Card>
-        <div style={{fontFamily:"DM Sans,sans-serif",fontSize:10,color:C.mint,textTransform:"uppercase",letterSpacing:"0.08em",marginBottom:12}}>Privacy & Preferences</div>
+        <div style={{fontFamily:"DM Sans,sans-serif",fontSize:10,color:"var(--ey-mint)",textTransform:"uppercase",letterSpacing:"0.08em",marginBottom:12}}>Privacy & Preferences</div>
         {TOGGLES.map((t,i)=>{
           const isPush = t.label==="Push Notifications";
           const on = isPush ? pushOn : states[i];
@@ -113,7 +113,7 @@ export function SettingsScreen({ setScreen }) {
       </Card>
       {iosTip&&!pushOn&&(
         <Card style={{borderColor:`${C.gold}40`,background:`rgba(255,215,0,0.06)`}}>
-          <div style={{fontFamily:"DM Sans,sans-serif",fontSize:10,color:C.gold,textTransform:"uppercase",letterSpacing:"0.08em",marginBottom:6}}>📲 Enable on iPhone</div>
+          <div style={{fontFamily:"DM Sans,sans-serif",fontSize:10,color:"var(--ey-gold)",textTransform:"uppercase",letterSpacing:"0.08em",marginBottom:6}}>📲 Enable on iPhone</div>
           <div style={{fontFamily:"DM Sans,sans-serif",fontSize:12,color:"rgba(var(--ink-rgb),0.75)",lineHeight:1.6}}>To get notifications on iOS, add Vybi to your Home Screen: tap the <strong>Share</strong> button, then <strong>Add to Home Screen</strong>. Open it from there and turn on notifications.</div>
         </Card>
       )}

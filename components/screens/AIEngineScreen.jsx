@@ -33,7 +33,7 @@ export function AIEngineScreen() {
       <div style={{flex:1,overflowY:"auto",padding:"0 16px 28px",display:"flex",flexDirection:"column",gap:12}}>
         <GlowOrb color={C.fuchsia} size={220} opacity={0.12} x={60} y={-30}/>
 
-        <Card style={{background:`linear-gradient(135deg,rgba(var(--velvet-rgb),0.9),rgba(74,32,128,0.7))`}}>
+        <Card style={{background:`var(--card-hero)`}}>
           <div style={{display:"flex",alignItems:"center",gap:16,marginBottom:14}}>
             <div style={{position:"relative",width:90,height:90,flexShrink:0}}>
               <svg width={90} height={90} style={{transform:"rotate(-90deg)"}}>
@@ -67,7 +67,7 @@ export function AIEngineScreen() {
             </div>
           </div>
 
-          <div style={{fontFamily:"DM Sans,sans-serif",fontSize:10,color:C.mint,textTransform:"uppercase",letterSpacing:"0.08em",marginBottom:8}}>What's powering your accuracy</div>
+          <div style={{fontFamily:"DM Sans,sans-serif",fontSize:10,color:"var(--ey-mint)",textTransform:"uppercase",letterSpacing:"0.08em",marginBottom:8}}>What's powering your accuracy</div>
           <div style={{display:"flex",flexDirection:"column",gap:7}}>
             {signals.map((s,i)=>(
               <div key={i} style={{display:"flex",alignItems:"center",gap:10}}>
@@ -89,7 +89,7 @@ export function AIEngineScreen() {
         </Card>
 
         <Card style={{borderColor:`${C.gold}40`,background:`rgba(255,215,0,0.06)`}}>
-          <div style={{fontFamily:"DM Sans,sans-serif",fontSize:10,color:C.gold,textTransform:"uppercase",letterSpacing:"0.08em",marginBottom:10}}>✦ How Vybi compares</div>
+          <div style={{fontFamily:"DM Sans,sans-serif",fontSize:10,color:"var(--ey-gold)",textTransform:"uppercase",letterSpacing:"0.08em",marginBottom:10}}>✦ How Vybi compares</div>
           {[
             {label:"Regular cycles accuracy",flo:"90%",vybi:currentAccuracy!=null?`${currentAccuracy}%`:"—",vybiMax:"90%+",note:"Matches at 6 cycles + wearable"},
             {label:"Irregular cycles accuracy",flo:"65-70%",vybi:"~72%",vybiMax:"~85%",note:"Biome layer uniquely helps here"},
@@ -108,9 +108,9 @@ export function AIEngineScreen() {
           ))}
         </Card>
 
-        <div style={{fontFamily:"DM Sans,sans-serif",fontSize:10,color:C.mint,textTransform:"uppercase",letterSpacing:"0.08em"}}>Algorithm Layers</div>
+        <div style={{fontFamily:"DM Sans,sans-serif",fontSize:10,color:"var(--ey-mint)",textTransform:"uppercase",letterSpacing:"0.08em"}}>Algorithm Layers</div>
         {AI_LAYERS.map((layer,i)=>(
-          <Card key={layer.id} style={{cursor:"pointer",borderColor:expanded===i?`${layer.color}50`:`${layer.color}20`,background:expanded===i?`${layer.color}08`:"rgba(var(--velvet-rgb),0.55)"}}
+          <Card key={layer.id} style={{cursor:"pointer",borderColor:expanded===i?`${layer.color}50`:`${layer.color}20`,background:expanded===i?`${layer.color}08`:"var(--card-bg)"}}
             onClick={()=>setExpanded(expanded===i?null:i)}>
             <div style={{display:"flex",gap:12,alignItems:"flex-start"}}>
               <div style={{position:"relative",width:48,height:48,flexShrink:0}}>
@@ -208,7 +208,7 @@ export function AIEngineScreen() {
         ))}
 
         <Card>
-          <div style={{fontFamily:"DM Sans,sans-serif",fontSize:10,color:C.mint,textTransform:"uppercase",letterSpacing:"0.08em",marginBottom:10}}>Your accuracy roadmap</div>
+          <div style={{fontFamily:"DM Sans,sans-serif",fontSize:10,color:"var(--ey-mint)",textTransform:"uppercase",letterSpacing:"0.08em",marginBottom:10}}>Your accuracy roadmap</div>
           {[
             {milestone:"Today",accuracy:currentAccuracy,layers:`${layersActive} layer${layersActive===1?"":"s"} active`,color:C.mint,done:true},
             {milestone:"Connect wearable",accuracy:90,layers:"L4 activates",color:C.purple,done:false},

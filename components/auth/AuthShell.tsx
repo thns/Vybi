@@ -59,7 +59,7 @@ export function AuthShell({
 
         <div
           style={{
-            background: "rgba(var(--velvet-rgb),0.55)",
+            background: "var(--card-bg)",
             borderRadius: 22,
             border: "1px solid var(--card-border)",
             padding: 22,

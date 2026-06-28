@@ -33,7 +33,7 @@ export function PreventionScreen() {
         <div style={{fontFamily:"DM Sans,sans-serif",fontSize:11,color:C.mint,marginBottom:14}}>AI risk scores · Biome + cycle + lifestyle data</div>
       </div>
       <div style={{flex:1,overflowY:"auto",padding:"0 16px 28px",display:"flex",flexDirection:"column",gap:10}}>
-        <Card style={{background:`linear-gradient(135deg,rgba(var(--velvet-rgb),0.9),rgba(74,32,128,0.7))`}}>
+        <Card style={{background:`var(--card-hero)`}}>
           <div style={{display:"flex",alignItems:"center",gap:16}}>
             <div style={{position:"relative",width:80,height:80,flexShrink:0}}>
               <svg width={80} height={80} style={{transform:"rotate(-90deg)"}}>
@@ -55,7 +55,7 @@ export function PreventionScreen() {
         </Card>
         {risks.map((risk,i)=>(
           <div key={i} onClick={()=>setSel(sel===i?null:i)}>
-            <Card style={{cursor:"pointer",borderColor:sel===i?`${risk.color}50`:`${risk.color}20`,background:sel===i?`${risk.color}08`:"rgba(var(--velvet-rgb),0.55)"}}>
+            <Card style={{cursor:"pointer",borderColor:sel===i?`${risk.color}50`:`${risk.color}20`,background:sel===i?`${risk.color}08`:"var(--card-bg)"}}>
               <div style={{display:"flex",justifyContent:"space-between",alignItems:"flex-start",marginBottom:sel===i?12:0}}>
                 <div style={{display:"flex",gap:10,alignItems:"center"}}>
                   <div style={{width:36,height:36,borderRadius:10,background:`${risk.color}20`,border:`1px solid ${risk.color}40`,display:"flex",alignItems:"center",justifyContent:"center",fontSize:18,flexShrink:0}}>{risk.icon}</div>
@@ -91,7 +91,7 @@ export function PreventionScreen() {
           </div>
         ))}
         <Card>
-          <div style={{fontFamily:"DM Sans,sans-serif",fontSize:10,color:C.mint,textTransform:"uppercase",letterSpacing:"0.08em",marginBottom:8}}>Share with your doctor</div>
+          <div style={{fontFamily:"DM Sans,sans-serif",fontSize:10,color:"var(--ey-mint)",textTransform:"uppercase",letterSpacing:"0.08em",marginBottom:8}}>Share with your doctor</div>
           <div style={{fontFamily:"DM Sans,sans-serif",fontSize:12,color:"rgba(var(--ink-rgb),0.7)",lineHeight:1.6,marginBottom:10}}>Generate a clinical summary of biome scores, cycle data and prevention risks for your appointment.</div>
           <button style={{width:"100%",padding:"10px",borderRadius:10,background:`${C.mint}20`,border:`1px solid ${C.mint}40`,color:C.mint,fontFamily:"DM Sans,sans-serif",fontSize:12,fontWeight:600,cursor:"pointer"}}>📄 Generate Doctor Report</button>
         </Card>
