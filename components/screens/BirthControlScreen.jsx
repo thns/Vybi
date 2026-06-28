@@ -73,7 +73,7 @@ export function BirthControlScreen() {
     <div style={{height:"100%",display:"flex",flexDirection:"column",overflow:"hidden"}}>
       <div style={{padding:"16px 16px 0"}}>
         <div style={{fontFamily:"Cormorant Garamond,Georgia,serif",fontSize:26,color:C.pearl}}>Birth Control</div>
-        <div style={{fontFamily:"DM Sans,sans-serif",fontSize:11,color:C.mint,marginBottom:8}}>Method · Pill tracking · Adherence</div>
+        <div style={{fontFamily:"DM Sans,sans-serif",fontSize:11,color:"var(--ey-mint)",marginBottom:8}}>Method · Pill tracking · Adherence</div>
       </div>
 
       <div style={{flex:1,overflowY:"auto",padding:"8px 16px 28px",display:"flex",flexDirection:"column",gap:12}}>
@@ -100,12 +100,12 @@ export function BirthControlScreen() {
                 </div>
               )}
               <button onClick={save} disabled={busy||!selected||selected===config?.method&&selected!=="pill"} style={{width:"100%",marginTop:12,padding:12,borderRadius:12,border:"none",background:`var(--brand-grad)`,color:"#fff",fontFamily:"DM Sans,sans-serif",fontSize:14,fontWeight:600,cursor:"pointer",opacity:busy||!selected?0.6:1}}>{busy?"Saving…":config?"Update method":"Save method"}</button>
-              {msg&&<div style={{marginTop:10,fontFamily:"DM Sans,sans-serif",fontSize:12,color:C.gold,textAlign:"center",lineHeight:1.5}}>{msg}</div>}
+              {msg&&<div style={{marginTop:10,fontFamily:"DM Sans,sans-serif",fontSize:12,color:"var(--ey-gold)",textAlign:"center",lineHeight:1.5}}>{msg}</div>}
             </Card>
 
             {config?.method==="pill"&&(
               <Card style={{borderColor:`${C.fuchsia}30`}}>
-                <div style={{fontFamily:"DM Sans,sans-serif",fontSize:10,color:C.fuchsia,textTransform:"uppercase",letterSpacing:"0.08em",marginBottom:10}}>This week's pills</div>
+                <div style={{fontFamily:"DM Sans,sans-serif",fontSize:10,color:"var(--ey-fuchsia)",textTransform:"uppercase",letterSpacing:"0.08em",marginBottom:10}}>This week's pills</div>
                 <div style={{display:"flex",justifyContent:"space-between",marginBottom:12}}>
                   {week.map((d,i)=>(
                     <div key={i} style={{display:"flex",flexDirection:"column",alignItems:"center",gap:5}}>

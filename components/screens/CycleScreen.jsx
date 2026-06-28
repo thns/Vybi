@@ -81,18 +81,18 @@ export function CycleScreen() {
   const sd = lengths.length > 1 ? Math.sqrt(lengths.reduce((a, b) => a + (b - avgLen) ** 2, 0) / lengths.length) : null;
   const regularity = sd == null ? null : sd <= 2 ? "Very Regular" : sd <= 4 ? "Regular" : "Irregular";
   const liveInsights = [
-    {label:"Regularity", value: regularity ?? "—", detail: sd!=null?`±${sd.toFixed(1)} days variance`:"Log ≥2 cycles to assess", color:C.mint},
-    {label:"Avg cycle length", value: avgLen!=null?`${avgLen.toFixed(1)} days`:"—", detail:`Based on ${lengths.length} cycle${lengths.length===1?"":"s"}`, color:C.mint},
-    {label:"AI accuracy", value: accuracy!=null?`${accuracy}%`:"—", detail: accuracy!=null?"Improves with each cycle":"Log a period to start", color:C.gold},
+    {label:"Regularity", value: regularity ?? "—", detail: sd!=null?`±${sd.toFixed(1)} days variance`:"Log ≥2 cycles to assess", color:"var(--ey-mint)"},
+    {label:"Avg cycle length", value: avgLen!=null?`${avgLen.toFixed(1)} days`:"—", detail:`Based on ${lengths.length} cycle${lengths.length===1?"":"s"}`, color:"var(--ey-mint)"},
+    {label:"AI accuracy", value: accuracy!=null?`${accuracy}%`:"—", detail: accuracy!=null?"Improves with each cycle":"Log a period to start", color:"var(--ey-gold)"},
     {label:"Biome confidence", value: biome?"Layer 3 active":"Not active", detail: biome?"Hormonal inference enabled":"Upload a biome test", color:C.vaginal},
-    {label:"Next upgrade", value:"Add wearable", detail:"BBT layer → tighter predictions", color:C.purple},
+    {label:"Next upgrade", value:"Add wearable", detail:"BBT layer → tighter predictions", color:"var(--ey-purple)"},
   ];
   const demoInsights = [
-    {label:"Regularity",value:"Very Regular",detail:"±1.2 days variance",color:C.mint},
-    {label:"Avg cycle length",value:"28.1 days",detail:"Based on 3 cycles",color:C.mint},
-    {label:"AI prediction error",value:"±1.4 days",detail:"Improving with each cycle",color:C.gold},
+    {label:"Regularity",value:"Very Regular",detail:"±1.2 days variance",color:"var(--ey-mint)"},
+    {label:"Avg cycle length",value:"28.1 days",detail:"Based on 3 cycles",color:"var(--ey-mint)"},
+    {label:"AI prediction error",value:"±1.4 days",detail:"Improving with each cycle",color:"var(--ey-gold)"},
     {label:"Biome confidence",value:"Layer 3 active",detail:"Hormonal inference enabled",color:C.vaginal},
-    {label:"Next upgrade",value:"Add wearable",detail:"BBT layer → ±0.8 days",color:C.purple},
+    {label:"Next upgrade",value:"Add wearable",detail:"BBT layer → ±0.8 days",color:"var(--ey-purple)"},
   ];
   const insights = isLive ? liveInsights : demoInsights;
 
@@ -157,18 +157,18 @@ export function CycleScreen() {
             </div>
             <div style={{display:"flex",justifyContent:"space-between",alignItems:"center",padding:"8px 10px",borderRadius:8,background:"rgba(var(--surface-rgb),0.04)",border:"1px solid rgba(var(--surface-rgb),0.08)"}}>
               <span style={{fontFamily:"DM Sans,sans-serif",fontSize:10,color:"rgba(var(--ink-rgb),0.5)"}}>AI prediction confidence</span>
-              <span style={{fontFamily:"DM Sans,sans-serif",fontSize:12,fontWeight:700,color:C.mint}}>{accuracy}% · L1+L2+L3</span>
+              <span style={{fontFamily:"DM Sans,sans-serif",fontSize:12,fontWeight:700,color:"var(--ey-mint)"}}>{accuracy}% · L1+L2+L3</span>
             </div>
           </Card>
 
           <Card style={{borderColor:`${C.rose}30`}}>
-            <div style={{fontFamily:"DM Sans,sans-serif",fontSize:10,color:C.rose,textTransform:"uppercase",letterSpacing:"0.08em",marginBottom:8}}>{hasCycleData?"Log a new period":"Log your period · activates Layer 1"}</div>
+            <div style={{fontFamily:"DM Sans,sans-serif",fontSize:10,color:"var(--ey-rose)",textTransform:"uppercase",letterSpacing:"0.08em",marginBottom:8}}>{hasCycleData?"Log a new period":"Log your period · activates Layer 1"}</div>
             <div style={{display:"flex",gap:8}}>
               <input type="date" value={periodDate} max={new Date().toISOString().slice(0,10)} onChange={(e)=>setPeriodDate(e.target.value)}
                 style={{flex:1,background:"rgba(var(--deep-rgb),0.6)",border:"1px solid rgba(var(--lav-rgb),0.3)",borderRadius:10,padding:"9px 12px",color:C.pearl,fontFamily:"DM Sans,sans-serif",fontSize:13,outline:"none",colorScheme:"var(--scheme)"}}/>
               <button onClick={logPeriod} disabled={logging||!periodDate} style={{padding:"9px 16px",borderRadius:10,border:"none",background:`var(--brand-grad)`,color:"#fff",fontFamily:"DM Sans,sans-serif",fontSize:13,fontWeight:600,cursor:logging||!periodDate?"default":"pointer",opacity:logging||!periodDate?0.6:1}}>{logging?"…":"Log"}</button>
             </div>
-            {logMsg&&<div style={{marginTop:8,fontFamily:"DM Sans,sans-serif",fontSize:10,color:C.mint}}>{logMsg}</div>}
+            {logMsg&&<div style={{marginTop:8,fontFamily:"DM Sans,sans-serif",fontSize:10,color:"var(--ey-mint)"}}>{logMsg}</div>}
             {hasCycleData&&<div style={{marginTop:8,fontFamily:"DM Sans,sans-serif",fontSize:10,color:"rgba(var(--ink-rgb),0.45)"}}>Last logged: {formatShort(latestCycle.periodStartDate)} · {cycles.length} cycle{cycles.length===1?"":"s"} on file</div>}
           </Card>
 
@@ -220,21 +220,21 @@ export function CycleScreen() {
               </div>
             ))}
             {loggedSymptoms.length>0&&<div style={{marginTop:10,padding:"8px 10px",borderRadius:8,background:"rgba(233,30,140,0.1)",border:`1px solid ${C.coral}30`}}>
-              <div style={{fontFamily:"DM Sans,sans-serif",fontSize:11,color:C.coral}}>{loggedSymptoms.length} symptoms selected → improving Layer 2 pattern recognition</div>
+              <div style={{fontFamily:"DM Sans,sans-serif",fontSize:11,color:"var(--ey-coral)"}}>{loggedSymptoms.length} symptoms selected → improving Layer 2 pattern recognition</div>
             </div>}
             <button onClick={saveSymptoms} disabled={saving||loggedSymptoms.length===0} style={{marginTop:10,width:"100%",padding:"9px 12px",borderRadius:10,border:"none",background:`var(--brand-grad)`,color:"#fff",fontFamily:"DM Sans,sans-serif",fontSize:12,fontWeight:600,cursor:saving||loggedSymptoms.length===0?"default":"pointer",opacity:saving||loggedSymptoms.length===0?0.6:1}}>
               {saving?"Logging…":`Log Day ${currentDay} symptoms`}
             </button>
-            {savedMsg&&<div style={{marginTop:8,fontFamily:"DM Sans,sans-serif",fontSize:10,color:C.mint,textAlign:"center"}}>{savedMsg}</div>}
+            {savedMsg&&<div style={{marginTop:8,fontFamily:"DM Sans,sans-serif",fontSize:10,color:"var(--ey-mint)",textAlign:"center"}}>{savedMsg}</div>}
           </Card>
 
           {(!isLive || hasCycleData) && (
           <Card>
             <div style={{fontFamily:"DM Sans,sans-serif",fontSize:10,color:"var(--ey-mint)",textTransform:"uppercase",letterSpacing:"0.08em",marginBottom:10}}>Estimated Hormones</div>
             {[
-              {label:"Oestrogen",value:today.estrogen,max:100,color:C.rose},
-              {label:"Progesterone",value:Math.min(today.progesterone*6,100),max:100,color:C.purple},
-              {label:"LH Surge",value:today.lhSurge?100:5,max:100,color:C.gold},
+              {label:"Oestrogen",value:today.estrogen,max:100,color:"var(--ey-rose)"},
+              {label:"Progesterone",value:Math.min(today.progesterone*6,100),max:100,color:"var(--ey-purple)"},
+              {label:"LH Surge",value:today.lhSurge?100:5,max:100,color:"var(--ey-gold)"},
             ].map(h=>(
               <div key={h.label} style={{marginBottom:10}}>
                 <div style={{display:"flex",justifyContent:"space-between",marginBottom:4}}>

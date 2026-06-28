@@ -37,7 +37,7 @@ const THEME_CSS = `
     --card-hero:linear-gradient(135deg,#ffffff 0%,#efe6fb 100%);
     --card-border:rgba(150,110,190,0.16);
     --card-shadow:0 6px 16px rgba(110,70,160,0.10), inset 0 1px 0 rgba(255,255,255,0.7);
-    --ey-mint:#0f7a5a; --ey-gold:#9a6b00; --ey-lavender:#7a3fb0; --ey-coral:#c41f7a; --ey-amber:#b5560b; --ey-saliva:#7a3fb0;
+    --ey-mint:#0f7a5a; --ey-aqua:#0f7a5a; --ey-gold:#9a6b00; --ey-amber:#b5560b; --ey-rose:#b81e5e; --ey-blush:#b81e5e; --ey-bubblegum:#c01f8f; --ey-coral:#c41f7a; --ey-fuchsia:#c41f7a; --ey-lavender:#7a3fb0; --ey-saliva:#7a3fb0; --ey-amethyst:#6b3a9e; --ey-purple:#6b3a9e;
   }
   [data-vybi-theme="pink"]{
     --app-bg:radial-gradient(130% 80% at 20% 0%, #fff1f8 0%, #ffe2ee 55%, #ffd6e8 100%);
@@ -58,7 +58,7 @@ const THEME_CSS = `
     --card-hero:linear-gradient(135deg,rgba(45,17,85,0.92),rgba(74,32,128,0.72));
     --card-border:rgba(195,155,211,0.20);
     --card-shadow:0 6px 16px rgba(0,0,0,0.28), inset 0 1px 0 rgba(255,255,255,0.05);
-    --ey-mint:#b8f0e6; --ey-gold:#ffd700; --ey-lavender:#c39bd3; --ey-coral:#e91e8c; --ey-amber:#ff8c42; --ey-saliva:#c39bd3;
+    --ey-mint:#b8f0e6; --ey-aqua:#b8f0e6; --ey-gold:#ffd700; --ey-amber:#ff8c42; --ey-rose:#ff9dc6; --ey-blush:#ff9dc6; --ey-bubblegum:#ff6eb4; --ey-coral:#e91e8c; --ey-fuchsia:#e91e8c; --ey-lavender:#c39bd3; --ey-saliva:#c39bd3; --ey-amethyst:#9b59b6; --ey-purple:#9b59b6;
   }
   :root{
     --brand-grad:linear-gradient(180deg,rgba(255,255,255,0.18),rgba(255,255,255,0) 52%),linear-gradient(135deg,#9c1fc9,#e6199b);

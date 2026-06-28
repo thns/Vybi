@@ -55,7 +55,7 @@ export function CommunityScreen() {
     <div style={{ height: "100%", display: "flex", flexDirection: "column", overflow: "hidden" }}>
       <div style={{ padding: "16px 16px 0" }}>
         <div style={{ fontFamily: "Cormorant Garamond,Georgia,serif", fontSize: 26, color: C.pearl }}>Community</div>
-        <div style={{ fontFamily: "DM Sans,sans-serif", fontSize: 11, color: C.mint, marginBottom: 10 }}>Anonymous · Be kind · You're “{posts[0]?.mine ? posts.find((p) => p.mine)?.anonName : "anonymous"}”</div>
+        <div style={{ fontFamily: "DM Sans,sans-serif", fontSize: 11, color: "var(--ey-mint)", marginBottom: 10 }}>Anonymous · Be kind · You're “{posts[0]?.mine ? posts.find((p) => p.mine)?.anonName : "anonymous"}”</div>
         <div style={{ display: "flex", gap: 6, marginBottom: 12, overflowX: "auto", paddingBottom: 4 }}>
           {ROOMS.map((r) => (
             <button key={r.id} onClick={() => setRoom(r.id)} style={{ padding: "6px 12px", borderRadius: 20, border: `1px solid ${room === r.id ? C.fuchsia : "rgba(var(--surface-rgb),0.1)"}`, background: room === r.id ? `${C.fuchsia}20` : "transparent", color: room === r.id ? C.fuchsia : "rgba(var(--ink-rgb),0.5)", fontFamily: "DM Sans,sans-serif", fontSize: 11, fontWeight: 600, cursor: "pointer", whiteSpace: "nowrap" }}>{r.icon} {r.label}</button>
@@ -70,7 +70,7 @@ export function CommunityScreen() {
           <textarea value={draft} onChange={(e) => setDraft(e.target.value)} placeholder={`Share with the ${ROOMS.find((r) => r.id === room)?.label} room…`} rows={2}
             style={{ width: "100%", background: "rgba(var(--deep-rgb),0.6)", border: "1px solid rgba(var(--lav-rgb),0.25)", borderRadius: 10, padding: "10px 12px", color: C.pearl, fontFamily: "DM Sans,sans-serif", fontSize: 13, outline: "none", resize: "none" }} />
           <button onClick={submit} disabled={busy || draft.trim().length < 2} style={{ width: "100%", marginTop: 8, padding: 10, borderRadius: 10, border: "none", background: `var(--brand-grad)`, color: "#fff", fontFamily: "DM Sans,sans-serif", fontSize: 13, fontWeight: 600, cursor: "pointer", opacity: busy || draft.trim().length < 2 ? 0.6 : 1 }}>{busy ? "Posting…" : "Post anonymously"}</button>
-          {msg && <div style={{ marginTop: 8, fontFamily: "DM Sans,sans-serif", fontSize: 12, color: C.gold, textAlign: "center", lineHeight: 1.5 }}>{msg}</div>}
+          {msg && <div style={{ marginTop: 8, fontFamily: "DM Sans,sans-serif", fontSize: 12, color: "var(--ey-gold)", textAlign: "center", lineHeight: 1.5 }}>{msg}</div>}
         </Card>
 
         {loading ? (
@@ -85,7 +85,7 @@ export function CommunityScreen() {
                 <span style={{ fontFamily: "DM Sans,sans-serif", fontSize: 10, color: "rgba(var(--ink-rgb),0.35)" }}>{ago(p.createdAt)}</span>
               </div>
               <div style={{ fontFamily: "DM Sans,sans-serif", fontSize: 13, color: "rgba(var(--ink-rgb),0.85)", lineHeight: 1.6, whiteSpace: "pre-line" }}>{p.body}</div>
-              <div style={{ fontFamily: "DM Sans,sans-serif", fontSize: 11, color: C.mint, marginTop: 8 }}>💬 {p.replyCount || 0} {p.replyCount === 1 ? "reply" : "replies"}</div>
+              <div style={{ fontFamily: "DM Sans,sans-serif", fontSize: 11, color: "var(--ey-mint)", marginTop: 8 }}>💬 {p.replyCount || 0} {p.replyCount === 1 ? "reply" : "replies"}</div>
             </Card>
           ))
         )}
@@ -121,7 +121,7 @@ function PostDetail({ postId, onBack }) {
   return (
     <div style={{ height: "100%", display: "flex", flexDirection: "column", overflow: "hidden" }}>
       <div style={{ padding: "16px 16px 8px" }}>
-        <button onClick={onBack} style={{ background: "none", border: "none", color: C.lavender, fontFamily: "DM Sans,sans-serif", fontSize: 13, cursor: "pointer", padding: 0 }}>‹ Community</button>
+        <button onClick={onBack} style={{ background: "none", border: "none", color: "var(--ey-lavender)", fontFamily: "DM Sans,sans-serif", fontSize: 13, cursor: "pointer", padding: 0 }}>‹ Community</button>
       </div>
       <div style={{ flex: 1, overflowY: "auto", padding: "4px 16px 28px", display: "flex", flexDirection: "column", gap: 10 }}>
         {!data ? <div style={{ color: "rgba(var(--ink-rgb),0.4)", fontFamily: "DM Sans,sans-serif", fontSize: 12 }}>Loading…</div> : (
@@ -149,7 +149,7 @@ function PostDetail({ postId, onBack }) {
               <textarea value={draft} onChange={(e) => setDraft(e.target.value)} placeholder="Add a kind reply…" rows={2}
                 style={{ width: "100%", background: "rgba(var(--deep-rgb),0.6)", border: "1px solid rgba(var(--lav-rgb),0.25)", borderRadius: 10, padding: "10px 12px", color: C.pearl, fontFamily: "DM Sans,sans-serif", fontSize: 13, outline: "none", resize: "none" }} />
               <button onClick={reply} disabled={busy || draft.trim().length < 2} style={{ width: "100%", marginTop: 8, padding: 10, borderRadius: 10, border: "none", background: `var(--brand-grad)`, color: "#fff", fontFamily: "DM Sans,sans-serif", fontSize: 13, fontWeight: 600, cursor: "pointer", opacity: busy || draft.trim().length < 2 ? 0.6 : 1 }}>{busy ? "Sending…" : "Reply"}</button>
-              {msg && <div style={{ marginTop: 8, fontFamily: "DM Sans,sans-serif", fontSize: 12, color: C.gold, textAlign: "center", lineHeight: 1.5 }}>{msg}</div>}
+              {msg && <div style={{ marginTop: 8, fontFamily: "DM Sans,sans-serif", fontSize: 12, color: "var(--ey-gold)", textAlign: "center", lineHeight: 1.5 }}>{msg}</div>}
             </Card>
           </>
         )}

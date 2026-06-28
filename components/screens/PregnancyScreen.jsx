@@ -43,7 +43,7 @@ export function PregnancyScreen() {
   const Header = (
     <div style={{padding:"16px 16px 0"}}>
       <div style={{fontFamily:"Cormorant Garamond,Georgia,serif",fontSize:26,color:C.pearl}}>Pregnancy</div>
-      <div style={{fontFamily:"DM Sans,sans-serif",fontSize:11,color:C.blush||C.rose,marginBottom:8}}>Week-by-week · Baby size · Countdown</div>
+      <div style={{fontFamily:"DM Sans,sans-serif",fontSize:11,color:"var(--ey-blush)"||C.rose,marginBottom:8}}>Week-by-week · Baby size · Countdown</div>
     </div>
   );
 
@@ -82,7 +82,7 @@ export function PregnancyScreen() {
               </>
             )}
             <button onClick={start} disabled={busy||(mode==="due"?!dueDate:!lmp)} style={{width:"100%",marginTop:6,padding:13,borderRadius:12,border:"none",background:`var(--brand-grad)`,color:"#fff",fontFamily:"DM Sans,sans-serif",fontSize:15,fontWeight:600,cursor:"pointer",opacity:busy||(mode==="due"?!dueDate:!lmp)?0.6:1}}>{busy?"Starting…":"Start pregnancy tracking"}</button>
-            {msg&&<div style={{marginTop:10,fontFamily:"DM Sans,sans-serif",fontSize:12,color:C.gold,textAlign:"center",lineHeight:1.5}}>{msg}</div>}
+            {msg&&<div style={{marginTop:10,fontFamily:"DM Sans,sans-serif",fontSize:12,color:"var(--ey-gold)",textAlign:"center",lineHeight:1.5}}>{msg}</div>}
           </Card>
         </div>
       </div>
@@ -106,7 +106,7 @@ export function PregnancyScreen() {
             </svg>
             <div style={{position:"absolute",inset:0,display:"flex",flexDirection:"column",alignItems:"center",justifyContent:"center"}}>
               <span style={{fontFamily:"Cormorant Garamond,Georgia,serif",fontSize:40,color:C.pearl,lineHeight:1}}>{status.week}</span>
-              <span style={{fontFamily:"DM Sans,sans-serif",fontSize:10,color:C.lavender,letterSpacing:"0.08em"}}>WEEKS{status.dayOfWeek?` +${status.dayOfWeek}d`:""}</span>
+              <span style={{fontFamily:"DM Sans,sans-serif",fontSize:10,color:"var(--ey-lavender)",letterSpacing:"0.08em"}}>WEEKS{status.dayOfWeek?` +${status.dayOfWeek}d`:""}</span>
             </div>
           </div>
           <div style={{fontFamily:"DM Sans,sans-serif",fontSize:12,color:"var(--ey-mint)",textTransform:"uppercase",letterSpacing:"0.08em"}}>{TRI[status.trimester]}</div>
@@ -128,7 +128,7 @@ export function PregnancyScreen() {
         </Card>
 
         <Card style={{borderColor:`${C.fuchsia}30`,background:`rgba(233,30,140,0.05)`}}>
-          <div style={{fontFamily:"DM Sans,sans-serif",fontSize:10,color:C.fuchsia,textTransform:"uppercase",letterSpacing:"0.08em",marginBottom:6}}>This week</div>
+          <div style={{fontFamily:"DM Sans,sans-serif",fontSize:10,color:"var(--ey-fuchsia)",textTransform:"uppercase",letterSpacing:"0.08em",marginBottom:6}}>This week</div>
           <div style={{fontFamily:"DM Sans,sans-serif",fontSize:13,color:"rgba(var(--ink-rgb),0.8)",lineHeight:1.7}}>{status.weeklyNote}</div>
         </Card>
 

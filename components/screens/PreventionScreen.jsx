@@ -30,7 +30,7 @@ export function PreventionScreen() {
     <div style={{height:"100%",display:"flex",flexDirection:"column",overflow:"hidden"}}>
       <div style={{padding:"16px 16px 0"}}>
         <div style={{fontFamily:"Cormorant Garamond,Georgia,serif",fontSize:26,color:C.pearl,marginBottom:4}}>Prevention</div>
-        <div style={{fontFamily:"DM Sans,sans-serif",fontSize:11,color:C.mint,marginBottom:14}}>AI risk scores · Biome + cycle + lifestyle data</div>
+        <div style={{fontFamily:"DM Sans,sans-serif",fontSize:11,color:"var(--ey-mint)",marginBottom:14}}>AI risk scores · Biome + cycle + lifestyle data</div>
       </div>
       <div style={{flex:1,overflowY:"auto",padding:"0 16px 28px",display:"flex",flexDirection:"column",gap:10}}>
         <Card style={{background:`var(--card-hero)`}}>
@@ -43,7 +43,7 @@ export function PreventionScreen() {
                   strokeLinecap="round" style={{filter:`drop-shadow(0 0 6px ${C.mint})`}}/>
               </svg>
               <div style={{position:"absolute",inset:0,display:"flex",flexDirection:"column",alignItems:"center",justifyContent:"center"}}>
-                <span style={{fontSize:18,fontWeight:700,color:C.mint,fontFamily:"DM Sans,sans-serif"}}>{protection}</span>
+                <span style={{fontSize:18,fontWeight:700,color:"var(--ey-mint)",fontFamily:"DM Sans,sans-serif"}}>{protection}</span>
                 <span style={{fontSize:7,color:"rgba(var(--ink-rgb),0.5)",fontFamily:"DM Sans,sans-serif"}}>PROTECT</span>
               </div>
             </div>
@@ -93,7 +93,7 @@ export function PreventionScreen() {
         <Card>
           <div style={{fontFamily:"DM Sans,sans-serif",fontSize:10,color:"var(--ey-mint)",textTransform:"uppercase",letterSpacing:"0.08em",marginBottom:8}}>Share with your doctor</div>
           <div style={{fontFamily:"DM Sans,sans-serif",fontSize:12,color:"rgba(var(--ink-rgb),0.7)",lineHeight:1.6,marginBottom:10}}>Generate a clinical summary of biome scores, cycle data and prevention risks for your appointment.</div>
-          <button style={{width:"100%",padding:"10px",borderRadius:10,background:`${C.mint}20`,border:`1px solid ${C.mint}40`,color:C.mint,fontFamily:"DM Sans,sans-serif",fontSize:12,fontWeight:600,cursor:"pointer"}}>📄 Generate Doctor Report</button>
+          <button style={{width:"100%",padding:"10px",borderRadius:10,background:`${C.mint}20`,border:`1px solid ${C.mint}40`,color:"var(--ey-mint)",fontFamily:"DM Sans,sans-serif",fontSize:12,fontWeight:600,cursor:"pointer"}}>📄 Generate Doctor Report</button>
         </Card>
       </div>
     </div>

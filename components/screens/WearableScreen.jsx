@@ -45,7 +45,7 @@ export function WearableScreen() {
     <div style={{ height: "100%", display: "flex", flexDirection: "column", overflow: "hidden" }}>
       <div style={{ padding: "16px 16px 0" }}>
         <div style={{ fontFamily: "Cormorant Garamond,Georgia,serif", fontSize: 26, color: C.pearl }}>Wearable Data</div>
-        <div style={{ fontFamily: "DM Sans,sans-serif", fontSize: 11, color: C.aqua, marginBottom: 8 }}>BBT · Resting HR · HRV → Layer 4</div>
+        <div style={{ fontFamily: "DM Sans,sans-serif", fontSize: 11, color: "var(--ey-aqua)", marginBottom: 8 }}>BBT · Resting HR · HRV → Layer 4</div>
       </div>
 
       <div style={{ flex: 1, overflowY: "auto", padding: "8px 16px 28px", display: "flex", flexDirection: "column", gap: 12 }}>
@@ -63,7 +63,7 @@ export function WearableScreen() {
         </Card>
 
         <Card>
-          <div style={{ fontFamily: "DM Sans,sans-serif", fontSize: 10, color: C.aqua, textTransform: "uppercase", letterSpacing: "0.08em", marginBottom: 10 }}>Log today's readings</div>
+          <div style={{ fontFamily: "DM Sans,sans-serif", fontSize: 10, color: "var(--ey-aqua)", textTransform: "uppercase", letterSpacing: "0.08em", marginBottom: 10 }}>Log today's readings</div>
           <label style={{ display: "block", fontFamily: "DM Sans,sans-serif", fontSize: 10, color: "rgba(var(--ink-rgb),0.6)", marginBottom: 5 }}>Date</label>
           <input type="date" value={date} max={new Date().toISOString().slice(0, 10)} onChange={(e) => setDate(e.target.value)}
             style={{ width: "100%", background: "rgba(var(--deep-rgb),0.6)", border: "1px solid rgba(var(--lav-rgb),0.3)", borderRadius: 10, padding: "9px 12px", color: C.pearl, fontFamily: "DM Sans,sans-serif", fontSize: 13, outline: "none", colorScheme:"var(--scheme)", marginBottom: 12 }} />
@@ -73,13 +73,13 @@ export function WearableScreen() {
             {field("HRV (ms)", hrv, setHrv, "45", "1")}
           </div>
           <button onClick={log} disabled={busy} style={{ width: "100%", padding: 12, borderRadius: 12, border: "none", background: `linear-gradient(135deg,${C.aqua},${C.amethyst})`, color: "#1a0a2e", fontFamily: "DM Sans,sans-serif", fontSize: 14, fontWeight: 700, cursor: "pointer", opacity: busy ? 0.6 : 1 }}>{busy ? "Saving…" : "Log readings"}</button>
-          {msg && <div style={{ marginTop: 8, fontFamily: "DM Sans,sans-serif", fontSize: 10, color: C.mint, textAlign: "center" }}>{msg}</div>}
+          {msg && <div style={{ marginTop: 8, fontFamily: "DM Sans,sans-serif", fontSize: 10, color: "var(--ey-mint)", textAlign: "center" }}>{msg}</div>}
           <div style={{ marginTop: 8, fontFamily: "DM Sans,sans-serif", fontSize: 10, color: "rgba(var(--ink-rgb),0.35)", textAlign: "center" }}>Apple Health / Oura / Garmin auto-sync needs the native app — manual entry works today.</div>
         </Card>
 
         {readings.length > 0 && (
           <Card>
-            <div style={{ fontFamily: "DM Sans,sans-serif", fontSize: 10, color: C.mint, textTransform: "uppercase", letterSpacing: "0.08em", marginBottom: 10 }}>Recent readings</div>
+            <div style={{ fontFamily: "DM Sans,sans-serif", fontSize: 10, color: "var(--ey-mint)", textTransform: "uppercase", letterSpacing: "0.08em", marginBottom: 10 }}>Recent readings</div>
             {readings.slice(0, 10).map((r, i) => (
               <div key={i} style={{ display: "flex", justifyContent: "space-between", alignItems: "center", padding: "7px 0", borderBottom: i < Math.min(readings.length, 10) - 1 ? "1px solid rgba(var(--surface-rgb),0.05)" : "none" }}>
                 <span style={{ fontFamily: "DM Sans,sans-serif", fontSize: 12, color: C.pearl }}>{formatShort(r.date)}</span>

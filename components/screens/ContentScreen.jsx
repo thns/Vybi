@@ -14,7 +14,7 @@ export function ContentScreen() {
     return (
       <div style={{ height: "100%", display: "flex", flexDirection: "column", overflow: "hidden" }}>
         <div style={{ padding: "16px 16px 8px" }}>
-          <button onClick={() => setOpenId(null)} style={{ background: "none", border: "none", color: C.lavender, fontFamily: "DM Sans,sans-serif", fontSize: 13, cursor: "pointer", padding: 0 }}>‹ Library</button>
+          <button onClick={() => setOpenId(null)} style={{ background: "none", border: "none", color: "var(--ey-lavender)", fontFamily: "DM Sans,sans-serif", fontSize: 13, cursor: "pointer", padding: 0 }}>‹ Library</button>
         </div>
         <div style={{ flex: 1, overflowY: "auto", padding: "4px 16px 20px" }}>
           <GlowOrb color={article.color} size={220} opacity={0.13} x={70} y={-20} />
@@ -34,14 +34,14 @@ export function ContentScreen() {
     <div style={{ height: "100%", display: "flex", flexDirection: "column", overflow: "hidden" }}>
       <div style={{ padding: "16px 16px 0" }}>
         <div style={{ fontFamily: "Cormorant Garamond,Georgia,serif", fontSize: 26, color: C.pearl }}>Learn</div>
-        <div style={{ fontFamily: "DM Sans,sans-serif", fontSize: 11, color: C.mint, marginBottom: 8 }}>Cycle · Biome · Fertility · Prevention</div>
+        <div style={{ fontFamily: "DM Sans,sans-serif", fontSize: 11, color: "var(--ey-mint)", marginBottom: 8 }}>Cycle · Biome · Fertility · Prevention</div>
       </div>
 
       <div style={{ flex: 1, overflowY: "auto", padding: "8px 16px 28px", display: "flex", flexDirection: "column", gap: 12 }}>
         <GlowOrb color={C.fuchsia} size={200} opacity={0.1} x={80} y={-20} />
 
         <Card style={{ borderColor: `${C.gold}40`, background: `rgba(255,215,0,0.06)` }}>
-          <div style={{ fontFamily: "DM Sans,sans-serif", fontSize: 10, color: C.gold, textTransform: "uppercase", letterSpacing: "0.08em", marginBottom: 6 }}>✦ Insight of the day</div>
+          <div style={{ fontFamily: "DM Sans,sans-serif", fontSize: 10, color: "var(--ey-gold)", textTransform: "uppercase", letterSpacing: "0.08em", marginBottom: 6 }}>✦ Insight of the day</div>
           <div style={{ fontFamily: "DM Sans,sans-serif", fontSize: 13, color: "rgba(var(--ink-rgb),0.85)", lineHeight: 1.7 }}>{getDailyTip()}</div>
         </Card>
 

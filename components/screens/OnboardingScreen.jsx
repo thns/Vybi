@@ -4,10 +4,10 @@ import { GlowOrb } from "../vybi-ui.jsx";
 import { api } from "../../lib/client-api.ts";
 
 const STEPS = [
-  {icon:"◎",title:"Meet Vybi",sub:"Your whole-body biome companion",body:"Vybi is the world's first app combining menstrual cycle intelligence with all four of your microbiomes — vaginal, gut, skin and oral.",color:C.coral},
-  {icon:"◉",title:"5-Layer AI Engine",sub:"Gets smarter with your data",body:"Vybi uses a 5-layer algorithm stack. 3 layers activate from day one — including the biome-hormonal inference layer no competitor has.",color:C.gold},
+  {icon:"◎",title:"Meet Vybi",sub:"Your whole-body biome companion",body:"Vybi is the world's first app combining menstrual cycle intelligence with all four of your microbiomes — vaginal, gut, skin and oral.",color:"var(--ey-coral)"},
+  {icon:"◉",title:"5-Layer AI Engine",sub:"Gets smarter with your data",body:"Vybi uses a 5-layer algorithm stack. 3 layers activate from day one — including the biome-hormonal inference layer no competitor has.",color:"var(--ey-gold)"},
   {icon:"◈",title:"Biome tells the truth",sub:"Your hormones written in bacteria",body:"Your vaginal biome tracks your oestrogen levels. L. crispatus rises at ovulation. This biological signal gives Vybi a 3-5 day early warning that calendar apps cannot see.",color:C.vaginal},
-  {icon:"○",title:"Private by design",sub:"Anonymous Mode. ISO 27001.",body:"Your biome data is your most personal health data. No one — not even Vybi — can identify you in Anonymous Mode.",color:C.mint},
+  {icon:"○",title:"Private by design",sub:"Anonymous Mode. ISO 27001.",body:"Your biome data is your most personal health data. No one — not even Vybi — can identify you in Anonymous Mode.",color:"var(--ey-mint)"},
 ];
 
 export function OnboardingScreen({ onComplete }) {
@@ -36,7 +36,7 @@ export function OnboardingScreen({ onComplete }) {
         <GlowOrb color={C.fuchsia} size={300} opacity={0.15} x={-50} y={-40}/>
         <div style={{zIndex:1,flex:"1 0 auto",display:"flex",flexDirection:"column",justifyContent:"flex-start",gap:14}}>
           <div style={{textAlign:"center"}}>
-            <div style={{fontSize:40,color:C.fuchsia,filter:`drop-shadow(0 0 20px ${C.fuchsia})`}}>◎</div>
+            <div style={{fontSize:40,color:"var(--ey-fuchsia)",filter:`drop-shadow(0 0 20px ${C.fuchsia})`}}>◎</div>
             <div style={{fontFamily:"Cormorant Garamond,Georgia,serif",fontSize:26,color:C.pearl,marginTop:6}}>Let's start your cycle</div>
             <div style={{fontFamily:"DM Sans,sans-serif",fontSize:12,color:"rgba(var(--ink-rgb),0.6)",marginTop:4,lineHeight:1.6}}>This activates Layer 1 of the AI engine right away.</div>
           </div>
@@ -47,7 +47,7 @@ export function OnboardingScreen({ onComplete }) {
               {[{k:"track",l:"Track my cycle",icon:"🌙"},{k:"conceive",l:"Trying to conceive",icon:"🤍"},{k:"avoid",l:"Avoiding pregnancy",icon:"🛡"}].map(g=>(
                 <button key={g.k} onClick={()=>setGoal(g.k)} style={{display:"flex",alignItems:"center",gap:10,padding:"10px 12px",borderRadius:12,border:`1px solid ${goal===g.k?C.fuchsia:"rgba(var(--surface-rgb),0.12)"}`,background:goal===g.k?`${C.fuchsia}18`:"rgba(var(--surface-rgb),0.03)",color:goal===g.k?C.pearl:"rgba(var(--ink-rgb),0.6)",fontFamily:"DM Sans,sans-serif",fontSize:13,fontWeight:goal===g.k?600:400,cursor:"pointer",textAlign:"left"}}>
                   <span style={{fontSize:18}}>{g.icon}</span>{g.l}
-                  {goal===g.k&&<span style={{marginLeft:"auto",color:C.fuchsia}}>✓</span>}
+                  {goal===g.k&&<span style={{marginLeft:"auto",color:"var(--ey-fuchsia)"}}>✓</span>}
                 </button>
               ))}
             </div>
@@ -60,7 +60,7 @@ export function OnboardingScreen({ onComplete }) {
           </div>
 
           <div>
-            <label style={{display:"block",fontFamily:"DM Sans,sans-serif",fontSize:12,color:"rgba(var(--ink-rgb),0.7)",marginBottom:6}}>Typical cycle length: <span style={{color:C.fuchsia,fontWeight:600}}>{cycleLength} days</span></label>
+            <label style={{display:"block",fontFamily:"DM Sans,sans-serif",fontSize:12,color:"rgba(var(--ink-rgb),0.7)",marginBottom:6}}>Typical cycle length: <span style={{color:"var(--ey-fuchsia)",fontWeight:600}}>{cycleLength} days</span></label>
             <input type="range" min={21} max={40} value={cycleLength} onChange={(e)=>setCycleLength(e.target.value)}
               style={{width:"100%",accentColor:C.fuchsia}}/>
             <div style={{display:"flex",justifyContent:"space-between",fontFamily:"DM Sans,sans-serif",fontSize:9,color:"rgba(var(--ink-rgb),0.35)"}}><span>21</span><span>40</span></div>
@@ -88,7 +88,7 @@ export function OnboardingScreen({ onComplete }) {
           : <div style={{fontSize:60,color:s.color,filter:`drop-shadow(0 0 20px ${s.color})`}}>{s.icon}</div>}
         <div>
           <div style={{fontFamily:"Cormorant Garamond,Georgia,serif",fontSize:32,color:C.pearl,lineHeight:1.1,marginBottom:6}}>{s.title}</div>
-          <div style={{fontFamily:"DM Sans,sans-serif",fontSize:12,color:C.mint,letterSpacing:"0.08em",textTransform:"uppercase"}}>{s.sub}</div>
+          <div style={{fontFamily:"DM Sans,sans-serif",fontSize:12,color:"var(--ey-mint)",letterSpacing:"0.08em",textTransform:"uppercase"}}>{s.sub}</div>
         </div>
         <p style={{fontFamily:"DM Sans,sans-serif",fontSize:14,color:"rgba(var(--ink-rgb),0.75)",lineHeight:1.7,maxWidth:280,margin:"0 auto"}}>{s.body}</p>
         <div style={{display:"flex",gap:6,justifyContent:"center"}}>

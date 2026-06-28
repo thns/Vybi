@@ -34,7 +34,7 @@ export function SubscriptionScreen() {
     <div style={{padding:"16px 16px 28px",overflowY:"auto",height:"100%",display:"flex",flexDirection:"column",gap:12}}>
       <div>
         <div style={{fontFamily:"Cormorant Garamond,Georgia,serif",fontSize:26,color:C.pearl}}>Vybi Plans</div>
-        <div style={{fontFamily:"DM Sans,sans-serif",fontSize:12,color:C.mint}}>More layers = more accuracy</div>
+        <div style={{fontFamily:"DM Sans,sans-serif",fontSize:12,color:"var(--ey-mint)"}}>More layers = more accuracy</div>
       </div>
       {plans.map(plan=>(
         <div key={plan.id} onClick={()=>setSel(plan.id)} style={{borderRadius:16,border:`2px solid ${sel===plan.id?plan.color:"rgba(var(--surface-rgb),0.08)"}`,background:sel===plan.id?`${plan.color}10`:"var(--card-bg)",boxShadow:"var(--card-shadow)",padding:16,cursor:"pointer",position:"relative"}}>
@@ -46,7 +46,7 @@ export function SubscriptionScreen() {
                 {plan.id===currentTier&&<span style={{fontSize:9,fontWeight:700,padding:"2px 8px",borderRadius:20,background:`${plan.color}30`,color:plan.color,fontFamily:"DM Sans,sans-serif"}}>CURRENT</span>}
               </div>
               <div style={{display:"flex",alignItems:"baseline",gap:2}}>
-                <span style={{fontFamily:"Cormorant Garamond,Georgia,serif",fontSize:28,color:plan.color}}>{plan.price}</span>
+                <span style={{fontFamily:"Cormorant Garamond,Georgia,serif",fontSize:28,color:"var(--text)"}}>{plan.price}</span>
                 <span style={{fontFamily:"DM Sans,sans-serif",fontSize:12,color:"rgba(var(--ink-rgb),0.5)"}}>{plan.period}</span>
               </div>
             </div>
@@ -61,7 +61,7 @@ export function SubscriptionScreen() {
       <button onClick={startCheckout} disabled={busy||sel===currentTier} style={{width:"100%",padding:14,borderRadius:12,background:`var(--brand-grad)`,boxShadow:`0 8px 24px rgba(180,40,140,0.26)`,border:"none",color:"white",fontFamily:"DM Sans,sans-serif",fontSize:15,fontWeight:600,cursor:busy||sel===currentTier?"default":"pointer",opacity:busy||sel===currentTier?0.6:1}}>
         {busy?"Redirecting…":sel===currentTier?`Current plan · ${plans.find(p=>p.id===sel)?.name}`:sel==="free"?"Continue Free":`Start ${plans.find(p=>p.id===sel)?.name} — 7 days free`}
       </button>
-      {msg&&<div style={{textAlign:"center",fontFamily:"DM Sans,sans-serif",fontSize:11,color:C.amber}}>{msg}</div>}
+      {msg&&<div style={{textAlign:"center",fontFamily:"DM Sans,sans-serif",fontSize:11,color:"var(--ey-amber)"}}>{msg}</div>}
       <div style={{textAlign:"center",fontFamily:"DM Sans,sans-serif",fontSize:11,color:"rgba(var(--ink-rgb),0.35)"}}>Cancel anytime · ISO 27001 · vybi.health</div>
     </div>
   );

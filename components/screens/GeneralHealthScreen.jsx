@@ -23,7 +23,7 @@ export function GeneralHealthScreen() {
     <div style={{padding:"16px 16px 28px",overflowY:"auto",height:"100%",display:"flex",flexDirection:"column",gap:12}}>
       <div>
         <div style={{fontFamily:"Cormorant Garamond,Georgia,serif",fontSize:26,color:C.pearl}}>General Health</div>
-        <div style={{fontFamily:"DM Sans,sans-serif",fontSize:11,color:C.mint}}>Lifestyle factors · Biome impact · Wearable sync</div>
+        <div style={{fontFamily:"DM Sans,sans-serif",fontSize:11,color:"var(--ey-mint)"}}>Lifestyle factors · Biome impact · Wearable sync</div>
       </div>
       <div style={{display:"grid",gridTemplateColumns:"1fr 1fr 1fr",gap:8}}>
         {metrics.map(m=>(

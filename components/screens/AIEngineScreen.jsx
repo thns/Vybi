@@ -27,7 +27,7 @@ export function AIEngineScreen() {
     <div style={{height:"100%",display:"flex",flexDirection:"column",overflow:"hidden"}}>
       <div style={{padding:"16px 16px 0",flexShrink:0}}>
         <div style={{fontFamily:"Cormorant Garamond,Georgia,serif",fontSize:26,color:C.pearl,marginBottom:2}}>AI Prediction Engine</div>
-        <div style={{fontFamily:"DM Sans,sans-serif",fontSize:11,color:C.mint,marginBottom:14}}>5-layer algorithm · Accuracy grows with your data</div>
+        <div style={{fontFamily:"DM Sans,sans-serif",fontSize:11,color:"var(--ey-mint)",marginBottom:14}}>5-layer algorithm · Accuracy grows with your data</div>
       </div>
 
       <div style={{flex:1,overflowY:"auto",padding:"0 16px 28px",display:"flex",flexDirection:"column",gap:12}}>
@@ -52,17 +52,17 @@ export function AIEngineScreen() {
               </svg>
               <div style={{position:"absolute",inset:0,display:"flex",flexDirection:"column",alignItems:"center",justifyContent:"center"}}>
                 <span style={{fontSize:22,fontWeight:700,color:C.pearl,fontFamily:"DM Sans,sans-serif"}}>{currentAccuracy!=null?`${currentAccuracy}%`:"—"}</span>
-                <span style={{fontSize:7,color:C.lavender,fontFamily:"DM Sans,sans-serif",letterSpacing:"0.06em"}}>ACCURACY</span>
+                <span style={{fontSize:7,color:"var(--ey-lavender)",fontFamily:"DM Sans,sans-serif",letterSpacing:"0.06em"}}>ACCURACY</span>
               </div>
             </div>
             <div style={{flex:1}}>
               <div style={{fontFamily:"Cormorant Garamond,Georgia,serif",fontSize:20,color:C.pearl,marginBottom:4}}>Your current accuracy</div>
-              <div style={{fontFamily:"DM Sans,sans-serif",fontSize:11,color:"rgba(var(--ink-rgb),0.6)",lineHeight:1.6,marginBottom:8}}>{layersActive} layer{layersActive===1?"":"s"} active. Connect a wearable + log more cycles to reach <span style={{color:C.gold,fontWeight:600}}>{maxAccuracy}%</span></div>
+              <div style={{fontFamily:"DM Sans,sans-serif",fontSize:11,color:"rgba(var(--ink-rgb),0.6)",lineHeight:1.6,marginBottom:8}}>{layersActive} layer{layersActive===1?"":"s"} active. Connect a wearable + log more cycles to reach <span style={{color:"var(--ey-gold)",fontWeight:600}}>{maxAccuracy}%</span></div>
               <div style={{display:"flex",gap:6,alignItems:"center"}}>
                 <div style={{height:4,flex:1,borderRadius:2,background:"rgba(var(--surface-rgb),0.08)"}}>
                   <div style={{width:`${(accPct/maxAccuracy)*100}%`,height:"100%",borderRadius:2,background:`linear-gradient(90deg,${C.aqua},${C.fuchsia})`}}/>
                 </div>
-                <span style={{fontFamily:"DM Sans,sans-serif",fontSize:10,color:C.gold}}>{maxAccuracy}% max</span>
+                <span style={{fontFamily:"DM Sans,sans-serif",fontSize:10,color:"var(--ey-gold)"}}>{maxAccuracy}% max</span>
               </div>
             </div>
           </div>
@@ -100,8 +100,8 @@ export function AIEngineScreen() {
               <div style={{fontFamily:"DM Sans,sans-serif",fontSize:11,color:C.pearl,marginBottom:4}}>{row.label}</div>
               <div style={{display:"flex",gap:8,alignItems:"center",flexWrap:"wrap"}}>
                 <span style={{padding:"2px 8px",borderRadius:10,background:"rgba(var(--surface-rgb),0.06)",fontFamily:"DM Sans,sans-serif",fontSize:10,color:"rgba(var(--ink-rgb),0.5)"}}>Flo: {row.flo}</span>
-                <span style={{padding:"2px 8px",borderRadius:10,background:`${C.coral}25`,border:`1px solid ${C.coral}40`,fontFamily:"DM Sans,sans-serif",fontSize:10,color:C.coral}}>Vybi now: {row.vybi}</span>
-                {row.vybiMax!=="—"&&<span style={{padding:"2px 8px",borderRadius:10,background:`${C.mint}20`,border:`1px solid ${C.mint}40`,fontFamily:"DM Sans,sans-serif",fontSize:10,color:C.mint}}>Vybi max: {row.vybiMax}</span>}
+                <span style={{padding:"2px 8px",borderRadius:10,background:`${C.coral}25`,border:`1px solid ${C.coral}40`,fontFamily:"DM Sans,sans-serif",fontSize:10,color:"var(--ey-coral)"}}>Vybi now: {row.vybi}</span>
+                {row.vybiMax!=="—"&&<span style={{padding:"2px 8px",borderRadius:10,background:`${C.mint}20`,border:`1px solid ${C.mint}40`,fontFamily:"DM Sans,sans-serif",fontSize:10,color:"var(--ey-mint)"}}>Vybi max: {row.vybiMax}</span>}
               </div>
               <div style={{fontFamily:"DM Sans,sans-serif",fontSize:10,color:"rgba(var(--ink-rgb),0.4)",marginTop:4}}>{row.note}</div>
             </div>

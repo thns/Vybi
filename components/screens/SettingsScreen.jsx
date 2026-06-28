@@ -11,10 +11,10 @@ const cap = (s) => s.charAt(0).toUpperCase() + s.slice(1);
 const GOAL_LABEL = { track: "🌙 Tracking my cycle", conceive: "🤍 Trying to conceive", avoid: "🛡 Avoiding pregnancy" };
 
 const TOGGLES = [
-  {label:"Anonymous Mode",desc:"No identity linked to health data",on:false,color:C.coral},
-  {label:"Partner Sharing",desc:"Share cycle & biome with partner",on:true,color:C.mint},
-  {label:"Push Notifications",desc:"Reminders, results & insights",on:true,color:C.gold},
-  {label:"Biometric Lock",desc:"Face ID / Fingerprint",on:true,color:C.saliva},
+  {label:"Anonymous Mode",desc:"No identity linked to health data",on:false,color:"var(--ey-coral)"},
+  {label:"Partner Sharing",desc:"Share cycle & biome with partner",on:true,color:"var(--ey-mint)"},
+  {label:"Push Notifications",desc:"Reminders, results & insights",on:true,color:"var(--ey-gold)"},
+  {label:"Biometric Lock",desc:"Face ID / Fingerprint",on:true,color:"var(--ey-saliva)"},
   {label:"Research Opt-in",desc:"Contribute anonymised data",on:false,color:C.sage},
 ];
 
@@ -72,9 +72,9 @@ export function SettingsScreen({ setScreen }) {
           <div style={{width:48,height:48,borderRadius:"50%",background:`var(--brand-grad)`,display:"flex",alignItems:"center",justifyContent:"center",fontSize:20,fontWeight:700,color:"#fff",fontFamily:"DM Sans,sans-serif",overflow:"hidden"}}>{user?.image?<img src={user.image} alt="" style={{width:"100%",height:"100%",objectFit:"cover"}}/>:initial}</div>
           <div style={{flex:1,minWidth:0}}>
             <div style={{fontFamily:"Cormorant Garamond,Georgia,serif",fontSize:18,color:C.pearl,whiteSpace:"nowrap",overflow:"hidden",textOverflow:"ellipsis"}}>{display}</div>
-            <div style={{fontFamily:"DM Sans,sans-serif",fontSize:11,color:C.mint}}>{tier}</div>
+            <div style={{fontFamily:"DM Sans,sans-serif",fontSize:11,color:"var(--ey-mint)"}}>{tier}</div>
             {user?.email&&user?.name&&<div style={{fontFamily:"DM Sans,sans-serif",fontSize:10,color:"rgba(var(--ink-rgb),0.4)",whiteSpace:"nowrap",overflow:"hidden",textOverflow:"ellipsis"}}>{user.email}</div>}
-            {goal&&GOAL_LABEL[goal]&&<div style={{fontFamily:"DM Sans,sans-serif",fontSize:10,color:C.lavender,marginTop:3}}>{GOAL_LABEL[goal]}</div>}
+            {goal&&GOAL_LABEL[goal]&&<div style={{fontFamily:"DM Sans,sans-serif",fontSize:10,color:"var(--ey-lavender)",marginTop:3}}>{GOAL_LABEL[goal]}</div>}
           </div>
         </div>
       </Card>
@@ -102,7 +102,7 @@ export function SettingsScreen({ setScreen }) {
           return (
           <div key={i} style={{display:"flex",justifyContent:"space-between",alignItems:"center",marginBottom:i<TOGGLES.length-1?14:0,paddingBottom:i<TOGGLES.length-1?14:0,borderBottom:i<TOGGLES.length-1?"1px solid rgba(var(--surface-rgb),0.05)":"none"}}>
             <div style={{flex:1}}>
-              <div style={{fontFamily:"DM Sans,sans-serif",fontSize:13,color:C.pearl}}>{t.label}{isPush&&pushOn&&<span onClick={test} style={{marginLeft:8,fontSize:10,color:C.mint,cursor:"pointer",textDecoration:"underline"}}>Send test</span>}</div>
+              <div style={{fontFamily:"DM Sans,sans-serif",fontSize:13,color:C.pearl}}>{t.label}{isPush&&pushOn&&<span onClick={test} style={{marginLeft:8,fontSize:10,color:"var(--ey-mint)",cursor:"pointer",textDecoration:"underline"}}>Send test</span>}</div>
               <div style={{fontFamily:"DM Sans,sans-serif",fontSize:11,color:"rgba(var(--ink-rgb),0.4)"}}>{isPush&&pushMsg?pushMsg:t.desc}</div>
             </div>
             <div onClick={pushBusy&&isPush?undefined:toggle} style={{width:44,height:24,borderRadius:12,background:on?t.color:"rgba(var(--surface-rgb),0.1)",position:"relative",cursor:"pointer",transition:"background 0.2s",flexShrink:0,opacity:pushBusy&&isPush?0.6:1}}>

@@ -29,7 +29,7 @@ export function MicrobeReportScreen() {
     <div style={{height:"100%",display:"flex",flexDirection:"column",overflow:"hidden"}}>
       <div style={{padding:"16px 16px 0"}}>
         <div style={{fontFamily:"Cormorant Garamond,Georgia,serif",fontSize:26,color:C.pearl,marginBottom:4}}>Microbe Report</div>
-        <div style={{fontFamily:"DM Sans,sans-serif",fontSize:11,color:C.mint,marginBottom:12}}>{reportDate?`${reportDate} · ${liveBiome?.testKitId??"Test Kit"} · Powers Layer 3`:(isLive?"No biome test on file yet":"May 2026 · Test Kit #3 · Powers Layer 3")}</div>
+        <div style={{fontFamily:"DM Sans,sans-serif",fontSize:11,color:"var(--ey-mint)",marginBottom:12}}>{reportDate?`${reportDate} · ${liveBiome?.testKitId??"Test Kit"} · Powers Layer 3`:(isLive?"No biome test on file yet":"May 2026 · Test Kit #3 · Powers Layer 3")}</div>
         <div style={{display:"flex",gap:8,marginBottom:14,overflowX:"auto",paddingBottom:4}}>
           {BIOMES.map(b=>(
             <button key={b.id} onClick={()=>setSelected(b.id)} style={{padding:"7px 14px",borderRadius:20,border:`1px solid ${selected===b.id?b.color:"rgba(var(--surface-rgb),0.1)"}`,background:selected===b.id?`${b.color}20`:"transparent",color:selected===b.id?b.color:"rgba(var(--ink-rgb),0.5)",fontFamily:"DM Sans,sans-serif",fontSize:11,fontWeight:600,cursor:"pointer",whiteSpace:"nowrap",display:"flex",alignItems:"center",gap:5}}>
@@ -53,7 +53,7 @@ export function MicrobeReportScreen() {
         {r.alert&&<Card style={{borderColor:`${C.amber}50`,background:`rgba(255,140,66,0.08)`}}>
           <div style={{display:"flex",gap:8,alignItems:"center"}}>
             <span style={{fontSize:18}}>⚠️</span>
-            <div style={{fontFamily:"DM Sans,sans-serif",fontSize:12,color:C.amber,lineHeight:1.6}}>Action recommended · This data is powering Layer 3 predictions</div>
+            <div style={{fontFamily:"DM Sans,sans-serif",fontSize:12,color:"var(--ey-amber)",lineHeight:1.6}}>Action recommended · This data is powering Layer 3 predictions</div>
           </div>
         </Card>}
 

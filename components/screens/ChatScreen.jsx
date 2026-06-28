@@ -42,7 +42,7 @@ export function ChatScreen() {
     <div style={{height:"100%",display:"flex",flexDirection:"column"}}>
       <div style={{padding:"16px 16px 10px",borderBottom:"1px solid rgba(var(--surface-rgb),0.07)"}}>
         <div style={{fontFamily:"Cormorant Garamond,Georgia,serif",fontSize:26,color:C.pearl}}>Vybi AI</div>
-        <div style={{fontFamily:"DM Sans,sans-serif",fontSize:11,color:C.mint}}>Biome + Cycle aware · {accuracy}% accuracy · {layers} layers active</div>
+        <div style={{fontFamily:"DM Sans,sans-serif",fontSize:11,color:"var(--ey-mint)"}}>Biome + Cycle aware · {accuracy}% accuracy · {layers} layers active</div>
       </div>
       <div style={{flex:1,overflowY:"auto",padding:"12px 16px",display:"flex",flexDirection:"column",gap:10}}>
         {messages.map((m,i)=>(
@@ -62,7 +62,7 @@ export function ChatScreen() {
       <div style={{padding:"10px 16px",borderTop:"1px solid rgba(var(--surface-rgb),0.07)"}}>
         <div style={{display:"flex",gap:5,marginBottom:8,overflowX:"auto"}}>
           {["How accurate am I?","Explain Layer 3","My biome report","Restore plan"].map(q=>(
-            <button key={q} onClick={()=>setInput(q)} style={{padding:"5px 10px",borderRadius:16,border:`1px solid ${C.sage}50`,background:"transparent",color:C.mint,fontFamily:"DM Sans,sans-serif",fontSize:10,cursor:"pointer",whiteSpace:"nowrap",flexShrink:0}}>{q}</button>
+            <button key={q} onClick={()=>setInput(q)} style={{padding:"5px 10px",borderRadius:16,border:`1px solid ${C.sage}50`,background:"transparent",color:"var(--ey-mint)",fontFamily:"DM Sans,sans-serif",fontSize:10,cursor:"pointer",whiteSpace:"nowrap",flexShrink:0}}>{q}</button>
           ))}
         </div>
         <div style={{display:"flex",gap:8}}>
