@@ -6,6 +6,7 @@ declare module "next-auth" {
       id: string;
       subscriptionTier: "free" | "core" | "premium";
       onboarded: boolean;
+      isAdmin: boolean;
     } & DefaultSession["user"];
   }
 
@@ -20,5 +21,6 @@ declare module "next-auth/jwt" {
     id?: string;
     subscriptionTier?: "free" | "core" | "premium";
     onboarded?: boolean;
+    isAdmin?: boolean;
   }
 }

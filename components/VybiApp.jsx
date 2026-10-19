@@ -21,6 +21,7 @@ import { WearableScreen } from "./screens/WearableScreen.jsx";
 import { ContentScreen } from "./screens/ContentScreen.jsx";
 import { PartnerScreen } from "./screens/PartnerScreen.jsx";
 import { CommunityScreen } from "./screens/CommunityScreen.jsx";
+import { AdminScreen } from "./screens/AdminScreen.jsx";
 import { AccountMenu } from "./AccountMenu.tsx";
 
 // Theme tokens. `:root` defaults to the light (white) palette so first paint
@@ -142,6 +143,7 @@ function VybiAppInner() {
       case "Community": return <CommunityScreen/>;
       case "Subscription": return <SubscriptionScreen/>;
       case "Settings": return <SettingsScreen setScreen={setScreen}/>;
+      case "Admin": return <AdminScreen/>;
       default: return <HomeScreen setScreen={setScreen}/>;
     }
   };

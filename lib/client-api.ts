@@ -26,6 +26,42 @@ async function post<T>(url: string, body: unknown): Promise<T | null> {
   }
 }
 
+async function patch<T>(url: string, body: unknown): Promise<T | null> {
+  try {
+    const res = await fetch(url, {
+      method: "PATCH",
+      headers: { "Content-Type": "application/json" },
+      body: JSON.stringify(body),
+    });
+    if (!res.ok) return null;
+    return (await res.json()) as T;
+  } catch {
+    return null;
+  }
+}
+
+export interface AdminUser {
+  id: string;
+  name: string | null;
+  email: string | null;
+  subscriptionTier: "free" | "core" | "premium";
+  onboarded: boolean;
+  anonymousMode: boolean;
+  goal: string | null;
+  birthYear: number | null;
+  createdAt: string;
+  isAdmin: boolean;
+}
+
+export interface AdminStats {
+  total: number;
+  free: number;
+  core: number;
+  premium: number;
+  onboarded: number;
+  admins: number;
+}
+
 export interface PredictionRow {
   predictedPeriodStart: string | null;
   predictedOvulation: string | null;
@@ -153,6 +189,12 @@ export const api = {
   me: () =>
     get<{ user: { email: string | null; name: string | null; subscriptionTier: string; goal: string | null; birthYear: number | null } | null }>(
       "/api/me",
+    ),
+  adminUsers: () => get<{ users: AdminUser[]; stats: AdminStats }>("/api/admin/users"),
+  adminSetTier: (id: string, subscriptionTier: "free" | "core" | "premium") =>
+    patch<{ user: { id: string; email: string | null; subscriptionTier: string } }>(
+      `/api/admin/users/${id}`,
+      { subscriptionTier },
     ),
   pregnancy: () =>
     get<{ pregnancy: unknown; status: PregnancyStatus | null }>("/api/pregnancy"),

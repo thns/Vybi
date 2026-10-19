@@ -12,6 +12,7 @@ export function AccountMenu({ setScreen }: { setScreen?: (s: string) => void }) 
   const router = useRouter();
 
   const user = session?.user;
+  const isAdmin = !!session?.user?.isAdmin;
   const display = user?.name || user?.email || "Guest";
   const initial = display.trim().charAt(0).toUpperCase();
   const tier = user?.subscriptionTier ? `Vybi ${cap(user.subscriptionTier)}` : "Guest mode";
@@ -86,6 +87,15 @@ export function AccountMenu({ setScreen }: { setScreen?: (s: string) => void }) 
               <div style={{ fontSize: 10, color: "#ff6eb4", marginTop: 4, letterSpacing: "0.04em" }}>{tier}</div>
             </div>
 
+            {isAdmin && (
+              <MenuItem
+                label="⚡ Admin"
+                onClick={() => {
+                  setScreen?.("Admin");
+                  setOpen(false);
+                }}
+              />
+            )}
             <MenuItem
               label="Settings"
               onClick={() => {

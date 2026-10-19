@@ -1,5 +1,6 @@
 import type { NextAuthConfig } from "next-auth";
 import Google from "next-auth/providers/google";
+import { isAdminEmail } from "@/lib/admin";
 
 const PUBLIC_PREFIXES = ["/login", "/signup", "/forgot-password", "/shared"];
 
@@ -48,9 +49,10 @@ export const authConfig = {
       if (user) {
         token.id = user.id as string;
         // These fields ride along from authorize()/the adapter user row.
-        const u = user as { subscriptionTier?: string; onboarded?: boolean };
+        const u = user as { subscriptionTier?: string; onboarded?: boolean; email?: string | null };
         token.subscriptionTier = u.subscriptionTier ?? "free";
         token.onboarded = u.onboarded ?? false;
+        token.isAdmin = isAdminEmail(u.email ?? (token.email as string | undefined));
       }
       return token;
     },
@@ -59,6 +61,10 @@ export const authConfig = {
       session.user.subscriptionTier =
         (token.subscriptionTier as "free" | "core" | "premium") ?? "free";
       session.user.onboarded = (token.onboarded as boolean) ?? false;
+      // Re-evaluate from the email each time so an ADMIN_EMAILS change takes
+      // effect on the next session read without needing a fresh sign-in.
+      session.user.isAdmin =
+        isAdminEmail(session.user.email) || (token.isAdmin as boolean) || false;
       return session;
     },
   },
