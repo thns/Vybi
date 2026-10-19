@@ -24,6 +24,8 @@ export const users = pgTable("users", {
   image: text("image"),
   passwordHash: text("password_hash"),
   subscriptionTier: text("subscription_tier").notNull().default("free"), // free | core | premium
+  isAdmin: boolean("is_admin").notNull().default(false),
+  suspended: boolean("suspended").notNull().default(false),
   stripeCustomerId: text("stripe_customer_id"),
   stripeSubscriptionId: text("stripe_subscription_id"),
   anonymousMode: boolean("anonymous_mode").notNull().default(false),

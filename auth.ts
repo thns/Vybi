@@ -30,6 +30,7 @@ export const { handlers, auth, signIn, signOut } = NextAuth({
 
         const [user] = await db.select().from(users).where(eq(users.email, email)).limit(1);
         if (!user?.passwordHash) return null;
+        if (user.suspended) return null; // suspended accounts cannot sign in
 
         const ok = await bcrypt.compare(password, user.passwordHash);
         if (!ok) return null;
@@ -41,6 +42,7 @@ export const { handlers, auth, signIn, signOut } = NextAuth({
           image: user.image,
           subscriptionTier: user.subscriptionTier,
           onboarded: user.onboarded,
+          isAdmin: user.isAdmin,
         } as never;
       },
     }),

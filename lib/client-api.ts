@@ -51,6 +51,8 @@ export interface AdminUser {
   birthYear: number | null;
   createdAt: string;
   isAdmin: boolean;
+  isEnvAdmin: boolean;
+  suspended: boolean;
 }
 
 export interface AdminStats {
@@ -60,6 +62,14 @@ export interface AdminStats {
   premium: number;
   onboarded: number;
   admins: number;
+  suspended: number;
+}
+
+export interface AdminUserDetail {
+  user: Record<string, unknown> & { id: string; email: string | null; isAdmin: boolean; isEnvAdmin: boolean; suspended: boolean };
+  counts: Record<string, number>;
+  recentCycles: unknown[];
+  latestBiome: unknown | null;
 }
 
 export interface PredictionRow {
@@ -191,11 +201,13 @@ export const api = {
       "/api/me",
     ),
   adminUsers: () => get<{ users: AdminUser[]; stats: AdminStats }>("/api/admin/users"),
+  adminUser: (id: string) => get<AdminUserDetail>(`/api/admin/users/${id}`),
+  adminUpdate: (id: string, body: { subscriptionTier?: "free" | "core" | "premium"; isAdmin?: boolean; suspended?: boolean }) =>
+    patch<{ user: AdminUser }>(`/api/admin/users/${id}`, body),
+  adminDeleteUser: (id: string) => del<{ ok: boolean; deleted: string | null }>(`/api/admin/users/${id}`),
+  // kept for backwards-compat
   adminSetTier: (id: string, subscriptionTier: "free" | "core" | "premium") =>
-    patch<{ user: { id: string; email: string | null; subscriptionTier: string } }>(
-      `/api/admin/users/${id}`,
-      { subscriptionTier },
-    ),
+    patch<{ user: AdminUser }>(`/api/admin/users/${id}`, { subscriptionTier }),
   pregnancy: () =>
     get<{ pregnancy: unknown; status: PregnancyStatus | null }>("/api/pregnancy"),
   startPregnancy: (b: { due_date?: string; last_period_date?: string }) =>

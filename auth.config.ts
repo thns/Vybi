@@ -49,10 +49,11 @@ export const authConfig = {
       if (user) {
         token.id = user.id as string;
         // These fields ride along from authorize()/the adapter user row.
-        const u = user as { subscriptionTier?: string; onboarded?: boolean; email?: string | null };
+        const u = user as { subscriptionTier?: string; onboarded?: boolean; email?: string | null; isAdmin?: boolean };
         token.subscriptionTier = u.subscriptionTier ?? "free";
         token.onboarded = u.onboarded ?? false;
-        token.isAdmin = isAdminEmail(u.email ?? (token.email as string | undefined));
+        // Admin = env allowlist OR the DB is_admin flag (granted via the UI).
+        token.isAdmin = isAdminEmail(u.email ?? (token.email as string | undefined)) || !!u.isAdmin;
       }
       return token;
     },

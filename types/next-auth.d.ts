@@ -13,6 +13,7 @@ declare module "next-auth" {
   interface User {
     subscriptionTier?: "free" | "core" | "premium";
     onboarded?: boolean;
+    isAdmin?: boolean;
   }
 }
 
