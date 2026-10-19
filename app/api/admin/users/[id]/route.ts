@@ -25,7 +25,7 @@ export async function GET(_req: Request, { params }: { params: Promise<{ id: str
   if (!u) return NextResponse.json({ error: "User not found" }, { status: 404 });
   const { passwordHash, ...safe } = u as Record<string, unknown>;
 
-  const [counts, recentCycles, latestBiome] = await Promise.all([
+  const [counts, recentCycles, latestBiome, latestPrediction, latestPrevention, recentSymptoms] = await Promise.all([
     (async () => ({
       cycles: await cnt(cycleLogs, id),
       symptoms: await cnt(symptomLogs, id),
@@ -42,10 +42,20 @@ export async function GET(_req: Request, { params }: { params: Promise<{ id: str
     }))(),
     db.select().from(cycleLogs).where(eq(cycleLogs.userId, id)).orderBy(desc(cycleLogs.periodStartDate)).limit(6),
     db.select().from(biomeScores).where(eq(biomeScores.userId, id)).orderBy(desc(biomeScores.loggedAt)).limit(1),
+    db.select().from(predictions).where(eq(predictions.userId, id)).orderBy(desc(predictions.createdAt)).limit(1),
+    db.select().from(preventionScores).where(eq(preventionScores.userId, id)).orderBy(desc(preventionScores.calculatedAt)).limit(1),
+    db.select().from(symptomLogs).where(eq(symptomLogs.userId, id)).orderBy(desc(symptomLogs.loggedAt)).limit(8),
   ]);
 
   return NextResponse.json(
-    { user: { ...safe, isAdmin: isAdminEmail(u.email) || u.isAdmin, isEnvAdmin: isAdminEmail(u.email) }, counts, recentCycles, latestBiome: latestBiome[0] ?? null },
+    {
+      user: { ...safe, isAdmin: isAdminEmail(u.email) || u.isAdmin, isEnvAdmin: isAdminEmail(u.email) },
+      counts, recentCycles,
+      latestBiome: latestBiome[0] ?? null,
+      latestPrediction: latestPrediction[0] ?? null,
+      latestPrevention: latestPrevention[0] ?? null,
+      recentSymptoms,
+    },
     { status: 200 },
   );
 }

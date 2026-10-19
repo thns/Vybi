@@ -65,6 +65,18 @@ export interface AdminStats {
   suspended: number;
 }
 
+export interface AdminModItem {
+  id: string;
+  postId?: string;
+  room?: string;
+  body: string;
+  anonName: string;
+  reportCount: number;
+  hidden: boolean;
+  createdAt: string;
+  authorEmail: string | null;
+}
+
 export interface AdminUserDetail {
   user: Record<string, unknown> & { id: string; email: string | null; isAdmin: boolean; isEnvAdmin: boolean; suspended: boolean };
   counts: Record<string, number>;
@@ -205,6 +217,12 @@ export const api = {
   adminUpdate: (id: string, body: { subscriptionTier?: "free" | "core" | "premium"; isAdmin?: boolean; suspended?: boolean }) =>
     patch<{ user: AdminUser }>(`/api/admin/users/${id}`, body),
   adminDeleteUser: (id: string) => del<{ ok: boolean; deleted: string | null }>(`/api/admin/users/${id}`),
+  adminCommunity: () =>
+    get<{ posts: AdminModItem[]; replies: AdminModItem[]; counts: { flaggedPosts: number; flaggedReplies: number } }>(
+      "/api/admin/community",
+    ),
+  adminModerate: (kind: "post" | "reply", id: string, action: "hide" | "unhide" | "clearReports" | "delete") =>
+    post<{ ok: boolean }>("/api/admin/community", { kind, id, action }),
   // kept for backwards-compat
   adminSetTier: (id: string, subscriptionTier: "free" | "core" | "premium") =>
     patch<{ user: AdminUser }>(`/api/admin/users/${id}`, { subscriptionTier }),

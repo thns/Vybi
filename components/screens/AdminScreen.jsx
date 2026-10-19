@@ -68,14 +68,94 @@ function UserDetail({ id, onBack }) {
           </div>
         </Card>
       )}
+      {d.latestPrediction && (
+        <Card>
+          <div style={{fontFamily:"DM Sans,sans-serif",fontSize:10,color:"var(--ey-mint)",textTransform:"uppercase",letterSpacing:"0.08em",marginBottom:8}}>Latest prediction</div>
+          <div style={{fontFamily:"DM Sans,sans-serif",fontSize:11,color:"rgba(var(--ink-rgb),0.7)",lineHeight:1.7}}>
+            Next period {d.latestPrediction.predictedPeriodStart ?? "—"} · Ovulation {d.latestPrediction.predictedOvulation ?? "—"} · Confidence {d.latestPrediction.confidencePct ?? "—"}% · Accuracy {d.latestPrediction.accuracyPct ?? "—"}%
+          </div>
+        </Card>
+      )}
+      {d.latestPrevention && (
+        <Card>
+          <div style={{fontFamily:"DM Sans,sans-serif",fontSize:10,color:"var(--ey-amber)",textTransform:"uppercase",letterSpacing:"0.08em",marginBottom:8}}>Latest prevention scores</div>
+          <div style={{fontFamily:"DM Sans,sans-serif",fontSize:11,color:"rgba(var(--ink-rgb),0.7)",lineHeight:1.7}}>
+            BV {d.latestPrevention.bvRiskScore ?? "—"} · UTI {d.latestPrevention.utiRiskScore ?? "—"} · Gut {d.latestPrevention.gutDysbiosisScore ?? "—"} · Skin {d.latestPrevention.skinImbalanceScore ?? "—"} · PCOS {d.latestPrevention.pcosIndicatorScore ?? "—"} · Protection {d.latestPrevention.overallProtectionScore ?? "—"}
+          </div>
+        </Card>
+      )}
+      {d.recentSymptoms?.length > 0 && (
+        <Card>
+          <div style={{fontFamily:"DM Sans,sans-serif",fontSize:10,color:"var(--ey-lavender)",textTransform:"uppercase",letterSpacing:"0.08em",marginBottom:8}}>Recent symptom logs</div>
+          {d.recentSymptoms.slice(0,8).map((s,i)=>(
+            <div key={i} style={{fontFamily:"DM Sans,sans-serif",fontSize:11,color:"rgba(var(--ink-rgb),0.7)",padding:"3px 0",borderBottom:i<Math.min(d.recentSymptoms.length,8)-1?"1px solid rgba(var(--surface-rgb),0.06)":"none"}}>
+              Day {s.cycleDay ?? "—"}: {(s.symptoms||[]).join(", ") || "—"}
+            </div>
+          ))}
+        </Card>
+      )}
       <div style={{fontFamily:"DM Sans,sans-serif",fontSize:10,color:"rgba(var(--ink-rgb),0.4)",lineHeight:1.6}}>
-        Read-only view of this user's account and the volume of data they've logged. Individual health records aren't shown here.
+        Read-only snapshot of this user's account and logged data. You are viewing — not acting as — this user.
       </div>
     </div>
   );
 }
 
 const backBtn = {alignSelf:"flex-start",background:"rgba(var(--surface-rgb),0.06)",border:"1px solid rgba(var(--surface-rgb),0.12)",borderRadius:10,padding:"6px 12px",fontFamily:"DM Sans,sans-serif",fontSize:12,color:C.pearl,cursor:"pointer"};
+
+function ModItem({ item, kind, busy, onAction }) {
+  return (
+    <Card style={item.hidden?{borderColor:`${C.amber}50`}:undefined}>
+      <div style={{display:"flex",justifyContent:"space-between",gap:8,marginBottom:6,flexWrap:"wrap"}}>
+        <span style={{fontFamily:"DM Sans,sans-serif",fontSize:10,color:"rgba(var(--ink-rgb),0.5)"}}>
+          {kind==="post"?`${item.room} · `:""}{item.anonName} · {item.authorEmail ?? "—"}
+        </span>
+        <span style={{display:"flex",gap:6}}>
+          {item.reportCount>0 && <span style={{fontSize:9,fontWeight:700,padding:"2px 7px",borderRadius:10,background:`${C.amber}22`,color:"var(--ey-amber)"}}>{item.reportCount} report{item.reportCount===1?"":"s"}</span>}
+          {item.hidden && <span style={{fontSize:9,fontWeight:700,padding:"2px 7px",borderRadius:10,background:"rgba(var(--surface-rgb),0.12)",color:"rgba(var(--ink-rgb),0.6)"}}>HIDDEN</span>}
+        </span>
+      </div>
+      <div style={{fontFamily:"DM Sans,sans-serif",fontSize:12,color:C.pearl,lineHeight:1.6,marginBottom:10,whiteSpace:"pre-wrap",wordBreak:"break-word"}}>{item.body}</div>
+      <div style={{display:"flex",gap:6,flexWrap:"wrap"}}>
+        {item.hidden
+          ? <button disabled={busy} onClick={()=>onAction(kind,item.id,"unhide")} style={modBtn(C.mint)}>Unhide</button>
+          : <button disabled={busy} onClick={()=>onAction(kind,item.id,"hide")} style={modBtn(C.amber)}>Hide</button>}
+        <button disabled={busy} onClick={()=>onAction(kind,item.id,"clearReports")} style={modBtn(C.mint)}>Clear reports</button>
+        <button disabled={busy} onClick={()=>onAction(kind,item.id,"delete")} style={{...modBtn("#ff7a7a"),marginLeft:"auto"}}>Delete</button>
+      </div>
+    </Card>
+  );
+}
+const modBtn = (c) => ({background:"transparent",border:`1px solid ${c}55`,color:c,borderRadius:8,padding:"5px 10px",fontFamily:"DM Sans,sans-serif",fontSize:11,fontWeight:500,cursor:"pointer"});
+
+function ModerationView() {
+  const [d, setD] = useState({ posts: [], replies: [], counts: null });
+  const [loading, setLoading] = useState(true);
+  const [busy, setBusy] = useState(false);
+  const load = () => { setLoading(true); api.adminCommunity().then((r)=>{ setD(r ?? {posts:[],replies:[]}); setLoading(false); }); };
+  useEffect(() => { load(); }, []);
+  const onAction = async (kind,id,action) => {
+    setBusy(true);
+    await api.adminModerate(kind,id,action);
+    setBusy(false); load();
+  };
+  if (loading) return <div style={{fontFamily:"DM Sans,sans-serif",fontSize:12,color:"rgba(var(--ink-rgb),0.5)",padding:"20px 0",textAlign:"center"}}>Loading reports…</div>;
+  const empty = d.posts.length===0 && d.replies.length===0;
+  if (empty) return (
+    <Card style={{textAlign:"center"}}>
+      <div style={{fontSize:28}}>✨</div>
+      <div style={{fontFamily:"DM Sans,sans-serif",fontSize:12,color:"rgba(var(--ink-rgb),0.6)",marginTop:6}}>No reported or hidden content. Community is clean.</div>
+    </Card>
+  );
+  return (
+    <>
+      {d.posts.length>0 && <div style={{fontFamily:"DM Sans,sans-serif",fontSize:10,color:"var(--ey-amber)",textTransform:"uppercase",letterSpacing:"0.08em"}}>Posts ({d.posts.length})</div>}
+      {d.posts.map((p)=><ModItem key={p.id} item={p} kind="post" busy={busy} onAction={onAction}/>)}
+      {d.replies.length>0 && <div style={{fontFamily:"DM Sans,sans-serif",fontSize:10,color:"var(--ey-amber)",textTransform:"uppercase",letterSpacing:"0.08em",marginTop:4}}>Replies ({d.replies.length})</div>}
+      {d.replies.map((r)=><ModItem key={r.id} item={r} kind="reply" busy={busy} onAction={onAction}/>)}
+    </>
+  );
+}
 
 export function AdminScreen() {
   const { data: session } = useSession();
@@ -86,6 +166,7 @@ export function AdminScreen() {
   const [msg, setMsg] = useState(null);
   const [confirmDel, setConfirmDel] = useState(null);
   const [viewId, setViewId] = useState(null);
+  const [tab, setTab] = useState("users");
 
   const load = () => {
     setLoading(true);
@@ -125,8 +206,17 @@ export function AdminScreen() {
     <div style={{padding:"16px 16px 28px",overflowY:"auto",height:"100%",display:"flex",flexDirection:"column",gap:12}}>
       <div>
         <div style={{fontFamily:"DM Sans,sans-serif",fontSize:10,color:"var(--ey-coral)",textTransform:"uppercase",letterSpacing:"0.1em"}}>Superadmin</div>
-        <div style={{fontFamily:"Cormorant Garamond,Georgia,serif",fontSize:26,color:C.pearl}}>User management</div>
+        <div style={{fontFamily:"Cormorant Garamond,Georgia,serif",fontSize:26,color:C.pearl}}>{tab==="users"?"User management":"Community moderation"}</div>
       </div>
+
+      <div style={{display:"flex",gap:8}}>
+        {[["users","Users"],["moderation","Moderation"]].map(([k,label])=>(
+          <button key={k} onClick={()=>setTab(k)} style={{flex:1,padding:"8px",borderRadius:10,cursor:"pointer",fontFamily:"DM Sans,sans-serif",fontSize:12,fontWeight:tab===k?700:500,
+            border:`1px solid ${tab===k?C.fuchsia:"rgba(var(--surface-rgb),0.14)"}`,background:tab===k?`${C.fuchsia}15`:"rgba(var(--surface-rgb),0.03)",color:tab===k?"var(--ey-coral)":"rgba(var(--ink-rgb),0.7)"}}>{label}</button>
+        ))}
+      </div>
+
+      {tab==="moderation" ? <ModerationView/> : (<>
 
       {s && (
         <div style={{display:"grid",gridTemplateColumns:"1fr 1fr 1fr",gap:8}}>
@@ -202,6 +292,7 @@ export function AdminScreen() {
           </Card>
         ))
       )}
+      </>)}
     </div>
   );
 }
