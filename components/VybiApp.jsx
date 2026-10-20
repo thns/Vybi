@@ -150,9 +150,9 @@ function VybiAppInner() {
   // Phones fill the width; wider screens show the app column centered on the
   // themed background (no device mockup, no demo side panel).
   return (
-    <div style={{height:"100dvh",display:"flex",justifyContent:"center",background:"var(--app-bg)",fontFamily:"DM Sans,sans-serif",overflow:"hidden"}}>
+    <div style={{height:"100dvh",display:"flex",flexDirection:"column",background:"var(--app-bg)",fontFamily:"DM Sans,sans-serif",overflow:"hidden"}}>
       {GLOBAL_STYLE}
-      <div style={{width:"100%",maxWidth:480,height:"100dvh",display:"flex",flexDirection:"column",overflow:"hidden",position:"relative",boxShadow:"0 0 60px rgba(90,50,130,0.12)"}}>
+      <div style={{flex:1,minHeight:0,width:"100%",display:"flex",flexDirection:"column",overflow:"hidden",position:"relative"}}>
         <div style={{flex:1,overflow:"hidden",position:"relative",display:"flex",flexDirection:"column"}}>
           {onboarded&&<AccountMenu setScreen={setScreen}/>}
           <TopBar inset />
